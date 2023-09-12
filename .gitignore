@@ -1,0 +1,14 @@
+
+*.o
+*.obj
+*.dll
+*.a
+*.lib
+*.out
+*.app
+serveX
+html/*
+.vscode/*
+.DS_STORE
+.DS_Store
+*.dSYM
