@@ -1,37 +1,19 @@
-#Output Program Name
-NAME = parsingConfig
+NAME = serveX
 
-# Colors :
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-RED= \033[0;31m
-BLUE = \033[0;34m
-STOP = \033[0m
+CC = c++
+PREFIX_FOLDER = $(shell pwd)
+CPPFLAGS = -Wall -Wextra -Werror -ggdb -std=c++98 -D PREFIX_FOLDER=\"$(PREFIX_FOLDER)\"
+OBJS = $(SRCS:%.cpp=%.o)
 
-# Commands And Flags :
-CPP = c++
-FLAGS =	-Wall -Wextra -Werror -std=c++98
-RM = rm -rf
+all: $(NAME)
 
-# loading source files :
-CONFFILEPARSERS = ./srcs/ParseConfigFile/ConfigFileParser.cpp \
-				  ./srcs/ParseConfigFile/ServerConfig.cpp \
-				  ./srcs/ParseConfigFile/LocationConfig.cpp
+$(NAME): $(OBJS)
+	$(CC) $(CPPFLAGS) -o $(NAME) $^ -fsanitize=address
 
-SRCS = main.cpp $(CONFFILEPARSERS)
-
-all : $(NAME)
-	@echo "You Can Use $(GREEN)*** $(NAME) ***$(STOP)"
-
-$(NAME) : $(SRCS)
-	@$(CPP) $(FLAGS) $(SRCS) -o $(NAME)
-	@echo "$(BLUE)Compiling the source files... $(STOP)"
-
-clean :
-	@echo "$(YELLOW)Cleaning... $(STOP)"
-
-fclean : clean
-	@$(RM) $(NAME)
-	@echo "$(RED)Deleting The $(NAME) ... $(STOP)"
-
-re : fclean all
+%.o: %.cpp $(HEADERS)
+	$(CC) $(CFLAGS) $< -o $@
+clean:
+	rm -f $(OBJS)
+fclean: clean
+	rm -f $(NAME)
+re: fclean all
