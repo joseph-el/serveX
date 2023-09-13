@@ -5,10 +5,14 @@
 # include <cstdlib>
 # include <cstdio>
 # include <getopt.h>
+# include <errno.h>
+# include <filesystem>
 
+
+# define GETOPT_EXIT    -1
 # define serveX_NAME    "serveX"
 # define serveX_VERSION "1.0.0"
-# define GETOPT_EXIT -1
+
 using namespace std;
 
 class sX_config;
@@ -46,17 +50,35 @@ enum options_flags {
 };
 
 class options {
- 
+    
+    private :
+        string p_conf, p_error;
+        bool    is_successful;
+
     public :
-        options();
+
+        options() : p_conf(""), p_error(""), is_successful(false) {}
         void sX_options(int , char *const []);
-        void setErrorLogFile(const string &) const;
-        void setConfigFile(const string &) const;
+        void setErrorLogFile() const;
+        void setConfigFile() const;
         void testConfigAndDump() const;
         void showVersionAndConfig() const;
         void testConfig() const;
         void showHelp() const;
         void version( void ) const;
+        bool successful( void ) const;
+
+    typedef void (options::*OptionFunction)() const;
+
+    OptionFunction optionFunctions[7] = {
+        &options::setErrorLogFile,
+        &options::setConfigFile,
+        &options::testConfigAndDump,
+        &options::showVersionAndConfig,
+        &options::testConfig,
+        &options::showHelp,
+        &options::version
+    };
 };
 
 # endif
