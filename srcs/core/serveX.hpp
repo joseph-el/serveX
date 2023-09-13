@@ -8,6 +8,8 @@
 # define serveX_core main
 # define required_argument 2
 
+using namespace std;
+
 namespace serveX {
 
     class sX_config;
