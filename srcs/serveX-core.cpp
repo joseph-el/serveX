@@ -7,7 +7,7 @@ int serveX_core(int argc, char *const argv[])
         serveX::init_serveX(argc, argv);
     }
     catch (...) {
-        std::cerr << strerror(errno);
+        std::cerr << "serveX : " << strerror(errno);
     }
 
     exit (EXIT_SUCCESS);

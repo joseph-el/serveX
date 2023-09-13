@@ -14,7 +14,6 @@ namespace serveX {
 
     void init_serveX( int , char *const *);
 
-
 };
 
 # endif
