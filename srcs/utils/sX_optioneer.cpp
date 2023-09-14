@@ -1,6 +1,8 @@
 # include "sX_optioneer.hpp"
 
-options::options() : p_conf(""), p_error(""), is_successful(false) {}
+options::options(int argc, char *const argv[]) : p_conf(""), p_error(""), is_successful(false) {
+    sX_options(argc, argv);
+}
 
 void options::sX_options(int argc, char *const argv[])
 {

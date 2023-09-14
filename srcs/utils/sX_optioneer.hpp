@@ -8,7 +8,6 @@
 # include <errno.h>
 # include <sys/stat.h>
 
-
 # define GETOPT_EXIT    -1
 # define serveX_NAME    "serveX"
 # define serveX_VERSION "1.0.0"
@@ -56,8 +55,7 @@ class options {
         mutable bool    is_successful;
 
     public :
-
-        options();
+        options(int , char *const []);
         void sX_options(int , char *const []);
         void setErrorLogFile() const;
         void setConfigFile() const;
