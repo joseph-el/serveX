@@ -6,7 +6,7 @@
 # include <cstdio>
 # include <getopt.h>
 # include <errno.h>
-# include <filesystem>
+# include <sys/stat.h>
 
 
 # define GETOPT_EXIT    -1
@@ -23,7 +23,7 @@ extern "C" {
     # include <unistd.h> 
 }
 
-extern const char* help_options =
+const char* help_options =
                           "Usage: nginx [-?hvtT]\n"
                           "             [-e filename] [-c filename] \n"
                           "Options:\n"
@@ -34,18 +34,18 @@ extern const char* help_options =
                           "  -e filename   : set error log file (default: logs/error.log)\n"
                           "  -c filename   : set configuration file (default: conf/serveX.conf)\n";
 
-extern const char* Sx_options = "?hvVTtce:";
+const char* Sx_options = "hvVTtc:e:";
 
 enum options_flags {
 
     HELP = ( 1 << 1),
     VERSION = ( 1 << 2),
-    UNKNOWN = ( 1 << 3),
-    ERROR_LOG = ( 1 << 4),
-    CONFIG_FILE = ( 1 << 5),
-    TEST_CONFIG = ( 1 << 6),
-    TEST_CONFIG_DUMP = ( 1 << 7),
-    SHOW_VERSION_CONFIG = ( 1 << 8)
+    UNKNOWN = ( 1 << 8 ),
+    ERROR_LOG = ( 1 << 3),
+    CONFIG_FILE = ( 1 << 4),
+    TEST_CONFIG = ( 1 << 5),
+    TEST_CONFIG_DUMP = ( 1 << 6),
+    SHOW_VERSION_CONFIG = ( 1 << 7 )
 
 };
 
@@ -57,7 +57,7 @@ class options {
 
     public :
 
-        options() : p_conf(""), p_error(""), is_successful(false) {}
+        options();
         void sX_options(int , char *const []);
         void setErrorLogFile() const;
         void setConfigFile() const;
@@ -67,18 +67,18 @@ class options {
         void showHelp() const;
         void version( void ) const;
         bool successful( void ) const;
+};
 
-    typedef void (options::*OptionFunction)() const;
+typedef void (options::*OptionFunction)() const;
 
-    OptionFunction optionFunctions[7] = {
+ OptionFunction optionFunctions[] = {
+        &options::showHelp,
+        &options::version,
         &options::setErrorLogFile,
         &options::setConfigFile,
+        &options::testConfig,
         &options::testConfigAndDump,
         &options::showVersionAndConfig,
-        &options::testConfig,
-        &options::showHelp,
-        &options::version
     };
-};
 
 # endif

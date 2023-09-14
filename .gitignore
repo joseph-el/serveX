@@ -7,7 +7,6 @@
 *.out
 *.app
 serveX
-concepts/*
 .vscode/*
 .DS_STORE
 .DS_Store
