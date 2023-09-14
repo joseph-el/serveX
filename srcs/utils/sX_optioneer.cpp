@@ -36,9 +36,8 @@ void options::sX_options(int argc, char *const argv[])
             return ;
         }
         else if ( flag & ~UNKNOWN ) 
-            (*this.*optionFunctions[ (int)log2(flag) - 1]) (), is_successful = true;
+            is_successful = true, (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
 }
-
 
 void options::setErrorLogFile() const 
 {
@@ -47,7 +46,8 @@ void options::setErrorLogFile() const
     errno = stat(p_error.c_str(), &_st) != 0 ? ENOENT : S_ISDIR(_st.st_mode) ? EISDIR : 0;
 
     if ( errno & (ENOENT | EISDIR) )
-		cerr << serveX_NAME ": \"" << p_error << "\" failed : " << strerror(errno) << endl;
+		cerr << serveX_NAME ": \"" << p_error << "\" failed : " << strerror(errno) << endl, is_successful = false;
+    // set p_error
 }
 
 void options::setConfigFile() const 
@@ -57,7 +57,8 @@ void options::setConfigFile() const
     errno = stat(p_error.c_str(), &_st) != 0 ? ENOENT : S_ISDIR(_st.st_mode) ? EISDIR : 0;
 
     if ( errno & (ENOENT | EISDIR) )
-		cerr << serveX_NAME ": \"" << p_conf << "\" failed : " << strerror(errno) << endl;
+		cerr << serveX_NAME ": \"" << p_conf << "\" failed : " << strerror(errno) << endl, is_successful = false;
+    // set p_conf
 }
 
 void options::testConfigAndDump() const 
@@ -90,11 +91,11 @@ void options::showVersionAndConfig() const {
 bool options::successful( void ) const { return is_successful; }
 
 
-int main(int ac, char *const av[])
-{
-    options ret;
+// int main(int ac, char *const av[])
+// {
+//     options ret;
 
-    ret.sX_options(ac, av);
+//     ret.sX_options(ac, av);
 
-    cout << (ret.successful() ? "yes option good" : "error in option ") << endl;
-}
+//     cout << (ret.successful() ? "yes option good" : "error in option ") << endl;
+// }

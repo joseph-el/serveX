@@ -14,7 +14,7 @@ namespace serveX {
 
     class sX_config;
 
-    void init_serveX( int , char *const *);
+    void init_serveX( int , char *const []);
 
 };
 

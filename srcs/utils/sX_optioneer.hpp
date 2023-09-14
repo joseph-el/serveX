@@ -53,7 +53,7 @@ class options {
     
     private :
         string p_conf, p_error;
-        bool    is_successful;
+        mutable bool    is_successful;
 
     public :
 
