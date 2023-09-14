@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SHELL_TYPE=$(basename $SHELL)
-
-ALIAS_COMMAND="alias serveX='./serveX'"
+serveX_path=$(shell pwd)
+ALIAS_COMMAND="alias serveX="$serveX_path/.serveX""
 
 case "$SHELL_TYPE" in
     "bash")
