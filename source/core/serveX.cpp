@@ -17,7 +17,6 @@ void serveX::init_serveX( int argc, char *const *argv)
 
     // Get virtual server
 
-
     while (true) {
 
     }

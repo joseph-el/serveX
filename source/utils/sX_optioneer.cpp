@@ -35,7 +35,6 @@ void options::sX_options(int argc, char *const argv[])
         {
             option_name.push_back(optopt);
             cout << serveX_NAME << ( (optopt == 'e' or optopt == 'c') ? string(": option \"-") + string(1, optopt) + string("\" requires file name") : option_name) << endl;
-            return ;
         }
         else if ( flag & ~UNKNOWN ) 
             is_successful = true, (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
@@ -60,6 +59,7 @@ void options::setConfigFile() const
 
     if ( errno & (ENOENT | EISDIR) )
 		cerr << serveX_NAME ": \"" << p_conf << "\" failed : " << strerror(errno) << endl, is_successful = false;
+        
     // set p_conf
 }
 
