@@ -1,5 +1,15 @@
 # include "sX_optioneer.hpp"
 
+OptionFunction optionFunctions[] = {
+        &options::showHelp,
+        &options::version,
+        &options::setErrorLogFile,
+        &options::setConfigFile,
+        &options::testConfig,
+        &options::testConfigAndDump,
+        &options::showVersionAndConfig,
+};
+
 options::options(int argc, char *const argv[]) : p_conf(""), p_error(""), is_successful(false) {
     sX_options(argc, argv);
 }
@@ -37,7 +47,7 @@ void options::sX_options(int argc, char *const argv[])
             cout << serveX_NAME << ( (optopt == 'e' or optopt == 'c') ? string(": option \"-") + string(1, optopt) + string("\" requires file name") : option_name) << endl;
         }
         else if ( flag & ~UNKNOWN ) 
-            is_successful = true, (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
+            is_successful = (flag & (CONFIG_FILE | ERROR_LOG)), (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
 }
 
 void options::setErrorLogFile() const 
@@ -59,19 +69,20 @@ void options::setConfigFile() const
 
     if ( errno & (ENOENT | EISDIR) )
 		cerr << serveX_NAME ": \"" << p_conf << "\" failed : " << strerror(errno) << endl, is_successful = false;
-        
-    // set p_conf
+    
+    sX_config.setPath(p_conf);
 }
 
 void options::testConfigAndDump() const 
 {
     testConfig();
+    sX_config.disp();
     // Sx_config.disp();
 }
 
 void options::testConfig() const 
 {
-    bool is_fine = true; // remplace by sX_config.good();
+    bool is_fine = sX_config.successful(); // remplace by sX_config.good();
 	cerr << serveX_NAME ": configuration file \"" << "path in config" << "\" test is " << (is_fine ? "successful" : "failed") << endl;
 }
 
@@ -81,7 +92,7 @@ void options::version() const {
 
 void options::showHelp( void ) const {
     cout << (serveX_NAME "/" serveX_VERSION) << endl;
-    cout << help_options;
+    cout << HELP_OPTIONS << endl;
 }
 
 void options::showVersionAndConfig() const {

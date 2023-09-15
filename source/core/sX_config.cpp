@@ -1,40 +1,65 @@
 #include "sX_config.hpp"
 
-/*  ServeX_config Constructors  */
-ServeX_config::ServeX_config ( void ) {}
+serveX_config sX_config;
 
-ServeX_config::ServeX_config( std::string const& fileName) : _configFileName(fileName)
+/*  serveX_config Constructors  */
+
+serveX_config::serveX_config( std::string const& fileName) 
 {
-    std::string extensionToCheck = ".conf";
-    if (!(fileName.length() >= extensionToCheck.length() &&
-          fileName.compare(fileName.length() - extensionToCheck.length(), extensionToCheck.length(), extensionToCheck) == 0))
-        _errorAndExit("A Config File Must End With a .conf Extension");
+    setPath(fileName);
 }
-ServeX_config::~ServeX_config(void) {}
 
+bool serveX_config::successful( void )
+{
+    try {
+        parseServersData();
+    }
+    catch (bool) {
+        return false;
+    }
+    return true;
+}
 
-/*  ServeX_config Getters */
-std::vector<Sx_server_data> ServeX_config::getServers(void) const
+void serveX_config::setPath( std::string const& fileName )  
+{
+    CHECK_CONF_EXTENSION(fileName);
+    _configFile.close();
+	_configFile.open(fileName, ios::in);
+    
+	if (!_configFile.good()) {
+		cerr << "serveX : " << strerror(errno) << endl;
+        exit(EXIT_FAILURE);
+    }
+	_configFileName = fileName;
+}
+
+serveX_config::~serveX_config(void) 
+{
+    _configFile.close();
+}
+
+/*  serveX_config Getters */
+std::vector<Sx_server_data> serveX_config::getServers(void) const
 {
     return _servers;
 }
 
-/*  ServeX_config Parsers  */
-void ServeX_config::parseServersData()
+/*  serveX_config Parsers  */
+void serveX_config::parseServersData()
 {
     std::string                 line;
     std::string                 trimmedLine;
     std::vector<std::string>    tokens;
     bool                        serverEnded = false;
     bool                        isDefaultParsedBefore = false;
-
+    short                       lineNumber = 0;
     /*  Opening The File    */
-    std::ifstream _configFile(_configFileName.c_str());
-    _isFileOpenedAndNotEmpty(_configFile);
+    // std::ifstream _configFile(_configFileName.c_str());
+    // _isFileOpenedAndNotEmpty(_configFile);
 
-    while (getline(_configFile, line))
+    for (; getline(_configFile, line); lineNumber++)
     {
-        if (!_isFileGoodToGo(line))
+        if (!_isFileGoodToGo(line, lineNumber))
             break;
         trimmedLine = _removeExtraSpaces(line);
         if (_isLineEmptyOrComment(trimmedLine))
@@ -47,195 +72,194 @@ void ServeX_config::parseServersData()
 
             serverEnded = false;
             getline(_configFile, line);
-            if (!_isFileGoodToGo(line))
+            if (!_isFileGoodToGo(line, lineNumber))
                 break;
             if (_removeExtraSpaces(line) != "{")
-                _errorAndExit(SERVERSYNTAXERROR);
+                _errorAndExit(SERVERSYNTAXERROR, lineNumber);
             while (getline(_configFile, line))
             {
                 /*  Starting To Read inside the server Here  */
-                if (!_isFileGoodToGo(line))
-                    _errorAndExit(READINSERVERGERROR);
+                if (!_isFileGoodToGo(line, lineNumber))
+                    _errorAndExit(READINSERVERGERROR, lineNumber);
                 trimmedLine = _removeExtraSpaces(line);
                 if (_isLineEmptyOrComment(trimmedLine))
                     continue;
                 /*  PARSING DIRECTIVES */
-                tokens = _tokenizerOfDirectives(trimmedLine);
+                tokens = _tokenizerOfDirectives(trimmedLine, lineNumber);
                 if (line.find("location") != std::string::npos)
                 {
                     if (tokens[0] != "location")
-                        _errorAndExit(LOCATIONNOTFOUNDERROR);
+                        _errorAndExit(LOCATIONNOTFOUNDERROR, lineNumber);
                     if (tokens.size() != 3)
-                        _errorAndExit("Location Must An Argument Path");
+                        _errorAndExit("Location Must An Argument Path", lineNumber);
                     if (tokens.back() != "{")
-                        _errorAndExit(LOCATIONSYNTAXERROR);
+                        _errorAndExit(LOCATIONSYNTAXERROR, lineNumber);
                     /*  Init Location Object Here */
                     Sx_location_data currentLocationConfig(tokens[1]);
                     while (getline(_configFile, line))
                     {
-                        if (!_isFileGoodToGo(line))
-                            _errorAndExit(READINLOCATIONERROR);
+                        if (!_isFileGoodToGo(line, lineNumber))
+                            _errorAndExit(READINLOCATIONERROR, lineNumber);
                         trimmedLine = _removeExtraSpaces(line);
                         if (_isLineEmptyOrComment(trimmedLine))
                             continue;
                         if (trimmedLine == "}")
                         {
                             if (currentLocationConfig.isEmpty())
-                                _errorAndExit("Parsing the Location!");
+                                _errorAndExit("Parsing the Location!", lineNumber);
                             if (!currentLocationConfig.isLocationValidAndReady())
-                                _errorAndExit("Location Inside A Server Must Contain At Least: DefaultPath, Root, index, and At least 1 AllowedMethod");
+                                _errorAndExit("Location Inside A Server Must Contain At Least: DefaultPath, Root, index, and At least 1 AllowedMethod", lineNumber);
                             currentConfig.addLocation(currentLocationConfig);
                             break;
                         }
-                        _parseLocationDirectives(trimmedLine, currentLocationConfig);
+                        _error.lineNumber = lineNumber;
+                        _parseLocationDirectives(trimmedLine, currentLocationConfig, lineNumber);
                     }
                     continue;
                 }
                 else if (tokens[0] == "host" && currentConfig.getHost().empty())
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'Host' directive must have a single Argument.");
-                    currentConfig.setHost(_parseHost(tokens[1]));
+                        _errorAndExit("'Host' directive must have a single Argument.", lineNumber);
+                    currentConfig.setHost(_parseHost(tokens[1], lineNumber));
                 }
                 else if (tokens[0] == "port" && !currentConfig.getListenPort())
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'Port' directive must have a single Argument.");
-                    currentConfig.setListenPort(_parsePort(tokens[1]));
+                        _errorAndExit("'Port' directive must have a single Argument.", lineNumber);
+                    currentConfig.setListenPort(_parsePort(tokens[1], lineNumber));
                 }
                 else if (tokens[0] == "server_name" && currentConfig.getServerName().empty())
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'server_name' directive must have a single argument.");
+                        _errorAndExit("'server_name' directive must have a single argument.", lineNumber);
                     currentConfig.setServerName(tokens[1]);
                 }
                 else if (tokens[0] == "default_server" && !isDefaultParsedBefore)
                 {
                     // must have a booleen
                     if (tokens.size() != 2)
-                        _errorAndExit("'default_server' directive must have a single argument: on or off");
+                        _errorAndExit("'default_server' directive must have a single argument: on or off", lineNumber);
                     if (tokens[1] == "on")
                         currentConfig.setDefaultServer(true);
                     else if (tokens[1] == "off")
                         currentConfig.setDefaultServer(false);
                     else
-                        _errorAndExit("cannot recognize the 'default_server' directive Arguments try {on || off}.");
+                        _errorAndExit("cannot recognize the 'default_server' directive Arguments try {on || off}.", lineNumber);
                     isDefaultParsedBefore = true;
                 }
                 else if (tokens[0] == "error_page")
                 {
                     if (tokens.size() != 3)
-                        _errorAndExit("'error_page' directive must have two argument: errorNumber and errorPage");
-                    currentConfig.addErrorPage(_stringToInt(tokens[1]), tokens[2]);
+                        _errorAndExit("'error_page' directive must have two argument: errorNumber and errorPage", lineNumber);
+                    currentConfig.addErrorPage(_stringToInt(tokens[1], lineNumber), tokens[2]);
                 }
                 else if (tokens[0] == "client_max_body_size" && !currentConfig.getMaxBodySize())
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'client_max_body_size' directive must have One argument: Size In Mb");
+                        _errorAndExit("'client_max_body_size' directive must have One argument: Size In Mb", lineNumber);
                     std::string sizeArgument = tokens[1];
                     if (sizeArgument[sizeArgument.size() - 1] != 'M')
-                        _errorAndExit("Invalid format for 'client_max_body_size' directive. It should end with 'M'");
+                        _errorAndExit("Invalid format for 'client_max_body_size' directive. It should end with 'M'", lineNumber);
                     tokens[1].erase(tokens[1].size() - 1);
-                    int tmpSize = _stringToInt(tokens[1]);
+                    int tmpSize = _stringToInt(tokens[1], lineNumber);
                     unsigned int maxSizeInBytes = tmpSize * 1024 * 1024;
                     currentConfig.setMaxBodySize(maxSizeInBytes);
                 }
                 else if (tokens[0] == "}")
                 {
                     if (!currentConfig.isServerValidAndReady())
-                        _errorAndExit("Server Must Contain At Least: DefaultPath, Root, Index and At least 1 AllowedMethod");
+                        _errorAndExit("Server Must Contain At Least: DefaultPath, Root, Index and At least 1 AllowedMethod",lineNumber);
                     _servers.push_back(currentConfig);
                     serverEnded = true;
                     isDefaultParsedBefore = false;
                     break;
                 }
                 else
-                    _errorAndExit(SECTIONSYNTAXERROR);
+                    _errorAndExit(SECTIONSYNTAXERROR, lineNumber);
             }
             if (!serverEnded)
-                _errorAndExit(SERVERBRACEERROR);
+                _errorAndExit(SERVERBRACEERROR, lineNumber);
         }
         else
-            _errorAndExit(FILEWITHOUTSERVER);
+            _errorAndExit(FILEWITHOUTSERVER, lineNumber);
     }
     if (_servers.size() < 1)
-        _errorAndExit(SERVERNOTFOUNDERROR);
-    _configFile.close();
+        _errorAndExit(SERVERNOTFOUNDERROR, lineNumber);
 }
 
-
-void ServeX_config::_parseLocationDirectives(std::string &trimmedLine, Sx_location_data &currentLocationConfig)
+void serveX_config::_parseLocationDirectives(std::string &trimmedLine, Sx_location_data &currentLocationConfig, short lineNumber)
 {
-    std::vector<std::string> tokens = _tokenizerOfDirectives(trimmedLine);
+    std::vector<std::string> tokens = _tokenizerOfDirectives(trimmedLine, lineNumber);
 
     if (tokens.empty())
-        _errorAndExit("Cannote Parse Location Directives 'Empty Directive'");
+        _errorAndExit("Cannote Parse Location Directives 'Empty Directive'", lineNumber);
     if (tokens[0] == "root" && currentLocationConfig.getRoot().empty())
     {
         if (tokens.size() != 2)
-            _errorAndExit("'root' directive must have a single argument.");
+            _errorAndExit("'root' directive must have a single argument.", lineNumber);
         currentLocationConfig.setRoot(tokens[1]);
     }
     else if (tokens[0] == "index" && !currentLocationConfig.getIndexes().size())
     {
         if (tokens.size() < 2)
-            _errorAndExit("'index' directive must have arguments");
+            _errorAndExit("'index' directive must have arguments", lineNumber);
         for (size_t i = 1; i < tokens.size(); i++)
             currentLocationConfig.setIndex(tokens[i]);
     }
     else if (tokens[0] == "auto_index")
     {
         if (tokens.size() != 2)
-            _errorAndExit("'auto_index' directive must have a single argument: on or off");
+            _errorAndExit("'auto_index' directive must have a single argument: on or off", lineNumber);
         if (tokens[1] == "on")
             currentLocationConfig.setAutoIndex(true);
         else if (tokens[1] == "off")
             currentLocationConfig.setAutoIndex(false);
         else
-            _errorAndExit("cannot recognize the 'autoindex' directive Arguments try {on || off}.");
+            _errorAndExit("cannot recognize the 'autoindex' directive Arguments try {on || off}.", lineNumber);
     }
     else if (tokens[0] == "auto_upload")
     {
         if (tokens.size() != 2)
-            _errorAndExit("'auto_upload' directive must have a single argument: on or off");
+            _errorAndExit("'auto_upload' directive must have a single argument: on or off", lineNumber);
         if (tokens[1] == "on")
             currentLocationConfig.setAutoUpload(true);
         else if (tokens[1] == "off")
             currentLocationConfig.setAutoUpload(false);
         else
-            _errorAndExit("cannot recognize the 'auto_upload' directive Arguments try {on || off}.");
+            _errorAndExit("cannot recognize the 'auto_upload' directive Arguments try {on || off}.", lineNumber);
     }
     else if (tokens[0] == "upload_path" && currentLocationConfig.getUploadPath().empty())
     {
         if (tokens.size() != 2)
-            _errorAndExit("'upload_path' directive must have a single argument: path");
+            _errorAndExit("'upload_path' directive must have a single argument: path", lineNumber);
         currentLocationConfig.setUploadPath(tokens[1]);
     }
     else if (tokens[0] == "cgi_path" && currentLocationConfig.getCgiPath().empty())
     {
         if (tokens.size() != 2)
-            _errorAndExit("'cgi_path' directive must have a single argument: path");
+            _errorAndExit("'cgi_path' directive must have a single argument: path", lineNumber);
         currentLocationConfig.setCgiPath(tokens[1]);
     }
     else if (tokens[0] == "allowed_methods" && !currentLocationConfig.getAllowedMethods().size())
     {
         if (tokens.size() > 4)
-            _errorAndExit("'allowed_methods' directive must have Three Methonds Only");
+            _errorAndExit("'allowed_methods' directive must have Three Methonds Only", lineNumber);
         else if (tokens.size() < 2)
-            _errorAndExit("'allowed_methods' directive must have at least One Methond");
+            _errorAndExit("'allowed_methods' directive must have at least One Methond", lineNumber);
         /* Parsing it */
         if (!_parseAllowedMethods(tokens))
-            _errorAndExit("Invalid Method keyword");
+            _errorAndExit("Invalid Method keyword", lineNumber);
         for (size_t i = 1; i < tokens.size(); i++)
             currentLocationConfig.setAllowedMethod(tokens[i]);
     }
     else
-        _errorAndExit("Duplicate Or Unkown Type Of Directive inside Location");
+        _errorAndExit("Duplicate Or Unkown Type Of Directive inside Location", lineNumber);
 }
 
 /* ---------- Parsing Helper Functions ----------- */
 //  Check if Line Empty Or Comment
-bool ServeX_config::_isLineEmptyOrComment(std::string const &line)
+bool serveX_config::_isLineEmptyOrComment(std::string const &line)
 {
     if (line.empty() || line[0] == '#' || line[0] == '\n')
         return true;
@@ -243,7 +267,7 @@ bool ServeX_config::_isLineEmptyOrComment(std::string const &line)
 }
 //  Convert String To Int
 
-int ServeX_config::_stringToInt( std::string const& input)
+int serveX_config::_stringToInt( std::string const& input, short lineNumber)
 {
     std::istringstream iss(input);
     long value;
@@ -251,15 +275,15 @@ int ServeX_config::_stringToInt( std::string const& input)
     iss >> value;
 
     if (iss.fail() || !iss.eof())
-        _errorAndExit("Int: Invalid characters");
+        _errorAndExit("Int: Invalid characters", lineNumber);
     if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min())
-        _errorAndExit("int: Overflow/Underflow during conversion of an Int");
+        _errorAndExit("int: Overflow/Underflow during conversion of an Int", lineNumber);
     int result = static_cast<int>(value);
     return result;
 }
 //  Check For Multiple Semicolone
 
-void ServeX_config::_splitBySemicolon( std::string const& line)
+void serveX_config::_splitBySemicolon( std::string const& line, short lineNumber)
 {
     int semicoloneCount = 0;
 
@@ -272,11 +296,11 @@ void ServeX_config::_splitBySemicolon( std::string const& line)
         }
     }
     if (semicoloneCount > 1)
-        _errorAndExit("Duplicate Semicolons in a Directive Line.");
+        _errorAndExit("Duplicate Semicolons in a Directive Line.", lineNumber);
 }
 //  Iterate and remove Extra Spaces from a line 
 
-std::string ServeX_config::_removeExtraSpaces( std::string const& line)
+std::string serveX_config::_removeExtraSpaces( std::string const& line)
 {
     std::string result;
     bool spaceFound = false;
@@ -307,30 +331,30 @@ std::string ServeX_config::_removeExtraSpaces( std::string const& line)
 }
 // Tokrnize A line and give a meaning to every token (Also Check for Some Errors)
 
-std::vector<std::string> ServeX_config::_tokenizerOfDirectives(std::string const &line)
+std::vector<std::string> serveX_config::_tokenizerOfDirectives(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
     std::vector<std::string> tokens;
     std::string token;
 
     /*  Check if Line have multiple semicolone */
-    _splitBySemicolon(line);
+    _splitBySemicolon(line, lineNumber);
 
     /*  {} Braces Line check if Stands Alone at a line */
     if (!line.empty() && line.find("{") != std::string::npos && (line.find("{") + 1) < line.length())
-        _errorAndExit("A '{' Brace Must Not Be Followed By Anything !");
+        _errorAndExit("A '{' Brace Must Not Be Followed By Anything !", lineNumber);
     /*  Check if There is Something with }  in the same line */
     if (!line.empty() && line.find("}") != std::string::npos && (line.find("}") + 1) < line.length())
-        _errorAndExit("A '}' Brace Must Not Be Followed By Anything !");
+        _errorAndExit("A '}' Brace Must Not Be Followed By Anything !", lineNumber);
 
     while (iss >> token)
         tokens.push_back(token);
     if (tokens.empty())
-        _errorAndExit(SECTIONSYNTAXERROR);
+        _errorAndExit(SECTIONSYNTAXERROR, lineNumber);
 
     /*  Check If Directive Ends With a Semicolone */
     if (!line.empty() && (tokens[0] != "location" && tokens[0] != "}" && tokens[0] != "{" && tokens[0] != "server") && line[line.length() - 1] != ';')
-        _errorAndExit("A Directive Must End with A semicolone");
+        _errorAndExit("A Directive Must End with A semicolone", lineNumber);
 
     /* Remove the Semicolone from the last Token To Make The Line ready*/
     if (!tokens[tokens.size() - 1].empty() && line[line.length() - 1] == ';')
@@ -339,7 +363,7 @@ std::vector<std::string> ServeX_config::_tokenizerOfDirectives(std::string const
 }
 // Check The Host Errors 
 
-std::string ServeX_config::_parseHost(std::string const &line)
+std::string serveX_config::_parseHost(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
     std::vector<std::string> parts;
@@ -349,22 +373,22 @@ std::string ServeX_config::_parseHost(std::string const &line)
     {
         if (token.find_first_not_of("0123456789") == std::string::npos)
         {
-            int num = _stringToInt(token);
+            int num = _stringToInt(token, lineNumber);
             if (num >= 0 && num <= 255)
                 parts.push_back(token);
             else
-                _errorAndExit("Host Name Out Of Range Error");
+                _errorAndExit("Host Name Out Of Range Error", lineNumber);
         }
         else
-            _errorAndExit("Invalid Digits in The Host Value");
+            _errorAndExit("Invalid Digits in The Host Value", lineNumber);
     }
     if (parts.size() != 4)
-        _errorAndExit("A host Must Have 4 parts");
+        _errorAndExit("A host Must Have 4 parts", lineNumber);
     return line;
 }
 // Checking The Port Value Errors  
 
-int ServeX_config::_parsePort(std::string const &line)
+int serveX_config::_parsePort(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
     long value;
@@ -372,15 +396,15 @@ int ServeX_config::_parsePort(std::string const &line)
     iss >> value;
 
     if (iss.fail() || !iss.eof())
-        _errorAndExit("Invalid characters in Port Value");
+        _errorAndExit("Invalid characters in Port Value", lineNumber);
     if (value < 1 || value > 65535)
-        _errorAndExit("Out Of Range Port Value");
+        _errorAndExit("Out Of Range Port Value", lineNumber);
     int result = static_cast<int>(value);
     return result;
 }
 // Check The Alloed Methods in a Location
 
-bool ServeX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
+bool serveX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
 {
     if (!tokens.size())
         return false;
@@ -413,35 +437,37 @@ bool ServeX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
 /* ------- File Error Handling  */
 // check if the file opened sucessfully
 
-void ServeX_config::_isFileOpenedAndNotEmpty(std::ifstream &configFile)
-{
-    if (!configFile.is_open())
-        _errorAndExit("Failed to open Config File");
-    bool is_empty = configFile.peek() == std::ifstream::traits_type::eof();
-    if (is_empty)
-        _errorAndExit("Empty Config File");
-}
+// void serveX_config::_isFileOpenedAndNotEmpty(std::ifstream &configFile)
+// {
+//     if (!configFile.is_open())
+//         _errorAndExit("Failed to open Config File");
+//     bool is_empty = configFile.peek() == std::ifstream::traits_type::eof();
+//     if (is_empty)
+//         _errorAndExit("Empty Config File");
+// }
 // check if the file is still good to run
 
-bool ServeX_config::_isFileGoodToGo(std::string const &line)
+bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
 {
     if (_configFile.fail())
-        _errorAndExit(READINGERROR);
+        _errorAndExit(READINGERROR, lineNumber);
     if (line.empty() && _configFile.eof())
         return false;
     return true;
 }
 
-
 /*  ------- Error printer and exit handler ------- */
-void ServeX_config::_errorAndExit(std::string const &error)
+void serveX_config::_errorAndExit(std::string const &error, short lineNumber)
 {
-    std::cerr << "Error: " << error << std::endl;
-    _exit(1);
+    _error._error = error , _error.lineNumber =  lineNumber;
+
+    // just for check
+    cout << "serveX : " << error << " at line : " << lineNumber << endl;
+    throw false;
 }
 
 /*  Display Current Servers Data    */
-void    ServeX_config::disp() const
+void    serveX_config::disp() const
 {
     std::cout << std::endl << std::endl << std::endl;
     std::cout << "*****Displaying Servers Config Data****" << std::endl << std::endl;

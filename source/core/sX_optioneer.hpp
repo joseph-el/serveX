@@ -8,13 +8,13 @@
 # include <errno.h>
 # include <sys/stat.h>
 
+# include "sX_config.hpp"
+
 # define GETOPT_EXIT    -1
 # define serveX_NAME    "serveX"
 # define serveX_VERSION "1.0.0"
 
 using namespace std;
-
-class sX_config;
 
 typedef int_fast32_t t_options;
 
@@ -22,18 +22,18 @@ extern "C" {
     # include <unistd.h> 
 }
 
-const char* help_options =
-                          "Usage: nginx [-?hvtT]\n"
-                          "             [-e filename] [-c filename] \n"
-                          "Options:\n"
-                          "  -?,-h         : this help\n"
-                          "  -v            : show version and exit\n"
-                          "  -t            : test configuration and exit\n"
-                          "  -T            : test configuration, dump it and exit\n"
-                          "  -e filename   : set error log file (default: logs/error.log)\n"
-                          "  -c filename   : set configuration file (default: conf/serveX.conf)\n";
+# define HELP_OPTIONS \
+                        "Usage: nginx [-?hvtT]\n" \
+                        "             [-e filename] [-c filename] \n" \
+                        "Options:\n" \
+                        "  -?,-h         : this help\n" \
+                        "  -v            : show version and exit\n" \
+                        "  -t            : test configuration and exit\n" \
+                        "  -T            : test configuration, dump it and exit\n" \
+                        "  -e filename   : set error log file (default: logs/error.log)\n" \
+                        "  -c filename   : set configuration file (default: conf/serveX.conf)"
 
-const char* Sx_options = "hvVTtc:e:";
+# define Sx_options "hvVTtc:e:"
 
 enum options_flags {
 
@@ -69,14 +69,6 @@ class options {
 
 typedef void (options::*OptionFunction)() const;
 
- OptionFunction optionFunctions[] = {
-        &options::showHelp,
-        &options::version,
-        &options::setErrorLogFile,
-        &options::setConfigFile,
-        &options::testConfig,
-        &options::testConfigAndDump,
-        &options::showVersionAndConfig,
-    };
+extern OptionFunction optionFunctions[];
 
 # endif

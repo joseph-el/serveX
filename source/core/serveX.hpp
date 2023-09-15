@@ -5,17 +5,19 @@
 # include <execution>
 # include <errno.h>
 
+# include "sX_config.hpp"
+
 # define serveX_core main
 # define required_argument 2
 
 using namespace std;
 
-namespace serveX {
+// namespace serveX {
 
-    class sX_config;
+//     class sX_config;
 
-    void init_serveX( int , char *const []);
+void init_serveX( int , char *const []);
 
-};
+// };
 
 # endif
