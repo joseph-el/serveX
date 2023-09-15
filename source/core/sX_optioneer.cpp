@@ -31,7 +31,7 @@ void options::sX_options(int argc, char *const argv[])
         flag |= (option == 'T') * TEST_CONFIG_DUMP;
         flag |= (option == 'V') * SHOW_VERSION_CONFIG;
         flag  = (option == '?') ? UNKNOWN : flag;
-        if (flag & UNKNOWN )
+        if ( flag & UNKNOWN )
             goto something_else;        
         p_conf = p_error = ( flag & (CONFIG_FILE | ERROR_LOG) ) ? string(optarg) : "";
     }
@@ -76,14 +76,16 @@ void options::setConfigFile() const
 void options::testConfigAndDump() const 
 {
     testConfig();
-    sX_config.disp();
-    // Sx_config.disp();
+    if (is_successful)
+        sX_config.disp();
 }
 
 void options::testConfig() const 
 {
-    bool is_fine = sX_config.successful(); // remplace by sX_config.good();
-	cerr << serveX_NAME ": configuration file \"" << "path in config" << "\" test is " << (is_fine ? "successful" : "failed") << endl;
+    bool is_fine = sX_config.successful();
+    if (is_fine)
+        cerr << serveX_NAME ": the configuration file " << sX_config._configFileName << " syntax is ok" << endl;
+	cerr << serveX_NAME ": configuration file \"" << sX_config._configFileName << "\" test is " << (is_fine ? "successful" : "failed") << endl;
 }
 
 void options::version() const {
@@ -102,13 +104,3 @@ void options::showVersionAndConfig() const {
 }
 
 bool options::successful( void ) const { return is_successful; }
-
-
-// int main(int ac, char *const av[])
-// {
-//     options ret;
-
-//     ret.sX_options(ac, av);
-
-//     cout << (ret.successful() ? "yes option good" : "error in option ") << endl;
-// }

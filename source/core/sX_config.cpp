@@ -25,9 +25,8 @@ void serveX_config::setPath( std::string const& fileName )
     CHECK_CONF_EXTENSION(fileName);
     _configFile.close();
 	_configFile.open(fileName, ios::in);
-    
 	if (!_configFile.good()) {
-		cerr << "serveX : " << strerror(errno) << endl;
+		cerr << serveX_NAME ": [emerg] " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
 	_configFileName = fileName;
@@ -112,7 +111,6 @@ void serveX_config::parseServersData()
                             currentConfig.addLocation(currentLocationConfig);
                             break;
                         }
-                        _error.lineNumber = lineNumber;
                         _parseLocationDirectives(trimmedLine, currentLocationConfig, lineNumber);
                     }
                     continue;
@@ -434,19 +432,6 @@ bool serveX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
     return true;
 }
 
-/* ------- File Error Handling  */
-// check if the file opened sucessfully
-
-// void serveX_config::_isFileOpenedAndNotEmpty(std::ifstream &configFile)
-// {
-//     if (!configFile.is_open())
-//         _errorAndExit("Failed to open Config File");
-//     bool is_empty = configFile.peek() == std::ifstream::traits_type::eof();
-//     if (is_empty)
-//         _errorAndExit("Empty Config File");
-// }
-// check if the file is still good to run
-
 bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
 {
     if (_configFile.fail())
@@ -459,51 +444,16 @@ bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
 /*  ------- Error printer and exit handler ------- */
 void serveX_config::_errorAndExit(std::string const &error, short lineNumber)
 {
-    _error._error = error , _error.lineNumber =  lineNumber;
-
-    // just for check
-    cout << "serveX : " << error << " at line : " << lineNumber << endl;
+    cerr << serveX_NAME ": [emerg] " + error + " in " + _configFileName + ":" << to_string(lineNumber) << endl;
     throw false;
 }
 
 /*  Display Current Servers Data    */
 void    serveX_config::disp() const
 {
-    std::cout << std::endl << std::endl << std::endl;
-    std::cout << "*****Displaying Servers Config Data****" << std::endl << std::endl;
-
-    for (size_t i = 0; i < _servers.size(); i++)
-    {
-        std::cout << "Server: " << i << std::endl;
-        std::cout << "Port: " << _servers[i].getListenPort() << std::endl;
-        std::cout << "Host: " << _servers[i].getHost() << std::endl;
-        std::cout << "Server Name: " << _servers[i].getServerName() << std::endl;
-        std::cout << "Max Body Size: " << _servers[i].getMaxBodySize() << std::endl;
-        std::cout << "Default Server: " << (_servers[i].isDefaultServer() ? "true" : "false") << std::endl;
-        std::cout << "Error Pages: " << std::endl;
-        for (std::map<int, std::string>::const_iterator it = _servers[i].getErrorPages().begin(); it != _servers[i].getErrorPages().end(); ++it)
-            std::cout << "  " << it->first << " => " << it->second << std::endl;
-        /*  location Data   */
-        std::cout << "Locations: " << std::endl;
-        for (size_t l = 0; l < _servers[i].getLocations().size(); l++)
-        {
-            std::cout << "Location " << l + 1 << ":" << std::endl;
-            std::cout << "  Default Path: " << _servers[i].getLocations()[l].getPath() << std::endl;
-            std::cout << "  Root: " << _servers[i].getLocations()[l].getRoot() << std::endl;
-            std::cout << "  AutoIndex: " << (_servers[i].getLocations()[l].getAutoIndex() ? "true" : "false") << std::endl;
-            std::cout << "  AutoUpload: " << (_servers[i].getLocations()[l].getAutoUpload() ? "true" : "false") << std::endl;
-            std::cout << "  Cgi_path: " << _servers[i].getLocations()[l].getCgiPath() << std::endl;
-            std::cout << "  Upload_path: " << _servers[i].getLocations()[l].getUploadPath() << std::endl;
-            std::cout << "  Indexes: ";
-            const std::vector<std::string>& locationIndex = _servers[i].getLocations()[l].getIndexes();
-            for (size_t j = 0; j < locationIndex.size(); j++)
-                std::cout << locationIndex[j] << " ";
-            std::cout << std::endl;
-            std::cout << "  Allowed_methods: ";
-            const std::vector<std::string>& locationAllowedMethods = _servers[i].getLocations()[l].getAllowedMethods();
-            for (size_t k = 0; k < locationAllowedMethods.size(); k++)
-                std::cout << locationAllowedMethods[k] << " ";
-            std::cout << std::endl;
-        }
-    }
+    string configFile;
+    _configFile.clear();
+    _configFile.seekg(0, std::ios::beg);
+    getline(_configFile, configFile, (char)0);
+    cerr << configFile;
 }

@@ -8,7 +8,7 @@
 # include "sX_config.hpp"
 
 # define serveX_core main
-# define required_argument 2
+// # define required_argument 2
 
 using namespace std;
 

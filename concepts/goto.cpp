@@ -7,9 +7,6 @@ void func(void* target){
 
 
 int main() {
-
-
-
     void* target;
     bool flag = true;
 l:

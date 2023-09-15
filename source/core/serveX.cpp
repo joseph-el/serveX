@@ -12,19 +12,13 @@ void init_serveX( int argc, char *const *argv)
     if (!opt.successful() or !sX_config.successful()) // or sX_config .syntax
         return ;
     
-    
-
-
-
-
-
-    // argc & ~required_argument ? throw E2BIG : argv++;
-
     // Get virtual server
 
-    // while (true) {
+    while (true) {
+        cout << "serve running\n";
+    }
 
-    // }
+
 }
 
 int main (int argc, char *const argv[])
@@ -34,7 +28,7 @@ int main (int argc, char *const argv[])
 
  
  
-    puts(""); puts(""); puts(""); puts("");
-    cout << "all is good\n";
+    // puts(""); puts(""); puts(""); puts("");
+    // cout << "all is good\n";
     return EXIT_SUCCESS;
 }
