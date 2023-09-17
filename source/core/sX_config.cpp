@@ -432,6 +432,7 @@ bool serveX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
     return true;
 }
 
+
 bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
 {
     if (_configFile.fail())

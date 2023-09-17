@@ -6,6 +6,13 @@
 using namespace std;
 
 
+class sX_request {
 
+    private :
+    
+
+    public :
+        
+}
 
 # endif
