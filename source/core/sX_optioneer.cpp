@@ -47,7 +47,8 @@ void options::sX_options(int argc, char *const argv[])
             cout << serveX_NAME << ( (optopt == 'e' or optopt == 'c') ? string(": option \"-") + string(1, optopt) + string("\" requires file name") : option_name) << endl;
         }
         else if ( flag & ~UNKNOWN ) 
-            is_successful = (flag & (CONFIG_FILE | ERROR_LOG)), (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
+            (*this.*optionFunctions[ (int)log2(flag) - 1]) ();
+    is_successful = (flag & (CONFIG_FILE | ERROR_LOG));
 }
 
 void options::setErrorLogFile() const 
@@ -74,7 +75,7 @@ void options::setConfigFile() const
 }
 
 void options::testConfigAndDump() const 
-{
+{  
     testConfig();
     if (is_successful)
         sX_config.disp();
@@ -82,10 +83,10 @@ void options::testConfigAndDump() const
 
 void options::testConfig() const 
 {
-    bool is_fine = sX_config.successful();
-    if (is_fine)
+    is_successful = sX_config.successful();
+    if (is_successful)
         cerr << serveX_NAME ": the configuration file " << sX_config._configFileName << " syntax is ok" << endl;
-	cerr << serveX_NAME ": configuration file \"" << sX_config._configFileName << "\" test is " << (is_fine ? "successful" : "failed") << endl;
+	cerr << serveX_NAME ": configuration file \"" << sX_config._configFileName << "\" test is " << (is_successful ? "successful" : "failed") << endl;
 }
 
 void options::version() const {

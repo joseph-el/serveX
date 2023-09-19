@@ -75,7 +75,7 @@ void serveX_config::parseServersData()
                 break;
             if (_removeExtraSpaces(line) != "{")
                 _errorAndExit(SERVERSYNTAXERROR, lineNumber);
-            while (getline(_configFile, line))
+            for (;getline(_configFile, line);lineNumber++)
             {
                 /*  Starting To Read inside the server Here  */
                 if (!_isFileGoodToGo(line, lineNumber))
@@ -95,7 +95,7 @@ void serveX_config::parseServersData()
                         _errorAndExit(LOCATIONSYNTAXERROR, lineNumber);
                     /*  Init Location Object Here */
                     Sx_location_data currentLocationConfig(tokens[1]);
-                    while (getline(_configFile, line))
+                    for (;getline(_configFile, line);lineNumber++)
                     {
                         if (!_isFileGoodToGo(line, lineNumber))
                             _errorAndExit(READINLOCATIONERROR, lineNumber);
@@ -361,13 +361,13 @@ std::vector<std::string> serveX_config::_tokenizerOfDirectives(std::string const
 }
 // Check The Host Errors 
 
-std::string serveX_config::_parseHost(std::string const &line, short lineNumber)
+std::string serveX_config::_parseHost(std::string const &line, short &lineNumber)
 {
     std::istringstream iss(line);
     std::vector<std::string> parts;
     std::string token;
 
-    while (std::getline(iss, token, '.'))
+    for (; getline(iss, token, '.'); lineNumber++)
     {
         if (token.find_first_not_of("0123456789") == std::string::npos)
         {

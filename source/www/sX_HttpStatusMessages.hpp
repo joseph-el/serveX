@@ -46,8 +46,7 @@ using namespace std;
 # define HTTP_UNSUPPORTED_MEDIA_TYPE 415
 # define HTTP_REQUESTED_RANGE_NOT_SATISFIABLE 416
 # define HTTP_EXPECTATION_FAILED 417
- 
- 
+
 # define HTTP_INTERNAL_SERVER_ERROR 500
 # define HTTP_NOT_IMPLEMENTED 501
 # define HTTP_BAD_GATEWAY 502
@@ -65,14 +64,13 @@ enum HttpMethod : int32_t {
     DELETE  = 1 << 7,
     CONNECT = 1 << 8,
     OPTIONS = 1 << 9,
-    UNKNOWN = 1 << 10,
+    UNK_METHOD = 1 << 10,
     HTTP_METHOD = GET | PUT | POST | HEAD | PATCH | TRACE | DELETE | CONNECT | OPTIONS
 };
 
 class HttpStatusMessages : public map <int32_t, string> {
      public :
          HttpStatusMessages();
-         string httpMethods[HTTP_AVAILABLE_METHOD];
 };
 
 extern HttpStatusMessages httpstatusmessages;

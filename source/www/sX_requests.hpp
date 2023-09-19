@@ -13,6 +13,6 @@ class sX_request {
 
     public :
         
-}
+};
 
 # endif

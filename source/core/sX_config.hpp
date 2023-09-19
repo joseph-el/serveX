@@ -54,7 +54,7 @@ class serveX_config
         std::string              _removeExtraSpaces(std::string  const& );
         bool                     _isLineEmptyOrComment(std::string  const& );
         int                      _stringToInt( std::string const& , short);
-        std::string              _parseHost(std::string const& , short);
+        std::string              _parseHost(std::string const& , short &);
         int                      _parsePort(std::string const& , short);
         bool                     _parseAllowedMethods( std::vector<std::string>& );
 

@@ -7,15 +7,18 @@ void init_serveX( int argc, char *const *argv)
 
     char stream[ (1 << 0xA) ];
 
-    signal(SIGPIPE, SIG_IGN);
+    // signal(SIGPIPE, SIG_IGN);
 
     if (!opt.successful() or !sX_config.successful()) // or sX_config .syntax
         return ;
     
-    // Get virtual server
-
+    vector<Sx_server_data> servers = sX_config.getServers();
+    
     while (true) {
-        cout << "serve running\n";
+        
+
+
+        // cout << "serve running\n";
     }
 
 
