@@ -6,7 +6,7 @@
 *.lib
 *.out
 *.app
-serveX
+webserv
 .vscode/*
 .DS_STORE
 .DS_Store
