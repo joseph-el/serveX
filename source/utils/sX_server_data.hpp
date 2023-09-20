@@ -41,6 +41,7 @@ public:
 
     /*  Other Helper Functions  */
     bool    isServerValidAndReady( void );
+
 private:
 
     int                                     _maxBodySize;
@@ -49,7 +50,8 @@ private:
     std::string                             _host;
     std::string                             _serverName;
     std::map<int, std::string>              _errorPages;
-    std::vector<Sx_location_data>    _locations;
+    std::vector<Sx_location_data>           _locations;
     
 };
+
 #endif

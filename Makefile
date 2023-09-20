@@ -1,8 +1,7 @@
-NAME = serveX
+NAME = webserv
 
 CC = c++
-PREFIX_FOLDER = $(shell pwd)
-CPPFLAGS = -Wall -Wextra -Werror -ggdb -std=c++98 -D PREFIX_FOLDER=\"$(PREFIX_FOLDER)\"
+CPPFLAGS = -Wall -Wextra -Werror -ggdb -std=c++98
 OBJS = $(SRCS:%.cpp=%.o)
 
 all: $(NAME)
