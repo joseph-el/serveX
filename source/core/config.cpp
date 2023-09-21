@@ -1,15 +1,15 @@
-#include "sX_config.hpp"
+#include "config.hpp"
 
-serveX_config sX_config;
+config MainContext;
 
-/*  serveX_config Constructors  */
+/*  config Constructors  */
 
-serveX_config::serveX_config( std::string const& fileName) 
+config::config( std::string const& fileName) 
 {
     setPath(fileName);
 }
 
-bool serveX_config::successful( void )
+bool config::successful( void )
 {
     try {
         parseServersData();
@@ -20,31 +20,31 @@ bool serveX_config::successful( void )
     return true;
 }
 
-void serveX_config::setPath( std::string const& fileName )  
+void config::setPath( std::string const& fileName )  
 {
     CHECK_CONF_EXTENSION(fileName);
     _configFile.close();
 	_configFile.open(fileName, ios::in);
 	if (!_configFile.good()) {
-		cerr << serveX_NAME ": [emerg] " << strerror(errno) << endl;
+		cerr << NAME ": [emerg] " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
 	_configFileName = fileName;
 }
 
-serveX_config::~serveX_config(void) 
+config::~config(void) 
 {
     _configFile.close();
 }
 
-/*  serveX_config Getters */
-std::vector<Sx_server_data> serveX_config::getServers(void) const
+/*  config Getters */
+std::vector<server_data> config::getServers(void) const
 {
     return _servers;
 }
 
-/*  serveX_config Parsers  */
-void serveX_config::parseServersData()
+/*  config Parsers  */
+void config::parseServersData()
 {
     std::string                 line;
     std::string                 trimmedLine;
@@ -67,7 +67,7 @@ void serveX_config::parseServersData()
         if (!trimmedLine.empty() && trimmedLine == "server")
         {
             /*  Server object Init */
-            Sx_server_data currentConfig;
+            server_data currentConfig;
 
             serverEnded = false;
             getline(_configFile, line);
@@ -94,7 +94,7 @@ void serveX_config::parseServersData()
                     if (tokens.back() != "{")
                         _errorAndExit(LOCATIONSYNTAXERROR, lineNumber);
                     /*  Init Location Object Here */
-                    Sx_location_data currentLocationConfig(tokens[1]);
+                    location_data currentLocationConfig(tokens[1]);
                     for (;getline(_configFile, line);lineNumber++)
                     {
                         if (!_isFileGoodToGo(line, lineNumber))
@@ -186,7 +186,7 @@ void serveX_config::parseServersData()
         _errorAndExit(SERVERNOTFOUNDERROR, lineNumber);
 }
 
-void serveX_config::_parseLocationDirectives(std::string &trimmedLine, Sx_location_data &currentLocationConfig, short lineNumber)
+void config::_parseLocationDirectives(std::string &trimmedLine, location_data &currentLocationConfig, short lineNumber)
 {
     std::vector<std::string> tokens = _tokenizerOfDirectives(trimmedLine, lineNumber);
 
@@ -257,7 +257,7 @@ void serveX_config::_parseLocationDirectives(std::string &trimmedLine, Sx_locati
 
 /* ---------- Parsing Helper Functions ----------- */
 //  Check if Line Empty Or Comment
-bool serveX_config::_isLineEmptyOrComment(std::string const &line)
+bool config::_isLineEmptyOrComment(std::string const &line)
 {
     if (line.empty() || line[0] == '#' || line[0] == '\n')
         return true;
@@ -265,7 +265,7 @@ bool serveX_config::_isLineEmptyOrComment(std::string const &line)
 }
 //  Convert String To Int
 
-int serveX_config::_stringToInt( std::string const& input, short lineNumber)
+int config::_stringToInt( std::string const& input, short lineNumber)
 {
     std::istringstream iss(input);
     long value;
@@ -281,7 +281,7 @@ int serveX_config::_stringToInt( std::string const& input, short lineNumber)
 }
 //  Check For Multiple Semicolone
 
-void serveX_config::_splitBySemicolon( std::string const& line, short lineNumber)
+void config::_splitBySemicolon( std::string const& line, short lineNumber)
 {
     int semicoloneCount = 0;
 
@@ -298,7 +298,7 @@ void serveX_config::_splitBySemicolon( std::string const& line, short lineNumber
 }
 //  Iterate and remove Extra Spaces from a line 
 
-std::string serveX_config::_removeExtraSpaces( std::string const& line)
+std::string config::_removeExtraSpaces( std::string const& line)
 {
     std::string result;
     bool spaceFound = false;
@@ -329,7 +329,7 @@ std::string serveX_config::_removeExtraSpaces( std::string const& line)
 }
 // Tokrnize A line and give a meaning to every token (Also Check for Some Errors)
 
-std::vector<std::string> serveX_config::_tokenizerOfDirectives(std::string const &line, short lineNumber)
+std::vector<std::string> config::_tokenizerOfDirectives(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
     std::vector<std::string> tokens;
@@ -361,7 +361,7 @@ std::vector<std::string> serveX_config::_tokenizerOfDirectives(std::string const
 }
 // Check The Host Errors 
 
-std::string serveX_config::_parseHost(std::string const &line, short &lineNumber)
+std::string config::_parseHost(std::string const &line, short &lineNumber)
 {
     std::istringstream iss(line);
     std::vector<std::string> parts;
@@ -386,7 +386,7 @@ std::string serveX_config::_parseHost(std::string const &line, short &lineNumber
 }
 // Checking The Port Value Errors  
 
-int serveX_config::_parsePort(std::string const &line, short lineNumber)
+int config::_parsePort(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
     long value;
@@ -402,7 +402,7 @@ int serveX_config::_parsePort(std::string const &line, short lineNumber)
 }
 // Check The Alloed Methods in a Location
 
-bool serveX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
+bool config::_parseAllowedMethods(std::vector<std::string> &tokens)
 {
     if (!tokens.size())
         return false;
@@ -433,7 +433,7 @@ bool serveX_config::_parseAllowedMethods(std::vector<std::string> &tokens)
 }
 
 
-bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
+bool config::_isFileGoodToGo(std::string const &line, short lineNumber)
 {
     if (_configFile.fail())
         _errorAndExit(READINGERROR, lineNumber);
@@ -443,14 +443,14 @@ bool serveX_config::_isFileGoodToGo(std::string const &line, short lineNumber)
 }
 
 /*  ------- Error printer and exit handler ------- */
-void serveX_config::_errorAndExit(std::string const &error, short lineNumber)
+void config::_errorAndExit(std::string const &error, short lineNumber)
 {
-    cerr << serveX_NAME ": [emerg] " + error + " in " + _configFileName + ":" << to_string(lineNumber) << endl;
+    cerr << NAME ": [emerg] " + error + " in " + _configFileName + ":" << to_string(lineNumber) << endl;
     throw false;
 }
 
 /*  Display Current Servers Data    */
-void    serveX_config::disp() const
+void    config::disp() const
 {
     string configFile;
     _configFile.clear();

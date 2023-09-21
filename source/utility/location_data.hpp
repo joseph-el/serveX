@@ -1,21 +1,21 @@
 
-#ifndef SX_LOCATION_DATA_HPP
-#define SX_LOCATION_DATA_HPP
+#ifndef _LOCATION_DATA_H_
+#define _LOCATION_DATA_H_
 
 #include <string>
 #include <vector>
 
     /*
-        Sx_location_data is a class that hold data you need to know about 
+        location_data is a class that hold data you need to know about 
         a location inside a server configuration file...
     */
-class Sx_location_data
+class location_data
 {
 public:
 
     /*  Constructors */
-    Sx_location_data();
-    Sx_location_data(const std::string& path);
+    location_data();
+    location_data(const std::string& path);
 
     /*  Setters */
     void                        setRoot( std::string const& );

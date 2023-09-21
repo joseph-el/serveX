@@ -1,5 +1,5 @@
-# if !defined(SX_COFIG_HPP)
-# define SX_COFIG_HPP
+# ifndef _CONFIG_H_
+# define _CONFIG_H_
 
 #include <iostream>
 #include <string>
@@ -9,42 +9,42 @@
 #include <limits>
 #include <set>
 
-#include "../utils/sX_server_data.hpp"   // waiting to link by makefile
-#include "../utils/sX_location_data.hpp"
-# include "sX_optioneer.hpp"
+#include "../utility/server_data.hpp"   // waiting to link by makefile
+#include "../utility/location_data.hpp"
+# include "optioneer.hpp"
 
-# define DEFAULT_CONF   "/Users/joseph/Desktop/serveX/conf/serveX.conf"
-# define DEFAULT_ERROR  "/Users/joseph/Desktop/serveX/logs/error.conf"
-# define DEFAULT_ACCESS "/Users/joseph/Desktop/serveX/logs/access.conf"
+# if !defined(DEFAULT_CONF)
+    # define DEFAULT_CONF "/Users/joseph/Desktop/webserv/webserv.cfg"
+# endif
 
 using namespace std;
 
-class serveX_config
+class config
 {
     public:
 
         string              _configFileName;
         mutable ifstream    _configFile;
 
-        /*  serveX_config Constructors */
-        serveX_config( string const& fileName = DEFAULT_CONF);
-        ~serveX_config( void );
+        /*  config Constructors */
+        config( string const& fileName = DEFAULT_CONF);
+        ~config( void );
 
-        /*  serveX_config Member Functions */
+        /*  config Member Functions */
         void    disp() const;
         bool    successful( void );
         void    parseServersData();
         void    setPath( std::string const&  );
 
-        /*  serveX_config Getters */
-        std::vector<Sx_server_data>   getServers( void ) const;
+        /*  config Getters */
+        std::vector<server_data>   getServers( void ) const;
 
     private:
 
-        vector<Sx_server_data>     _servers;
+        vector<server_data>     _servers;
 
         /*  Parsing Data Functions  */
-        void    _parseLocationDirectives(std::string &, Sx_location_data & , short);
+        void    _parseLocationDirectives(std::string &, location_data & , short);
 
         /*  Error Displayer with Exit */
         void    _errorAndExit(std::string const& , short);
@@ -66,14 +66,14 @@ class serveX_config
         std::vector<std::string> _tokenizerOfDirectives( std::string const& , short);
 };
 
-extern serveX_config sX_config;
+extern config MainContext;
 
 #define CHECK_CONF_EXTENSION(fileName) \
     do { \
-        string extension = ".conf"; \
+        string extension = ".cfg"; \
         if (fileName.length() < extension.length() or \
             fileName.substr(fileName.length() - extension.length()) != extension) \
-            cerr << "serveX : A Config File Must End With a .conf Extension\n", \
+            cerr << ( NAME " : " "a config file must end with a .cfg extension\n"), \
             exit(EXIT_FAILURE); \
     } while (false)
 
