@@ -19,6 +19,10 @@ public:
 
     /*  Constructors */
     server_data ( void );
+    server_data ( const server_data& other );
+    
+    /* Operators */
+    server_data &operator=( const server_data& other);
 
     /* Add to vectors */
     void    addErrorPage( int errorCode, const std::string& errorPage );

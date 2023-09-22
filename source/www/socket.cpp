@@ -33,9 +33,9 @@ sockaddr Socket::getSocketAddr( void )
 	saddr.sa_family = AF_INET;
 	saddr.sa_len = getSocketLen();
 
-    ((sockaddr_in *)&saddr)->sin_port = htons(Address->getListenPort());
+    ((sockaddr_in *)&saddr)->sin_port = htons(Address.getListenPort());
 
-	if (inet_pton(saddr.sa_family, Address->getHost().c_str(), getAddr(&saddr)) <= 0)
+	if (inet_pton(saddr.sa_family, Address.getHost().c_str(), getAddr(&saddr)) <= 0)
         goto invalid_Address;
 
     return saddr;
@@ -51,7 +51,7 @@ socklen_t Socket::getSocketLen()
 }
 
 void Socket::set_server_address(server_data &_address) {
-    Address = &_address;
+    Address = _address;
 }
 
 void Socket::bind() 
@@ -90,6 +90,12 @@ socket_t Socket::accept(void)
     }
 
     return newconnection;
+}
+
+
+server_data Socket::get_server_address( void ) const
+{
+    return Address;
 }
 
 vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, pair<socket_t, socket_t> &fd_range)

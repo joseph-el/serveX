@@ -3,6 +3,26 @@
 // server_data Constructors
 server_data::server_data() : _maxBodySize(0), _isDefaultServer(false), _port(0) {}
 
+server_data::server_data( const server_data& other )
+{
+        *this = other; 
+};
+
+server_data &server_data::operator=( const server_data& other)
+{
+    if (this != &other)
+    {
+        this->_maxBodySize = other._maxBodySize;
+        this->_isDefaultServer = other._isDefaultServer;
+        this->_port = other._port;
+        this->_host = other._host;
+        this->_serverName = other._serverName;
+        this->_errorPages = other._errorPages;
+        this->_locations = other._locations;
+    }
+    return *this;
+}
+
 // Sx_ServerData Setters
 void server_data::setListenPort(int port) {
     this->_port = port;

@@ -58,7 +58,7 @@ class Socket {
         sockaddr  getSocketAddr(void ); 
         socklen_t getSocketLen( void );
         socket_t  getsocket_t( void ) const;
-
+        server_data get_server_address( void ) const;
         // opr over
         socket_t operator < (const Socket& other) const { // min fd
             return _socketfd < other._socketfd ? _socketfd : other._socketfd;
@@ -70,7 +70,7 @@ class Socket {
 
     private :
         socket_t    _socketfd;
-        server_data *Address;
+        server_data Address;
 };
 
 vector<Socket> init_Socket(vector<server_data> , fd_set &);
