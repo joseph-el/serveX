@@ -55,16 +55,16 @@ void Options::options(int argc, char *const argv[])
     i will handel logs in my serveX ;
 */
 
-// void Options::setErrorLogFile() const 
-// {
-//     struct stat _st;
-//     memset(&_st, 0, sizeof _st);
-//     errno = stat(p_error.c_str(), &_st) != 0 ? ENOENT : S_ISDIR(_st.st_mode) ? EISDIR : 0;
+void Options::setErrorLogFile() const 
+{
+    struct stat _st;
+    memset(&_st, 0, sizeof _st);
+    errno = stat(p_error.c_str(), &_st) != 0 ? ENOENT : S_ISDIR(_st.st_mode) ? EISDIR : 0;
 
-//     if ( errno & (ENOENT | EISDIR) )
-// 		cerr << NAME ": \"" << p_error << "\" failed : " << strerror(errno) << endl, is_successful = false;
-//     // set p_error
-// }
+    if ( errno & (ENOENT | EISDIR) )
+		cerr << NAME ": \"" << p_error << "\" failed : " << strerror(errno) << endl, is_successful = false;
+    // set p_error
+}
 
 void Options::setConfigFile() const 
 {

@@ -6,6 +6,6 @@
 
 # define Webserv_core main
 
-void init_Webserv(int , char *const []);
+    void init_Webserv(int , char *const []);
 
 # endif
