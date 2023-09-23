@@ -31,7 +31,7 @@ void init_Webserv(int argc, char *const argv[])
                     socket_t newconnection = _socket[idx].accept();
                     if (newconnection == -1) {
                         cerr << NAME << " : Failed to accept connection." << endl;
-                        goto ExpireConnection; 
+                        goto ExpireConnection;
                     }
                     else {
                         clients[idx] = s_client(newconnection);
