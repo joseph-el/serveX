@@ -25,8 +25,8 @@ void init_Webserv(int argc, char *const argv[])
         for (int i = fd_range.first; i < fd_range.second + 1; i++)
         {
             if (FD_ISSET(i, &(rd_socket_copy)))
-            {   
-                if (int idx = is_inSocket(i, _socket) and idx != -1)
+            {   int idx = is_inSocket(i, _socket);
+                if (idx != -1)
                 {
                     socket_t newconnection = _socket[idx].accept();
                     if (newconnection == -1) {
