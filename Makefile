@@ -8,8 +8,6 @@ CONFIG_FILE   := $(addsuffix /cfg/webserv.cfg,$(PREFIX_FOLDER))
 CPPFLAGS :=  -D DEFAULT_CONF=\"$(CONFIG_FILE)\"
 
 
-
-
 UTILITY :=  source/utility/location_data.cpp\
 			source/utility/server_data.cpp \
 			source/utility/utils.cpp
@@ -19,8 +17,6 @@ HTTP   := source/www/socket.cpp \
 		  source/www/response.cpp \
 		  source/www/client.cpp
 		  
-
-
 
 CORE := source/Webserv-core.cpp \
 		source/core/config.cpp \

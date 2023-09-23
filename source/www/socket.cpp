@@ -16,7 +16,7 @@ void Socket::listen(int _backlog)
 {
     if (::listen(_socketfd, _backlog) != 0)
     {
-        cerr << NAME << ": bind " << strerror(errno) << endl;
+        cerr << NAME << ": listen " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -41,7 +41,7 @@ sockaddr Socket::getSocketAddr( void )
     return saddr;
 
     invalid_Address:
-        cerr << NAME << ": " << strerror(errno) << endl;
+        cerr << NAME << "inet_pton : " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
 }
 

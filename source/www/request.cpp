@@ -1,35 +1,15 @@
 # include "request.hpp"
 
-HeaderIt Header::find(const string &key)
+void request::parseRequest(socket_t fd)
 {
-    HeaderIt it = begin();
+    // just for test
+    char buffer[1024];
+    unsigned long f;
+    f = read(fd, buffer, 1024);
+    buffer[f] = '\0';
+    std::string req = buffer;
+    cout << "the request form <" << fd << ">" << "is : " << endl << endl << req << endl;
+    cout << endl;
 
-    for (; it != end(); it++)
-        if (it->first == key)
-            return it;
-    return it;
-}
 
-void Header::adding(string key, string value)
-{
-    insert( make_pair(key, value) );
-}
-
-void Header::Disp()
-{
-    HeaderIt it = begin();
-
-    cout << "disp headers : \n";
-    for (; it != end();it++)
-        cout << it->first << " = " << it->second << endl;
-    cout << "end Disp Header\n";
-}
-
-string Header::get(string key) {
-    HeaderIt it = find(key);
-    if (it == end()) {
-        cerr << NAME << " : " << "Header not found !\n";
-        return "";
-    }
-    return it->first;
 }

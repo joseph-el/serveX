@@ -14,6 +14,7 @@ class s_client
     private :
         response res_;
         request  req_;
+    
         pid_t     _pid; // for cgi
         int       _fds[2]; // for cgi
         socket_t _newconnection; // new client
