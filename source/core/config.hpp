@@ -8,6 +8,8 @@
 #include <sstream>
 #include <limits>
 #include <set>
+#include <string.h>
+#include <math.h>
 
 #include "../utility/server_data.hpp"   // waiting to link by makefile
 #include "../utility/location_data.hpp"

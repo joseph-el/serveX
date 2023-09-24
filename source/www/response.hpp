@@ -2,8 +2,6 @@
 # define _RESPONSES_H_
 
 # include "socket.hpp"
-#include <sys/_types/_size_t.h>
-#include <sys/qos.h>
 
 class response 
 {
