@@ -1,4 +1,5 @@
 # include "socket.hpp"
+#include "client.hpp"
 
 Socket::Socket(int domain , int type, int protocol)
 {
@@ -88,7 +89,7 @@ socket_t Socket::accept(void)
         cerr << NAME << ": " << strerror(errno) << endl;
         return -1;
     }
-
+    clients.push_back(newconnection);
     return newconnection;
 }
 

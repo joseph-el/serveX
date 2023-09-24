@@ -10,6 +10,4 @@ void request::parseRequest(socket_t fd)
     std::string req = buffer;
     cout << "the request form <" << fd << ">" << "is : " << endl << endl << req << endl;
     cout << endl;
-
-
 }

@@ -3,7 +3,9 @@
 # include "../utility/utils.hpp"
 # include "../www/client.hpp"
 
-Clients clients;
+// Clients clients;
+
+std::vector<s_client> clients;
 
 void init_Webserv(int argc, char *const argv[])
 {
@@ -13,7 +15,7 @@ void init_Webserv(int argc, char *const argv[])
         return ;
 
     pair<socket_t, socket_t>  fd_range;
-    fd_set                    rd_socket, rd_socket_copy;
+    fd_set                    rd_socket, wr_socket, wr_socket_copy, rd_socket_copy;
     vector<Socket>            _socket = init_Socket(MainContext.getServers(), rd_socket, fd_range);
 
     while (true)
@@ -33,16 +35,28 @@ void init_Webserv(int argc, char *const argv[])
                         cerr << NAME << " : Failed to accept connection." << endl;
                         goto ExpireConnection;
                     }
-                    else {
-                        clients[idx] = s_client(newconnection);
-                        clients[idx].DealwithRequest();
-                        clients[idx].DealwithResponce();
+                    clients.back().set_server_idx(idx, i);
+                    FD_SET(newconnection, &(rd_socket));
+                    if (newconnection > fd_range.second)
+                        fd_range.second = newconnection;
+                }
+                else
+                {
+                    for (int c = 0; c < clients.size(); c++) {
+                        std::cout << c << "   here" << std::endl;
+                        if (clients[c].get_client_socket() == i) {
+                            clients[c].DealwithRequest();
+                            clients[c].DealwithResponce();
+                            FD_CLR(i, &(rd_socket));
+                            FD_ZERO(&rd_socket_copy);
+                            clients.erase(clients.begin() + c);
+                            break;
+                        }
                     }
-                    close(newconnection);
                 }
             }
             ExpireConnection:
-                clients.Expireconnection(); // to handel 
+                clients[0].Expireconnection(); // to handel 
         }
     }
 }

@@ -5,6 +5,7 @@
 # include "socket.hpp"
 # include "request.hpp"
 # include "response.hpp"
+#include <vector>
 
 class response ; // waitng for creat
 class request  ; // waiting for creat
@@ -18,6 +19,8 @@ class s_client
         pid_t     _pid; // for cgi
         int       _fds[2]; // for cgi
         socket_t _newconnection; // new client
+        socket_t _server_socket; // server socket
+        int       _server_idx; // server index
 
 
     public :
@@ -25,21 +28,27 @@ class s_client
 
         s_client(socket_t newconnection);
         
+        void set_server_idx(int idx, int server_socket);
+
+        socket_t get_client_socket();
+
         void DealwithRequest(  void );
         void DealwithResponce( void );
+    
+        void Expireconnection() {
+            // exit(EXIT_FAILURE); // hhhhhhh debug about 20 min fuck
+            // waiting to remove iterator and close the fd
+        }
 };
 
-class Clients : public map<socket_t , s_client>
-{
-    public :
-        Clients() {}
+// class Clients : public map<socket_t , s_client>
+// {
+//     public :
+//         Clients() {}
 
-    void Expireconnection() {
-        // exit(EXIT_FAILURE); // hhhhhhh debug about 20 min fuck
-        // waiting to remove iterator and close the fd
-    }
-};
+// };
 
-extern Clients clients;
+// extern Clients clients;
+extern std::vector<s_client> clients;
 
 # endif
