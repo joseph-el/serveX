@@ -1,17 +1,7 @@
 # include "socket.hpp"
 #include "client.hpp"
-
-Socket::Socket(int domain , int type, int protocol)
-{
-    socket_t socketfd = socket( domain, type , protocol);
-    if (socketfd == -1) {
-        cerr << NAME << ": socket " << strerror(errno) << endl;
-        exit(EXIT_FAILURE);
-    }
-    _socketfd = socketfd;
-    int optval = 1;
-	setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
-}
+#include <netdb.h>
+#include <vector>
 
 void Socket::listen(int _backlog) 
 {
@@ -22,28 +12,31 @@ void Socket::listen(int _backlog)
     }
 }
 
+std::string to_str(int value)
+{
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+}
+
 void *getAddr(struct sockaddr *sa) 
 {
 	return &(((struct sockaddr_in *)sa)->sin_addr);
 }
 
-sockaddr Socket::getSocketAddr( void )
+struct addrinfo* Socket::getSocketAddr( void )
 {
-    sockaddr saddr;
-	bzero(&saddr, sizeof(sockaddr));
-	saddr.sa_family = AF_INET;
-	saddr.sa_len = getSocketLen();
-
-    ((sockaddr_in *)&saddr)->sin_port = htons(Address.getListenPort());
-
-	if (inet_pton(saddr.sa_family, Address.getHost().c_str(), getAddr(&saddr)) <= 0)
-        goto invalid_Address;
-
-    return saddr;
-
-    invalid_Address:
-        cerr << NAME << "inet_pton : " << strerror(errno) << endl;
-        exit(EXIT_FAILURE);
+    struct addrinfo *addr;
+    struct addrinfo hint;
+    memset(&hint, 0, sizeof(hint));
+    hint.ai_family = AF_UNSPEC;
+    hint.ai_socktype = SOCK_STREAM;
+    hint.ai_flags = AI_PASSIVE;
+    if (getaddrinfo(Address.getHost().c_str(), to_str(Address.getListenPort()).c_str(), &hint, &addr) < 0) {
+            std::cerr << "Invalid address.\n";
+            exit(EXIT_FAILURE);
+    }
+    return addr;
 }
 
 socklen_t Socket::getSocketLen() 
@@ -57,12 +50,20 @@ void Socket::set_server_address(server_data &_address) {
 
 void Socket::bind() 
 {
-    sockaddr saddr = getSocketAddr();
-    if (::bind(_socketfd, &saddr, getSocketLen()) != 0)
+    struct addrinfo *addr = getSocketAddr();
+    int error = 0, tmp_socket;
+    for (struct addrinfo *tmp = addr; tmp; tmp = tmp->ai_next)
     {
-        cerr << NAME << ": bind " << strerror(errno) << endl;
-        exit(EXIT_FAILURE);
+        tmp_socket = socket(tmp->ai_family, tmp->ai_socktype, tmp->ai_protocol);
+        error = ::bind(tmp_socket, tmp->ai_addr, tmp->ai_addrlen);
+        if (error != -1)
+            break ;
+        close(tmp_socket);
     }
+    freeaddrinfo(addr);
+    if (error == -1)
+            return ((void)(perror(NULL)), (void)close(tmp_socket), exit(1));
+    _socketfd = tmp_socket;
 }
 
 socket_t Socket::getsocket_t( void ) const 
@@ -76,7 +77,7 @@ int is_inSocket(socket_t &fdsocket, const vector<Socket> &_socket)
     for (; it != _socket.end(); it++)
         if (it->getsocket_t() == fdsocket)
             return distance(_socket.begin(), it);
-    
+
     return -1;
 }
 
@@ -121,6 +122,5 @@ vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, pair<
         min_fd = _socket.front() < *--_socket.end();
         // cout << "min " <<  min_fd << " max : " << max_fd << endl;
     }
-    
     return fd_range = make_pair(min_fd, max_fd), _socket;
 }

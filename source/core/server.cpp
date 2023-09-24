@@ -50,7 +50,7 @@ void init_Webserv(int argc, char *const argv[])
                             FD_CLR(i, &(rd_socket));
                             FD_ZERO(&rd_socket_copy);
                             clients.erase(clients.begin() + c);
-                            break;
+                            break ;
                         }
                     }
                 }

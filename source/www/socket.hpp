@@ -44,8 +44,6 @@ class Socket {
 
     public :
 
-        Socket(int domain = AF_INET, int type = SOCK_STREAM, int protocol = 0);
-
         // used function 
         void     listen(int _backlog = SERVER_BACKLOG);
         void     bind();
@@ -55,7 +53,7 @@ class Socket {
         void set_server_address(server_data &);
         
         // getters
-        sockaddr  getSocketAddr(void ); 
+        struct addrinfo*  getSocketAddr(void ); 
         socklen_t getSocketLen( void );
         socket_t  getsocket_t( void ) const;
         server_data get_server_address( void ) const;
