@@ -2,6 +2,8 @@
 # include "../www/socket.hpp"
 # include "../utility/utils.hpp"
 # include "../www/client.hpp"
+#include <cstdio>
+#include <sys/select.h>
 
 // Clients clients;
 
@@ -17,12 +19,16 @@ void init_Webserv(int argc, char *const argv[])
     pair<socket_t, socket_t>  fd_range;
     fd_set                    rd_socket, wr_socket, wr_socket_copy, rd_socket_copy;
     vector<Socket>            _socket = init_Socket(MainContext.getServers(), rd_socket, fd_range);
-
+    FD_ZERO(&wr_socket);
     while (true)
     {
+        FD_ZERO(&rd_socket_copy);
+        FD_ZERO(&wr_socket_copy);
         rd_socket_copy = rd_socket;
+        wr_socket_copy = wr_socket;
         struct timeval timeout = getmstime();
-        select(fd_range.second + 1, &(rd_socket_copy), NULL, NULL, &timeout);
+        if (select(fd_range.second + 1, &(rd_socket_copy), &wr_socket_copy, NULL, &timeout) == -1)
+            perror("select");
     
         for (int i = fd_range.first; i < fd_range.second + 1; i++)
         {
@@ -31,7 +37,8 @@ void init_Webserv(int argc, char *const argv[])
                 if (idx != -1)
                 {
                     socket_t newconnection = _socket[idx].accept();
-                    if (newconnection == -1) {
+                    if (newconnection == -1)
+                    {
                         cerr << NAME << " : Failed to accept connection." << endl;
                         goto ExpireConnection;
                     }
@@ -43,15 +50,24 @@ void init_Webserv(int argc, char *const argv[])
                 else
                 {
                     for (int c = 0; c < clients.size(); c++) {
-                        std::cout << c << "   here" << std::endl;
                         if (clients[c].get_client_socket() == i) {
                             clients[c].DealwithRequest();
-                            clients[c].DealwithResponce();
                             FD_CLR(i, &(rd_socket));
-                            FD_ZERO(&rd_socket_copy);
-                            clients.erase(clients.begin() + c);
+                            FD_SET(i, &wr_socket);
                             break ;
                         }
+                    }
+                }
+            }
+            if (FD_ISSET(i, &wr_socket_copy))
+            {
+                for (int c = 0; c < clients.size(); c++) {
+                    if (clients[c].get_client_socket() == i) {
+                        clients[c].DealwithResponce();
+                        FD_CLR(i, &wr_socket);
+                        clients.erase(clients.begin() + c);
+                        close(i);
+                        break ;
                     }
                 }
             }
