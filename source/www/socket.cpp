@@ -29,9 +29,13 @@ struct addrinfo* Socket::getSocketAddr( void )
     struct addrinfo *addr;
     struct addrinfo hint;
     memset(&hint, 0, sizeof(hint));
+    // ai_family = AF_UNSPEC : IPv4 or IPv6
     hint.ai_family = AF_UNSPEC;
+    // ai_socktype = SOCK_STREAM : TCP
     hint.ai_socktype = SOCK_STREAM;
+    // ai_flags = AI_PASSIVE : Bind
     hint.ai_flags = AI_PASSIVE;
+
     if (getaddrinfo(Address.getHost().c_str(), to_str(Address.getListenPort()).c_str(), &hint, &addr) < 0) {
             std::cerr << "Invalid address.\n";
             exit(EXIT_FAILURE);
@@ -112,7 +116,9 @@ vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, pair<
     {
         Socket new_socket;
         
+        // setting server address which contain all information about the server
         new_socket.set_server_address(*it);
+
         new_socket.bind();
         new_socket.listen();
         _socket.push_back(new_socket);

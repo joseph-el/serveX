@@ -26,12 +26,13 @@ void init_Webserv(int argc, char *const argv[])
         FD_ZERO(&wr_socket_copy);
         rd_socket_copy = rd_socket;
         wr_socket_copy = wr_socket;
-        struct timeval timeout = getmstime();
-        if (select(fd_range.second + 1, &(rd_socket_copy), &wr_socket_copy, NULL, &timeout) == -1)
+        // select function wait for any event in the socket
+        if (select(fd_range.second + 1, &(rd_socket_copy), &wr_socket_copy, NULL, 0) == -1)
             perror("select");
     
         for (int i = fd_range.first; i < fd_range.second + 1; i++)
         {
+            // FD_ISSET check if the socket is ready to read or write
             if (FD_ISSET(i, &(rd_socket_copy)))
             {   int idx = is_inSocket(i, _socket);
                 if (idx != -1)
@@ -52,6 +53,7 @@ void init_Webserv(int argc, char *const argv[])
                     for (int c = 0; c < clients.size(); c++) {
                         if (clients[c].get_client_socket() == i) {
                             clients[c].DealwithRequest();
+                            // yoel-idr use your flag to check if you have done reading the request before this two lines
                             FD_CLR(i, &(rd_socket));
                             FD_SET(i, &wr_socket);
                             break ;
@@ -64,6 +66,7 @@ void init_Webserv(int argc, char *const argv[])
                 for (int c = 0; c < clients.size(); c++) {
                     if (clients[c].get_client_socket() == i) {
                         clients[c].DealwithResponce();
+                        // yoel-idr use your flag to check if you have done sending the response before this tree lines
                         FD_CLR(i, &wr_socket);
                         clients.erase(clients.begin() + c);
                         close(i);
