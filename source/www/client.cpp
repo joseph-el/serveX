@@ -1,12 +1,14 @@
 # include "client.hpp"
+#include "request.hpp"
 #include "socket.hpp"
 
-s_client::s_client() {}
+// s_client::s_client() {}
 
 s_client::s_client(socket_t newconnection)
 {
     _fds[0] = _fds[1] = -2;
     _newconnection = newconnection;
+    std::cout << "Client constructor" << std::endl;
 }
 
 void s_client::set_server_idx(int idx, int server_socket) {
@@ -20,10 +22,7 @@ socket_t s_client::get_client_socket() {
 
 void s_client::DealwithRequest( void ) 
 {
-    // this is just for test the new version 
-
     req_.parseRequest(_newconnection);
-    // handel all by taha naceur
 }
 
 

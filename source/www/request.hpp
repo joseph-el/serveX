@@ -4,6 +4,7 @@
 # include "../core/config.hpp"
 # include "socket.hpp"
 # include "Header.hpp"
+#include <cstddef>
 
 enum METHODS {
     GET,
@@ -14,17 +15,27 @@ enum METHODS {
 class request 
 {
     public :
-        request() {}
+        request() {
+            std::cout << "request constructor" << std::endl;
+            counte = 0;
+        };
+        ~request() {
+            std::cout << "request destructor" << std::endl;
+         };
         void parseRequest(socket_t fd);
+        bool isReady() { return ready; };
 
 
     private :
-        stringstream *stream;
+        stringstream  *stream;
+        std::string   request_string;
         METHODS       httpMethod;
         string        path_;
         string        line_;
         string        query_;
         Header        header_;
+        bool          ready;
+        int           counte;
         // body
     
 };

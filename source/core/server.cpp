@@ -43,7 +43,7 @@ void init_Webserv(int argc, char *const argv[])
                         cerr << NAME << " : Failed to accept connection." << endl;
                         goto ExpireConnection;
                     }
-                    clients.back().set_server_idx(idx, i);
+                    clients[clients.size() - 1].set_server_idx(idx, i);
                     FD_SET(newconnection, &(rd_socket));
                     if (newconnection > fd_range.second)
                         fd_range.second = newconnection;
@@ -54,8 +54,12 @@ void init_Webserv(int argc, char *const argv[])
                         if (clients[c].get_client_socket() == i) {
                             clients[c].DealwithRequest();
                             // yoel-idr use your flag to check if you have done reading the request before this two lines
-                            FD_CLR(i, &(rd_socket));
-                            FD_SET(i, &wr_socket);
+                            if (clients[c].isReady())
+                            {
+                                FD_CLR(i, &(rd_socket));
+                                FD_SET(i, &wr_socket);
+
+                            }
                             break ;
                         }
                     }
@@ -68,6 +72,7 @@ void init_Webserv(int argc, char *const argv[])
                         clients[c].DealwithResponce();
                         // yoel-idr use your flag to check if you have done sending the response before this tree lines
                         FD_CLR(i, &wr_socket);
+                        std::cout << "client " << c << " will be deleted" << std::endl;
                         clients.erase(clients.begin() + c);
                         close(i);
                         break ;

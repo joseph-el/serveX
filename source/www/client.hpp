@@ -22,9 +22,13 @@ class s_client
         socket_t _server_socket; // server socket
         int       _server_idx; // server index
 
-
     public :
-        s_client();
+        s_client() {
+            std::cout << "Client Constructor" << std::endl;
+        };
+        ~s_client() { 
+            std::cout << "Client Destructor" << std::endl;
+        };
 
         s_client(socket_t newconnection);
         
@@ -34,7 +38,7 @@ class s_client
 
         void DealwithRequest(  void );
         void DealwithResponce( void );
-    
+        bool isReady() { return req_.isReady();};
         void Expireconnection() {
             // exit(EXIT_FAILURE); // hhhhhhh debug about 20 min fuck
             // waiting to remove iterator and close the fd
