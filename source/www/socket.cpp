@@ -59,6 +59,8 @@ void Socket::bind()
     for (struct addrinfo *tmp = addr; tmp; tmp = tmp->ai_next)
     {
         tmp_socket = socket(tmp->ai_family, tmp->ai_socktype, tmp->ai_protocol);
+        int optval = 1;
+	    setsockopt(tmp_socket, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
         error = ::bind(tmp_socket, tmp->ai_addr, tmp->ai_addrlen);
         if (error != -1)
             break ;

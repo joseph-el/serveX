@@ -10,12 +10,16 @@ CPPFLAGS :=  -D DEFAULT_CONF=\"$(CONFIG_FILE)\"
 
 UTILITY :=  source/utility/location_data.cpp\
 			source/utility/server_data.cpp \
+			source/utility/StringManipulation.cpp \
 			source/utility/utils.cpp
 
 HTTP   := source/www/socket.cpp \
 		  source/www/request.cpp \
 		  source/www/response.cpp \
-		  source/www/client.cpp
+		  source/www/client.cpp \
+		  source/www/Header.cpp \
+		  source/www/mimeTypes.cpp \
+
 		  
 
 CORE := source/Webserv-core.cpp \

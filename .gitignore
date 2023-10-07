@@ -5,9 +5,12 @@
 *.lib
 *.out
 *.app
-webserv
+Webserv
 .vscode/*
 .DS_STORE
+controllers/*
+main.cpp
 .DS_Store
 .ds_store
+tmp/*
 *.dSYM

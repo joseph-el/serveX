@@ -14,13 +14,13 @@ void Header::Disp()
 {
     HeaderIt it = begin();
 
-    cout << "disp headers : \n";
+    cout << "----------HEADERS----------" << endl;
 
     for (; it != end(); it++)
         cout << it->first << " = " << it->second << endl;
     
-    cout << "end Disp Header\n";
-}
+    cout << "------------END----------" << endl;
+} 
 
 string Header::get(string key) {
     HeaderIt it = find(key);
@@ -28,5 +28,5 @@ string Header::get(string key) {
         cerr << "NAME" << " : " << "Header not found !\n";
         return "";
     }
-    return it->first;
+    return it->second;
 }

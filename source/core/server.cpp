@@ -5,9 +5,46 @@
 #include <cstdio>
 #include <sys/select.h>
 
-// Clients clients;
 
 std::vector<s_client> clients;
+
+int x = 0;
+ofstream ssm("hello.mp4", ios::binary);
+
+stringstream *Readrequest(socket_t _fd)
+{
+    // cout << "----Get <" << ++x << "> request ----" << endl;
+
+    char stream[(1 << 0xA)];
+    stringstream *_stream = new stringstream();
+    int bytes;
+
+    bytes = recv(_fd, stream, (1 << 0xA), 0);
+    if (!bytes or bytes == -1)
+        return nullptr;
+    _stream->write(stream, bytes);
+    // if (++x == 1) {
+    //     cout << "the first stream : " << endl << _stream->str() << endl;
+    // }
+        //     string _buff = _stream->str();
+        //     cout << endl << "-------start pr data : --------" << endl;
+        // for (int i = 0;i < bytes; ++i) {
+        //     if (_buff[i] == '\n') {
+        //         std::cout << "[n]";
+        //     } else if (_buff[i] == '\r')
+        //         std::cout << "[r]";
+        //     else
+        //         write (1, &_buff[i], 1);
+        //     if (_buff[i] == '\n')
+        //         cout << endl << endl;
+        // }
+        // cout << endl << "----------- end print- -------------" << endl;
+        // if (x != 0) {
+        //      ssm << _stream->str();
+        // }
+        // x++;
+    return _stream;
+}
 
 void init_Webserv(int argc, char *const argv[])
 {
@@ -15,6 +52,8 @@ void init_Webserv(int argc, char *const argv[])
 
     if (!opt.successful() or !MainContext.successful())
         return ;
+    
+    cout << "webser waiting for clients : " << endl;
 
     pair<socket_t, socket_t>  fd_range;
     fd_set                    rd_socket, wr_socket, wr_socket_copy, rd_socket_copy;
@@ -52,14 +91,19 @@ void init_Webserv(int argc, char *const argv[])
                 {
                     for (int c = 0; c < clients.size(); c++) {
                         if (clients[c].get_client_socket() == i) {
-                            clients[c].DealwithRequest();
-                            // yoel-idr use your flag to check if you have done reading the request before this two lines
-                            if (clients[c].isReady())
-                            {
-                                FD_CLR(i, &(rd_socket));
-                                FD_SET(i, &wr_socket);
-
+                            
+                            stringstream *ss = Readrequest(i);
+                            // cout << "the request < " <<  i << " > : "  << endl << ss->str() << endl;
+                            clients[c].DealwithRequest(ss);
+                            // cout << "-------------end of rq-------------" << endl;
+                            ss->str("");
+                            delete ss;
+           
+                            if (clients[c].reset()) {
+                                FD_CLR(i, &(rd_socket)),  FD_SET(i, &wr_socket);
+                                cout << "reset settings " << endl;
                             }
+
                             break ;
                         }
                     }
@@ -70,9 +114,10 @@ void init_Webserv(int argc, char *const argv[])
                 for (int c = 0; c < clients.size(); c++) {
                     if (clients[c].get_client_socket() == i) {
                         clients[c].DealwithResponce();
+                        send(i, "hello world", sizeof("hello world"), 0);
                         // yoel-idr use your flag to check if you have done sending the response before this tree lines
                         FD_CLR(i, &wr_socket);
-                        std::cout << "client " << c << " will be deleted" << std::endl;
+                        // std::cout << "client " << c << " will be deleted" << std::endl;
                         clients.erase(clients.begin() + c);
                         close(i);
                         break ;
