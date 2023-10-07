@@ -1,4 +1,6 @@
 # include "requestBody.hpp"
+#include <cstdlib>
+#include <sstream>
 
 pair<bool, string> requestBody::extractBoundary(string &line)
 {
@@ -40,7 +42,8 @@ void    requestBody::FindBodyStatus( Header &_header ) {
         return (void)UpdateStatus(!boundary.first ? (BODY_STATUS | BODY_ERROR) : (BODY_STATUS | MULTIPART_BODY) );
     }
     line = _header.get("Transfer-Encoding"); // check if chunked
-    for (stringstream ss(line); !ss.eof() and !line.empty(); getline(ss, buff, ',')) {
+    stringstream ss(line);
+    while (getline(ss, buff, ',')) {
         trim(buff);
         if (identicalStrings(buff, "chunked"))
             return (void)UpdateStatus(CHUNKED_BODY | BODY_STATUS);
@@ -203,7 +206,8 @@ void    requestBody::absorb_stream(stringstream &stream)
             break;
         
         case CHUNKED_BODY:
-            // chunkedBody(stream);
+            chunkedBody(stream);
+
             cout << "waiting for tnaceur" << endl;
             exit(EXIT_FAILURE);
 
@@ -214,3 +218,27 @@ void    requestBody::absorb_stream(stringstream &stream)
     
     }
 }
+
+
+
+// ===========================================================================================================================================================================
+
+
+
+void    requestBody::chunkedBody(stringstream &stream) {
+
+
+    stringstream ss;
+
+    string jj = "HELLE DJEJDEJDEKDNKASNKDASKJDASKASJKJKDSAN DAKJDJKNDJKFJD ";
+    ss << jj;
+
+
+    s_write(bodycontent, ss);
+
+    cout << "chunkedBody" << endl;
+    
+    exit(4);
+
+
+} 

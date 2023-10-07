@@ -115,7 +115,7 @@ class requestBody {
 
         // absorb body types (binary , x-form, form-data, raw, none)
         void    multipartBody(stringstream &);
-        // void    chunkedBody(stringstream &);
+        void    chunkedBody(stringstream &);
         void    lengthedBody(stringstream &);
         
         requestBody(){
