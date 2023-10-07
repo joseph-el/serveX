@@ -12,7 +12,7 @@ int x = 0;
 
 stringstream *Readrequest(socket_t _fd)
 {
-    cout << "----Get <" << ++x << "> request ----" << endl;
+    // cout << "----Get <" << ++x << "> rcleaequest ----" << endl;
     char stream[(1 << 0xA)];
     stringstream *_stream = new stringstream();
     int bytes;
@@ -78,7 +78,8 @@ void init_Webserv(int argc, char *const argv[])
                             delete ss;
            
                             if (clients[c].reset()) {
-                                FD_CLR(i, &(rd_socket)),  FD_SET(i, &wr_socket);
+                                FD_CLR(i, &(rd_socket));
+                                FD_SET(i, &wr_socket);
                                 cout << "reset settings " << endl;
                             }
 

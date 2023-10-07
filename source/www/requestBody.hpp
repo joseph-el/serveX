@@ -28,14 +28,13 @@ extern "C" {
     # include <sys/time.h>
 }
 
-
 # define MULTIPART_STRING "multipart/form-data"
 # define BOUNDARY_STRING "boundary"
 # define BOUNDARY_BEGIN  "--"
-#define CR   "\r"
-#define LF   "\n"
-#define CRLF "\r\n"
-#define HTTP_VERSION "HTTP/1.1"
+# define CR   "\r"
+# define LF   "\n"
+# define CRLF "\r\n"
+# define HTTP_VERSION "HTTP/1.1"
 
 # define METHODS_LENGHT 4
 
@@ -120,7 +119,8 @@ class requestBody {
         // void    lengthedBody(stringstream &);
         // void    binaryBody(stringstream &);
         
-        requestBody() {
+        requestBody(){
+            bodycontent = NULL;
 			_idx = 0;
             contentLength = 0;
             chunkedLength = 0;
@@ -136,8 +136,8 @@ class requestBody {
             (void)copy;
         }
         ~requestBody() {
-            if (bodycontent)
-                fclose(bodycontent);
+            // if (bodycontent)
+            //     fclose(bodycontent);
         }
 }; 
 

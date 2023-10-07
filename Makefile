@@ -5,7 +5,7 @@ CC = c++
 PREFIX_FOLDER := $(shell pwd)
 CONFIG_FILE   := $(addsuffix /cfg/webserv.cfg,$(PREFIX_FOLDER))
 
-CPPFLAGS :=  -D DEFAULT_CONF=\"$(CONFIG_FILE)\"
+CPPFLAGS :=  -D DEFAULT_CONF=\"$(CONFIG_FILE)\" #-fsanitize=address -g
 
 
 UTILITY :=  source/utility/location_data.cpp\
