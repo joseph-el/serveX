@@ -73,7 +73,7 @@ extern "C" {
 # define CRLF_NO   2
 # define CRLF_WAIT 3
 
-class ShapeFile {
+struct ShapeFile {
 
     public :
         FILE    *file;
@@ -88,11 +88,12 @@ class requestBody {
     public : 
         // chunked | binary | x-www-form | raw
         FILE                *bodycontent;
+        string               bodyType;
         string               bodyPath;
         size_t               contentLength;
 	    size_t               chunkedLength;
         size_t               content;
-
+        bool                 _isBinary;
         mutable short       _status; // body status
 
         // multipartBody 
@@ -106,18 +107,16 @@ class requestBody {
         int absorbCRLF(stringstream &);
 
         void    FindBodyStatus( Header & );
-        void    lengthedBody(stringstream &);
         int     absorbBoundary(stringstream &, stringstream &);
         void    absorbHeaders(string &);
 
         bool    UpdateStatus(short) const ;
         void    absorb_stream(stringstream &);
 
-        // absorb body types
+        // absorb body types (binary , x-form, form-data, raw, none)
         void    multipartBody(stringstream &);
         // void    chunkedBody(stringstream &);
-        // void    lengthedBody(stringstream &);
-        // void    binaryBody(stringstream &);
+        void    lengthedBody(stringstream &);
         
         requestBody(){
             bodycontent = NULL;
@@ -126,6 +125,7 @@ class requestBody {
             chunkedLength = 0;
             content = 0;
             _status = 0;
+            _isBinary = false;
             _multipartStatus = MULTIPART_BEGIN | MLT_BOUNDARY;
         }
         requestBody &operator=(const requestBody &rhs) {

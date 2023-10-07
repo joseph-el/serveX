@@ -23,9 +23,13 @@ void Header::Disp()
 } 
 
 string Header::get(string key) {
+    // cout  << "==================== lPRINT ==================== " << endl;
+    // Disp();
+    // cout  << "==================== lENDED ==================== " << endl;
+    
     HeaderIt it = find(key);
     if (it == end()) {
-        cerr << "NAME" << " : " << "Header not found !\n";
+        cerr << "Webserv: " << key + ": " << "Header not found !\n";
         return "";
     }
     return it->second;

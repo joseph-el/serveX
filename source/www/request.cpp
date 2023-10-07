@@ -46,10 +46,12 @@ void request::parseHeader(string target) {
         short _st = _method & GET ? REQUEST_PARSE_DONE : REQUEST_BODY;
         if (_st & REQUEST_BODY) {
             _body.FindBodyStatus(this->_header);
+            cerr << "check body status: " << _body._status << endl;
             if (_body._status & ~MULTIPART_BODY) {
-                _body.bodyPath = "/tmp/.server__" + to_string(set_time()) + "__.server";
+                _body.bodyPath = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";
                 _body.bodycontent = s_open(_body.bodyPath);
             }
+            _body.content = 0;
             _body._multipartStatus =  (MULTIPART_BEGIN | MLT_BOUNDARY);
         }
         return UpdateStatus(_st | REQUEST_STATUS);

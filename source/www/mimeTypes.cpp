@@ -14,7 +14,7 @@ mimeTypes::mimeTypes(){
 	insert(make_pair("atom", "application/atom+xml"));
 	insert(make_pair("rss", "application/rss+xml"));
 	insert(make_pair("mml", "text/mathml"));
-	insert(make_pair("txt", "text/plain"));
+	insert(make_pair("§", "text/plain"));
 	insert(make_pair("jad", "text/vnd.sun.j2me.app-descriptor"));
 	insert(make_pair("wml", "text/vnd.wap.wml"));
 	insert(make_pair("htc", "text/x-component"));
@@ -29,6 +29,7 @@ mimeTypes::mimeTypes(){
 	insert(make_pair("ico", "image/x-icon"));
 	insert(make_pair("jng", "image/x-jng"));
 	insert(make_pair("bmp", "image/x-ms-bmp"));
+	insert(make_pair("md", "text/markdown"));
 	insert(make_pair("woff", "font/woff"));
 	insert(make_pair("woff2", "font/woff2"));
 	insert(make_pair("jar", "application/java-archive"));
