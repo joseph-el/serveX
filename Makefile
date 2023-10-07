@@ -19,9 +19,9 @@ HTTP   := source/www/socket.cpp \
 		  source/www/client.cpp \
 		  source/www/Header.cpp \
 		  source/www/mimeTypes.cpp \
+		  source/www/requestBody.cpp 
 
 		  
-
 CORE := source/Webserv-core.cpp \
 		source/core/config.cpp \
 		source/core/optioneer.cpp \

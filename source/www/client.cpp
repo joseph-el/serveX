@@ -24,9 +24,8 @@ void s_client::DealwithRequest( stringstream *stream )
     }
 
     req_.interpretRequest(*stream);
-    if (req_._status & REQUEST_PARSE_DONE) {
-        cout << "SET VALID TO TRUE " << endl;
-        req_.valid=true ;
+    if (req_.is_valid()) {
+        cout << " REQUEST DONE ! 👏🏻" << endl;
     }
 
 }

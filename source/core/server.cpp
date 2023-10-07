@@ -9,12 +9,10 @@
 std::vector<s_client> clients;
 
 int x = 0;
-ofstream ssm("hello.mp4", ios::binary);
 
 stringstream *Readrequest(socket_t _fd)
 {
-    // cout << "----Get <" << ++x << "> request ----" << endl;
-
+    cout << "----Get <" << ++x << "> request ----" << endl;
     char stream[(1 << 0xA)];
     stringstream *_stream = new stringstream();
     int bytes;
@@ -23,26 +21,6 @@ stringstream *Readrequest(socket_t _fd)
     if (!bytes or bytes == -1)
         return nullptr;
     _stream->write(stream, bytes);
-    // if (++x == 1) {
-    //     cout << "the first stream : " << endl << _stream->str() << endl;
-    // }
-        //     string _buff = _stream->str();
-        //     cout << endl << "-------start pr data : --------" << endl;
-        // for (int i = 0;i < bytes; ++i) {
-        //     if (_buff[i] == '\n') {
-        //         std::cout << "[n]";
-        //     } else if (_buff[i] == '\r')
-        //         std::cout << "[r]";
-        //     else
-        //         write (1, &_buff[i], 1);
-        //     if (_buff[i] == '\n')
-        //         cout << endl << endl;
-        // }
-        // cout << endl << "----------- end print- -------------" << endl;
-        // if (x != 0) {
-        //      ssm << _stream->str();
-        // }
-        // x++;
     return _stream;
 }
 
