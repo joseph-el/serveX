@@ -16,6 +16,7 @@
 # include <string>
 # include "../core/config.hpp"
 # include  <algorithm>
+#include <sys/_types/_size_t.h>
 # include "mimeTypes.hpp"
 # include "../utility/templates_helper.hpp"
 
@@ -50,7 +51,7 @@ extern "C" {
 # define RUNTIME_ERROR        (1 << 10)
 // body types
 # define MULTIPART_BODY   (1 << 1)
-# define CHUNKED_BODY     (1 << 2)
+# define CHUNKED_BODY     (1 << 11)
 # define LENGTH_BODY      (1 << 3)
 # define BINARY_BODY      (1 << 4)
 # define BODY_ERROR       (1 << 8)
@@ -94,7 +95,10 @@ class requestBody {
 	    size_t               chunkedLength;
         size_t               content;
         bool                 _isBinary;
+        bool                 _isHeader;
         mutable short       _status; // body status
+        // int                 chunk_count;
+        size_t                chunk_size;
 
         // multipartBody 
         short                  _idx;
@@ -115,7 +119,7 @@ class requestBody {
 
         // absorb body types (binary , x-form, form-data, raw, none)
         void    multipartBody(stringstream &);
-        void    chunkedBody(stringstream &);
+         void    chunkedBody(stringstream &);
         void    lengthedBody(stringstream &);
         
         requestBody(){
@@ -127,13 +131,27 @@ class requestBody {
             _status = 0;
             _isBinary = false;
             _multipartStatus = MULTIPART_BEGIN | MLT_BOUNDARY;
+            _isHeader = true;
+            chunk_size = 0;
         }
         requestBody &operator=(const requestBody &rhs) {
-	        (void)rhs;
-	        return *this;
+            if (this != &rhs) {
+                bodycontent = rhs.bodycontent;
+                bodyType = rhs.bodyType;
+                bodyPath = rhs.bodyPath;
+                contentLength = rhs.contentLength;
+                chunkedLength = rhs.chunkedLength;
+                content = rhs.content;
+                _status = rhs._status;
+                _isBinary = rhs._isBinary;
+                _multipartStatus = rhs._multipartStatus;
+                _isHeader = rhs._isHeader;
+                chunk_size = rhs.chunk_size;
+            }
+            return *this;
         }
         requestBody(const requestBody &copy) {
-            (void)copy;
+            *this = copy;
         }
         ~requestBody() {
             // if (bodycontent)

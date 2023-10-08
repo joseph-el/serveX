@@ -22,6 +22,21 @@ class s_client {
         ~s_client() { 
             // cout << "Client Destructor" << endl;
         }
+        s_client(const s_client &other) {
+            // cout << "Client Copy Constructor" << endl;
+            *this = other;
+        }
+        s_client &operator=(const s_client &other) {
+            // cout << "Client Assignement Operator" << endl;
+            if (this != &other) {
+                this->_newconnection = other._newconnection;
+                this->_server_socket = other._server_socket;
+                this->_server_idx = other._server_idx;
+                this->req_ = other.req_;
+                this->res_ = other.res_;
+            }
+            return *this;
+        }
         s_client(socket_t newconnection);
 
         bool reset() {return req_.is_valid();}

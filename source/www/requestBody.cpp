@@ -1,6 +1,8 @@
 # include "requestBody.hpp"
+#include <cstddef>
 #include <cstdlib>
 #include <sstream>
+#include <sys/_types/_size_t.h>
 
 pair<bool, string> requestBody::extractBoundary(string &line)
 {
@@ -208,8 +210,8 @@ void    requestBody::absorb_stream(stringstream &stream)
         case CHUNKED_BODY:
             chunkedBody(stream);
 
-            cout << "waiting for tnaceur" << endl;
-            exit(EXIT_FAILURE);
+            // cout << "waiting for tnaceur" << endl;
+            // exit(EXIT_FAILURE);
 
             break;
         case LENGTH_BODY:
@@ -224,21 +226,63 @@ void    requestBody::absorb_stream(stringstream &stream)
 // ===========================================================================================================================================================================
 
 
+size_t  hex_to_dec(std::string s)
+{
+    std::stringstream ss;
+    ss << std::hex << s;
+    size_t result;
+    ss >> result;
+    if (ss.fail() || ss.bad())
+    {
+        throw std::runtime_error(s);
+    }
+    return result;
+}
+
 
 void    requestBody::chunkedBody(stringstream &stream) {
 
 
-    stringstream ss;
+    // stringstream ss;
 
-    string jj = "HELLE DJEJDEJDEKDNKASNKDASKJDASKASJKJKDSAN DAKJDJKNDJKFJD ";
-    ss << jj;
-
-
-    s_write(bodycontent, ss);
-
-    cout << "chunkedBody" << endl;
+    // string jj = "HELLE DJEJDEJDEKDNKASNKDASKJDASKASJKJKDSAN DAKJDJKNDJKFJD ";
+    // ss << jj;
+    try {
+        if (_isHeader)
+        {
+            size_t f = stream.str().find("\r\n\r\n");
+            if (f != string::npos)
+            {
+                chunk_size = hex_to_dec(stream.str().substr(f + 4));
+                stream.str(stream.str().substr(f + 4 + std::to_string(chunk_size).length() + 2));
+                _isHeader = false;
+            }
+        }
+        if (!_isHeader && chunk_size < stream.str().length())
+        {
+            std::stringstream tmp;
+            tmp.str(stream.str().substr(0, stream.str().find("\r\n")));
+            s_write(bodycontent, tmp);
+            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            chunk_size = hex_to_dec(stream.str());
+            if (chunk_size == 0)
+                UpdateStatus(BODY_STATUS | BODY_DONE);
+            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+        }
+        if (!_isHeader && chunk_size >= stream.str().length())
+        {
+            chunk_size -= stream.str().length();
+            s_write(bodycontent, stream);
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    // s_write(bodycontent, stream);
+    // cout << "chunkedBody" << endl;
+    // exit(0);
     
-    exit(4);
-
+    // exit(4);
 
 } 

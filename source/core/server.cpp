@@ -21,6 +21,8 @@ stringstream *Readrequest(socket_t _fd)
     if (!bytes or bytes == -1)
         return nullptr;
     _stream->write(stream, bytes);
+
+    // cout << "----Get <" << ++x << "\n" << _stream->str() << endl;
     return _stream;
 }
 
