@@ -1,8 +1,6 @@
 # include "requestBody.hpp"
-#include <cstddef>
 #include <cstdlib>
 #include <sstream>
-#include <sys/_types/_size_t.h>
 
 pair<bool, string> requestBody::extractBoundary(string &line)
 {
@@ -261,9 +259,9 @@ void    requestBody::chunkedBody(stringstream &stream) {
         if (!_isHeader && chunk_size < stream.str().length())
         {
             std::stringstream tmp;
-            tmp.str(stream.str().substr(0, stream.str().find("\r\n")));
+            tmp.str(stream.str().substr(0, chunk_size));
             s_write(bodycontent, tmp);
-            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            stream.str(stream.str().substr(chunk_size + 2));
             chunk_size = hex_to_dec(stream.str());
             if (chunk_size == 0)
                 UpdateStatus(BODY_STATUS | BODY_DONE);
