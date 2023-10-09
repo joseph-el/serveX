@@ -3,12 +3,7 @@
 
 # include "requestBody.hpp"
 
-enum METHODS {
-    GET = 1 << 1,
-    POST = 1 << 2,
-    DELETE = 1 << 3,
-    UNKNOWN_MT = 1 << 4
-};
+
 
 class request {
     // private :

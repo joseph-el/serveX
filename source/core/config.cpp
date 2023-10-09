@@ -4,35 +4,38 @@ config MainContext;
 
 /*  config Constructors  */
 
-config::config( std::string const& fileName) 
+config::config(std::string const &fileName)
 {
     setPath(fileName);
 }
 
-bool config::successful( void )
+bool config::successful(void)
 {
-    try {
+    try
+    {
         parseServersData();
     }
-    catch (bool) {
+    catch (bool)
+    {
         return false;
     }
     return true;
 }
 
-void config::setPath( std::string const& fileName )  
+void config::setPath(std::string const &fileName)
 {
     CHECK_CONF_EXTENSION(fileName);
     _configFile.close();
-	_configFile.open(fileName, ios::in);
-	if (!_configFile.good()) {
-		cerr << NAME ": [emerg] " << strerror(errno) << endl;
+    _configFile.open(fileName, ios::in);
+    if (!_configFile.good())
+    {
+        cerr << NAME ": [emerg] " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
-	_configFileName = fileName;
+    _configFileName = fileName;
 }
 
-config::~config(void) 
+config::~config(void)
 {
     _configFile.close();
 }
@@ -46,17 +49,15 @@ std::vector<server_data> config::getServers(void) const
 /*  config Parsers  */
 void config::parseServersData()
 {
-    std::string                 line;
-    std::string                 trimmedLine;
-    std::vector<std::string>    tokens;
-    bool                        serverEnded = false;
-    bool                        isDefaultParsedBefore = false;
-    short                       lineNumber = 0;
+    std::string line;
+    std::string trimmedLine;
+    std::vector<std::string> tokens;
+    bool serverEnded = false;
+    bool isDefaultParsedBefore = false;
+    short lineNumber = 1;
     /*  Opening The File    */
-    // std::ifstream _configFile(_configFileName.c_str());
-    // _isFileOpenedAndNotEmpty(_configFile);
 
-    for (; getline(_configFile, line); lineNumber++)
+    for (; getline(_configFile, line); ++lineNumber)
     {
         if (!_isFileGoodToGo(line, lineNumber))
             break;
@@ -70,12 +71,14 @@ void config::parseServersData()
             server_data currentConfig;
 
             serverEnded = false;
+            ++lineNumber;
             getline(_configFile, line);
             if (!_isFileGoodToGo(line, lineNumber))
                 break;
             if (_removeExtraSpaces(line) != "{")
                 _errorAndExit(SERVERSYNTAXERROR, lineNumber);
-            for (;getline(_configFile, line);lineNumber++)
+            ++lineNumber;
+            for (; getline(_configFile, line); ++lineNumber)
             {
                 /*  Starting To Read inside the server Here  */
                 if (!_isFileGoodToGo(line, lineNumber))
@@ -95,7 +98,7 @@ void config::parseServersData()
                         _errorAndExit(LOCATIONSYNTAXERROR, lineNumber);
                     /*  Init Location Object Here */
                     location_data currentLocationConfig(tokens[1]);
-                    for (;getline(_configFile, line);lineNumber++)
+                    for (; getline(_configFile, line); ++lineNumber)
                     {
                         if (!_isFileGoodToGo(line, lineNumber))
                             _errorAndExit(READINLOCATIONERROR, lineNumber);
@@ -105,9 +108,7 @@ void config::parseServersData()
                         if (trimmedLine == "}")
                         {
                             if (currentLocationConfig.isEmpty())
-                                _errorAndExit("Parsing the Location!", lineNumber);
-                            if (!currentLocationConfig.isLocationValidAndReady())
-                                _errorAndExit("Location Inside A Server Must Contain At Least: DefaultPath, Root, index, and At least 1 AllowedMethod", lineNumber);
+                                currentLocationConfig.setIsEmptyLocation(true);
                             currentConfig.addLocation(currentLocationConfig);
                             break;
                         }
@@ -115,17 +116,17 @@ void config::parseServersData()
                     }
                     continue;
                 }
-                else if (tokens[0] == "host" && currentConfig.getHost().empty())
+                else if (tokens[0] == "listen" && currentConfig.getHost().empty() && !currentConfig.getListenPort())
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'Host' directive must have a single Argument.", lineNumber);
-                    currentConfig.setHost(_parseHost(tokens[1], lineNumber));
-                }
-                else if (tokens[0] == "port" && !currentConfig.getListenPort())
-                {
-                    if (tokens.size() != 2)
-                        _errorAndExit("'Port' directive must have a single Argument.", lineNumber);
-                    currentConfig.setListenPort(_parsePort(tokens[1], lineNumber));
+                        _errorAndExit("'listen' directive must have a single Argument {host:port}.", lineNumber);
+                    if (_isPort(tokens[1]))
+                    {
+                        currentConfig.setHost("127.0.0.1");
+                        currentConfig.setListenPort(_parsePort(tokens[1], lineNumber));
+                    }
+                    else
+                        _extractHostAndPort(tokens[1], lineNumber, currentConfig);
                 }
                 else if (tokens[0] == "server_name" && currentConfig.getServerName().empty())
                 {
@@ -133,41 +134,60 @@ void config::parseServersData()
                         _errorAndExit("'server_name' directive must have a single argument.", lineNumber);
                     currentConfig.setServerName(tokens[1]);
                 }
-                else if (tokens[0] == "default_server" && !isDefaultParsedBefore)
-                {
-                    // must have a booleen
-                    if (tokens.size() != 2)
-                        _errorAndExit("'default_server' directive must have a single argument: on or off", lineNumber);
-                    if (tokens[1] == "on")
-                        currentConfig.setDefaultServer(true);
-                    else if (tokens[1] == "off")
-                        currentConfig.setDefaultServer(false);
-                    else
-                        _errorAndExit("cannot recognize the 'default_server' directive Arguments try {on || off}.", lineNumber);
-                    isDefaultParsedBefore = true;
-                }
                 else if (tokens[0] == "error_page")
                 {
                     if (tokens.size() != 3)
                         _errorAndExit("'error_page' directive must have two argument: errorNumber and errorPage", lineNumber);
                     currentConfig.addErrorPage(_stringToInt(tokens[1], lineNumber), tokens[2]);
                 }
-                else if (tokens[0] == "client_max_body_size" && !currentConfig.getMaxBodySize())
+                else if (tokens[0] == "return")
+                {
+                    if (tokens.size() != 3)
+                        _errorAndExit("'return' redirection directive must have two argument: status and path", lineNumber);
+                    currentConfig.setRedirection(_stringToInt(tokens[1], lineNumber), tokens[2]);
+                }
+                else if (tokens[0] == "client_max_body_size" && currentConfig.getMaxBodySize() == MAX_BODY_SIZE)
                 {
                     if (tokens.size() != 2)
-                        _errorAndExit("'client_max_body_size' directive must have One argument: Size In Mb", lineNumber);
+                        _errorAndExit("'client_max_body_size' directive must have One argument: Size In MB", lineNumber);
                     std::string sizeArgument = tokens[1];
                     if (sizeArgument[sizeArgument.size() - 1] != 'M')
                         _errorAndExit("Invalid format for 'client_max_body_size' directive. It should end with 'M'", lineNumber);
                     tokens[1].erase(tokens[1].size() - 1);
-                    int tmpSize = _stringToInt(tokens[1], lineNumber);
-                    unsigned int maxSizeInBytes = tmpSize * 1024 * 1024;
+                    unsigned long long tmpSize = _stringToInt(tokens[1], lineNumber);
+                    if (tmpSize > ULLONG_MAX / (1024 * 1024))
+                        _errorAndExit("Risk Of Overflow using this MaxBodySize", lineNumber);
+                    unsigned long long maxSizeInBytes = tmpSize * 1024 * 1024;
                     currentConfig.setMaxBodySize(maxSizeInBytes);
+                }
+                else if (tokens[0] == "root" && currentConfig.getServerRoot().empty())
+                {
+                    if (tokens.size() != 2)
+                        _errorAndExit("'root' directive must have a single argument.", lineNumber);
+                    currentConfig.setServerRoot(tokens[1]);
+                }
+                else if (tokens[0] == "index" && !currentConfig.getServerIndexes().size())
+                {
+                    if (tokens.size() < 2)
+                        _errorAndExit("'index' directive must have arguments", lineNumber);
+                    for (size_t i = 1; i < tokens.size(); i++)
+                        currentConfig.setIndex(tokens[i]);
                 }
                 else if (tokens[0] == "}")
                 {
                     if (!currentConfig.isServerValidAndReady())
-                        _errorAndExit("Server Must Contain At Least: DefaultPath, Root, Index and At least 1 AllowedMethod",lineNumber);
+                        _errorAndExit("Server Must Contain Port To Listen", lineNumber);
+                    if (currentConfig.getServerRoot().empty() || !currentConfig.getServerIndexes().size())
+                    {
+                        if (!currentConfig.getLocations().size() || !currentConfig.getLocations().size())
+                            _errorAndExit("Server Must Contain A {Root || Index} Or A Nested Location With Them", lineNumber);
+                        std::vector<location_data>  tmpLocations = currentConfig.getLocations();
+                        for (size_t i = 0; i < tmpLocations.size(); i++)
+                        {
+                            if (tmpLocations[i].getRoot().empty() || !tmpLocations[i].getIndexes().size())
+                                _errorAndExit("Every Nested Location Must Contain A {Root || Index} Or Set a Global {Root || Index} In The Server", lineNumber);
+                        }                        
+                    }
                     _servers.push_back(currentConfig);
                     serverEnded = true;
                     isDefaultParsedBefore = false;
@@ -184,6 +204,7 @@ void config::parseServersData()
     }
     if (_servers.size() < 1)
         _errorAndExit(SERVERNOTFOUNDERROR, lineNumber);
+    _checkAndCleanDuplicates();
 }
 
 void config::_parseLocationDirectives(std::string &trimmedLine, location_data &currentLocationConfig, short lineNumber)
@@ -197,6 +218,12 @@ void config::_parseLocationDirectives(std::string &trimmedLine, location_data &c
         if (tokens.size() != 2)
             _errorAndExit("'root' directive must have a single argument.", lineNumber);
         currentLocationConfig.setRoot(tokens[1]);
+    }
+    else if (tokens[0] == "return")
+    {
+        if (tokens.size() != 3)
+            _errorAndExit("'return' redirection directive must have two argument: status and path", lineNumber);
+        currentLocationConfig.setRedirection(_stringToInt(tokens[1], lineNumber), tokens[2]);
     }
     else if (tokens[0] == "index" && !currentLocationConfig.getIndexes().size())
     {
@@ -249,13 +276,23 @@ void config::_parseLocationDirectives(std::string &trimmedLine, location_data &c
         if (!_parseAllowedMethods(tokens))
             _errorAndExit("Invalid Method keyword", lineNumber);
         for (size_t i = 1; i < tokens.size(); i++)
-            currentLocationConfig.setAllowedMethod(tokens[i]);
+        {
+            if (tokens[i] == "GET")
+                currentLocationConfig.setAllowedMethod(GET);
+            else if (tokens[i] == "POST")
+                currentLocationConfig.setAllowedMethod(POST);
+            else if (tokens[i] == "DELETE")
+                currentLocationConfig.setAllowedMethod(UNKNOWN_MT);
+            else
+                currentLocationConfig.setAllowedMethod(3);
+        }
     }
     else
         _errorAndExit("Duplicate Or Unkown Type Of Directive inside Location", lineNumber);
 }
 
 /* ---------- Parsing Helper Functions ----------- */
+
 //  Check if Line Empty Or Comment
 bool config::_isLineEmptyOrComment(std::string const &line)
 {
@@ -263,9 +300,9 @@ bool config::_isLineEmptyOrComment(std::string const &line)
         return true;
     return false;
 }
-//  Convert String To Int
 
-int config::_stringToInt( std::string const& input, short lineNumber)
+//  Convert String To Int
+int config::_stringToInt(std::string const &input, short lineNumber)
 {
     std::istringstream iss(input);
     long value;
@@ -273,15 +310,15 @@ int config::_stringToInt( std::string const& input, short lineNumber)
     iss >> value;
 
     if (iss.fail() || !iss.eof())
-        _errorAndExit("Int: Invalid characters", lineNumber);
+        _errorAndExit("Int: (Invalid character) try to use a valid INTEGER", lineNumber);
     if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min())
         _errorAndExit("int: Overflow/Underflow during conversion of an Int", lineNumber);
     int result = static_cast<int>(value);
     return result;
 }
-//  Check For Multiple Semicolone
 
-void config::_splitBySemicolon( std::string const& line, short lineNumber)
+//  Check For Multiple Semicolone
+void config::_splitBySemicolon(std::string const &line, short lineNumber)
 {
     int semicoloneCount = 0;
 
@@ -296,9 +333,9 @@ void config::_splitBySemicolon( std::string const& line, short lineNumber)
     if (semicoloneCount > 1)
         _errorAndExit("Duplicate Semicolons in a Directive Line.", lineNumber);
 }
-//  Iterate and remove Extra Spaces from a line 
 
-std::string config::_removeExtraSpaces( std::string const& line)
+//  Iterate and remove Extra Spaces from a line
+std::string config::_removeExtraSpaces(std::string const &line)
 {
     std::string result;
     bool spaceFound = false;
@@ -327,8 +364,8 @@ std::string config::_removeExtraSpaces( std::string const& line)
 
     return result;
 }
-// Tokrnize A line and give a meaning to every token (Also Check for Some Errors)
 
+// Tokrnize A line and give a meaning to every token (Also Check for Some Errors)
 std::vector<std::string> config::_tokenizerOfDirectives(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
@@ -359,8 +396,35 @@ std::vector<std::string> config::_tokenizerOfDirectives(std::string const &line,
         tokens[tokens.size() - 1].erase(tokens[tokens.size() - 1].size() - 1);
     return tokens;
 }
-// Check The Host Errors 
 
+// check if is_port only
+bool config::_isPort(std::string const &line)
+{
+    for (size_t i = 0; i < line.size(); i++)
+    {
+        if (!isdigit(line[i]))
+            return false;
+    }
+    return true;
+}
+
+// Extract host:port
+void config::_extractHostAndPort(std::string const &line, short lineNumber, server_data &currentConfig)
+{
+    std::istringstream iss(line);
+    std::string host;
+    std::string port;
+
+    getline(iss, host, ':');
+    getline(iss, port);
+
+    if (host.empty() || port.empty())
+        _errorAndExit("'listen' directive must have a valid syntax {X.X.X.X:port}.", lineNumber);
+    currentConfig.setHost(_parseHost(host, lineNumber));
+    currentConfig.setListenPort(_parsePort(port, lineNumber));
+}
+
+// Check The Host Errors
 std::string config::_parseHost(std::string const &line, short &lineNumber)
 {
     std::istringstream iss(line);
@@ -369,7 +433,7 @@ std::string config::_parseHost(std::string const &line, short &lineNumber)
 
     for (; getline(iss, token, '.'); lineNumber++)
     {
-        if (token.find_first_not_of("0123456789") == std::string::npos)
+        if (!token.empty() && token.find_first_not_of("0123456789") == std::string::npos)
         {
             int num = _stringToInt(token, lineNumber);
             if (num >= 0 && num <= 255)
@@ -380,12 +444,12 @@ std::string config::_parseHost(std::string const &line, short &lineNumber)
         else
             _errorAndExit("Invalid Digits in The Host Value", lineNumber);
     }
-    if (parts.size() != 4)
-        _errorAndExit("A host Must Have 4 parts", lineNumber);
+    if (parts.size() != 4 || line.back() == '.')
+        _errorAndExit("A host Must Have 4 digit parts", lineNumber);
     return line;
 }
-// Checking The Port Value Errors  
 
+// Checking The Port Value Errors
 int config::_parsePort(std::string const &line, short lineNumber)
 {
     std::istringstream iss(line);
@@ -400,8 +464,8 @@ int config::_parsePort(std::string const &line, short lineNumber)
     int result = static_cast<int>(value);
     return result;
 }
-// Check The Alloed Methods in a Location
 
+// Check The Alloed Methods in a Location
 bool config::_parseAllowedMethods(std::vector<std::string> &tokens)
 {
     if (!tokens.size())
@@ -431,8 +495,6 @@ bool config::_parseAllowedMethods(std::vector<std::string> &tokens)
         return false;
     return true;
 }
-
-
 bool config::_isFileGoodToGo(std::string const &line, short lineNumber)
 {
     if (_configFile.fail())
@@ -440,6 +502,40 @@ bool config::_isFileGoodToGo(std::string const &line, short lineNumber)
     if (line.empty() && _configFile.eof())
         return false;
     return true;
+}
+// clean Duplicate servers and duplicate Locations
+void config::_checkAndCleanDuplicates()
+{
+    if (_servers.size() > 1) 
+    {
+        int initServerPort = _servers[0].getListenPort();
+        std::string initServerHost = _servers[0].getHost();
+
+        for (std::vector<server_data>::iterator it = _servers.begin() + 1; it != _servers.end(); )
+        {
+            if (it->getListenPort() == initServerPort && it->getHost() == initServerHost)
+                it = _servers.erase(it);
+            else
+                ++it;
+        }
+    }
+    /* multiple location with the same path */
+    for (size_t i = 0; i < _servers.size(); ++i) 
+    {
+        if (_servers[i].getLocations().size() > 1) 
+        {
+            std::string defaultpath = _servers[0].getLocations()[0].getPath();
+            const std::vector<location_data>& locations_const = _servers[i].getLocations();
+            std::vector<location_data>& locations = const_cast<std::vector<location_data>&>(locations_const);
+            for (std::vector<location_data>::iterator lc = locations.begin() + 1; lc != locations.end(); ) 
+            {
+                if (lc->getPath() == defaultpath)
+                    lc = locations.erase(lc);
+                else
+                    ++lc;
+            }
+        }
+    }
 }
 
 /*  ------- Error printer and exit handler ------- */
@@ -450,11 +546,66 @@ void config::_errorAndExit(std::string const &error, short lineNumber)
 }
 
 /*  Display Current Servers Data    */
-void    config::disp() const
+void config::disp() const
 {
     string configFile;
     _configFile.clear();
     _configFile.seekg(0, std::ios::beg);
     getline(_configFile, configFile, (char)0);
     cerr << configFile;
+}
+
+void   config::print() const
+{
+    std::cout << std::endl << std::endl << std::endl;
+    std::cout << "*****Displaying Servers Config Data****" << std::endl << std::endl;
+    for (size_t i = 0; i < _servers.size(); i++)
+    {
+        std::cout << "          Server: |" << (i + 1) << "|" << std::endl;
+
+        std::cout << "Port: " << _servers[i].getListenPort() << std::endl;
+        std::cout << "Host: " << _servers[i].getHost() << std::endl;
+        std::cout << "Root: " << _servers[i].getServerRoot() << std::endl;
+        std::cout << "Server Name: " << _servers[i].getServerName() << std::endl;
+        std::cout << "Max Body Size: " << _servers[i].getMaxBodySize() << std::endl;
+        std::cout << "Redirection: " << _servers[i].getServerRedirection().first << " " << _servers[i].getServerRedirection().second << std::endl;
+
+        std::cout << "Error Pages: " << std::endl;
+        for (std::map<int, std::string>::const_iterator it = _servers[i].getErrorPages().begin(); it != _servers[i].getErrorPages().end(); ++it)
+            std::cout << "  " << it->first << " => " << it->second << std::endl;
+
+        std::cout << "Indexes: ";
+        for (size_t k = 0; k < _servers[i].getServerIndexes().size(); k++)
+            std::cout << " " <<  _servers[i].getServerIndexes()[k] << " ";
+        std::cout << std::endl;
+
+        /*  location Data   */
+        for (size_t l = 0; l < _servers[i].getLocations().size(); l++)
+        {
+            std::cout << "Location: |" << l + 1 << "|" << std::endl;
+            
+            if (_servers[i].getLocations()[l].getIsEmptyLocation())
+            {
+                std::cout << "      Empty Location !!     " << std::endl << std::endl;
+                continue;
+            }
+            std::cout << "      Default Path: " << _servers[i].getLocations()[l].getPath() << std::endl;
+            std::cout << "      Root: " << _servers[i].getLocations()[l].getRoot() << std::endl;
+            std::cout << "      AutoIndex: " << (_servers[i].getLocations()[l].getAutoIndex() ? "true" : "false") << std::endl;
+            std::cout << "      AutoUpload: " << (_servers[i].getLocations()[l].getAutoUpload() ? "true" : "false") << std::endl;
+            std::cout << "      Cgi_path: " << _servers[i].getLocations()[l].getCgiPath() << std::endl;
+            std::cout << "      Upload_path: " << _servers[i].getLocations()[l].getUploadPath() << std::endl;
+            std::cout << "      Redirection: " <<  _servers[i].getLocations()[l].getlocationRedirections().first << " " << _servers[i].getLocations()[l].getlocationRedirections().second << std::endl;
+            std::cout << "      Indexes: ";
+            const std::vector<std::string>& locationIndex = _servers[i].getLocations()[l].getIndexes();
+            for (size_t j = 0; j < locationIndex.size(); j++)
+                std::cout << locationIndex[j] << " ";
+            std::cout << std::endl;
+            std::cout << "      Allowed_methods: ";
+            const std::vector<int>& locationAllowedMethods = _servers[i].getLocations()[l].getAllowedMethods();
+            for (size_t k = 0; k < locationAllowedMethods.size(); k++)
+                std::cout << locationAllowedMethods[k] << " ";
+            std::cout << std::endl;
+        }
+    }
 }

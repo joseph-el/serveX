@@ -33,6 +33,8 @@ void init_Webserv(int argc, char *const argv[])
     if (!opt.successful() or !MainContext.successful())
         return ;
     
+    MainContext.print();
+    exit(41);
     cout << "webser waiting for clients : " << endl;
 
     pair<socket_t, socket_t>  fd_range;

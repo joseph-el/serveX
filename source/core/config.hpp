@@ -10,7 +10,6 @@
 #include <set>
 #include <string.h>
 #include <math.h>
-
 #include "../utility/server_data.hpp"   // waiting to link by makefile
 #include "../utility/location_data.hpp"
 # include "optioneer.hpp"
@@ -20,6 +19,13 @@
 # endif
 
 using namespace std;
+
+enum METHODS {
+    GET = 1 << 1,
+    POST = 1 << 2,
+    DELETE = 1 << 3,
+    UNKNOWN_MT = 1 << 4
+};
 
 class config
 {
@@ -33,6 +39,7 @@ class config
         ~config( void );
 
         /*  config Member Functions */
+        void    print() const;
         void    disp() const;
         bool    successful( void );
         void    parseServersData();
@@ -59,9 +66,11 @@ class config
         std::string              _parseHost(std::string const& , short &);
         int                      _parsePort(std::string const& , short);
         bool                     _parseAllowedMethods( std::vector<std::string>& );
+        bool                     _isPort( std::string const& );
+        void                     _extractHostAndPort ( std::string const&, short, server_data& );
+        void                     _checkAndCleanDuplicates( void );
 
         /*  FileStream Releted Functions  */
-        // void                     _isFileOpenedAndNotEmpty( std::ifstream& );
         bool                     _isFileGoodToGo( std::string const& , short);
 
         /*  Parsing Directives Functions */
