@@ -173,6 +173,17 @@ void config::parseServersData()
                     for (size_t i = 1; i < tokens.size(); i++)
                         currentConfig.setIndex(tokens[i]);
                 }
+                else if (tokens[0] == "auto_index")
+                {
+                    if (tokens.size() != 2)
+                        _errorAndExit("'auto_index' directive must have a single argument: on or off", lineNumber);
+                    if (tokens[1] == "on")
+                        currentConfig.setAutoIndex(true);
+                    else if (tokens[1] == "off")
+                        currentConfig.setAutoIndex(false);
+                    else
+                        _errorAndExit("cannot recognize the 'autoindex' directive Argument try {on || off}.", lineNumber);
+                }
                 else if (tokens[0] == "}")
                 {
                     if (!currentConfig.isServerValidAndReady())
@@ -241,7 +252,7 @@ void config::_parseLocationDirectives(std::string &trimmedLine, location_data &c
         else if (tokens[1] == "off")
             currentLocationConfig.setAutoIndex(false);
         else
-            _errorAndExit("cannot recognize the 'autoindex' directive Arguments try {on || off}.", lineNumber);
+            _errorAndExit("cannot recognize the 'autoindex' directive Argument try {on || off}.", lineNumber);
     }
     else if (tokens[0] == "auto_upload")
     {
@@ -555,6 +566,7 @@ void config::disp() const
     cerr << configFile;
 }
 
+/*  Print Servers Content */
 void   config::print() const
 {
     std::cout << std::endl << std::endl << std::endl;
@@ -566,6 +578,7 @@ void   config::print() const
         std::cout << "Port: " << _servers[i].getListenPort() << std::endl;
         std::cout << "Host: " << _servers[i].getHost() << std::endl;
         std::cout << "Root: " << _servers[i].getServerRoot() << std::endl;
+        std::cout << "AutoIndex: " << (_servers[i].getAutoIndex() ? "true" : "false") << std::endl;
         std::cout << "Server Name: " << _servers[i].getServerName() << std::endl;
         std::cout << "Max Body Size: " << _servers[i].getMaxBodySize() << std::endl;
         std::cout << "Redirection: " << _servers[i].getServerRedirection().first << " " << _servers[i].getServerRedirection().second << std::endl;

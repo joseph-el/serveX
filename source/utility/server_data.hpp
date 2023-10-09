@@ -20,10 +20,6 @@ public:
 
     /*  Constructors */
     server_data ( void );
-    server_data ( const server_data& );
-    
-    /* Operators */
-    server_data &operator=( const server_data& );
 
     /* Add to vectors */
     void    addErrorPage( int, const std::string& );
@@ -36,10 +32,12 @@ public:
     void    setMaxBodySize( unsigned long long );
     void    setServerRoot( std::string const& );
     void    setIndex ( std::string const& );
+    void    setAutoIndex ( bool );
     void    setRedirection(int, const std::string& );
 
     /*  Getters */
     int                                      getListenPort() const;
+    bool                                     getAutoIndex() const;
     unsigned long long                       getMaxBodySize() const;
     std::string                              getHost() const;
     std::string                              getServerName() const;
@@ -56,6 +54,7 @@ private:
 
     unsigned long long                      _maxBodySize;
     int                                     _port;
+    bool                                    _autoIndex;
     std::string                             _host;
     std::string                             _serverName;
     std::string                             _serverRoot;
