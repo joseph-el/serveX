@@ -90,6 +90,7 @@ class requestBody {
         // chunked | binary | x-www-form | raw
         FILE                *bodycontent;
         string               bodyType;
+        string               chunk_str;
         string               bodyPath;
         size_t               contentLength;
 	    size_t               chunkedLength;
@@ -97,8 +98,8 @@ class requestBody {
         bool                 _isBinary;
         bool                 _isHeader;
         mutable short       _status; // body status
-        // int                 chunk_count;
         size_t                chunk_size;
+        bool                 chunked_ok;
 
         // multipartBody 
         short                  _idx;
@@ -106,7 +107,7 @@ class requestBody {
         pair<bool, string>      boundary;
         map<short, ShapeFile>  _multipart;
         mutable short          _multipartStatus;
-        
+
         pair<bool, string> extractBoundary(string &);
         int absorbCRLF(stringstream &);
 
@@ -133,6 +134,7 @@ class requestBody {
             _multipartStatus = MULTIPART_BEGIN | MLT_BOUNDARY;
             _isHeader = true;
             chunk_size = 0;
+            chunked_ok = true;
         }
         requestBody &operator=(const requestBody &rhs) {
             if (this != &rhs) {
@@ -147,6 +149,8 @@ class requestBody {
                 _multipartStatus = rhs._multipartStatus;
                 _isHeader = rhs._isHeader;
                 chunk_size = rhs.chunk_size;
+                chunk_str = rhs.chunk_str;
+                chunked_ok = rhs.chunked_ok;
             }
             return *this;
         }

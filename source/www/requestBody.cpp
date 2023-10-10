@@ -232,19 +232,13 @@ size_t  hex_to_dec(std::string s)
     ss >> result;
     if (ss.fail() || ss.bad())
     {
-        throw std::runtime_error(s);
+        return -1;
     }
     return result;
 }
 
 
 void    requestBody::chunkedBody(stringstream &stream) {
-
-
-    // stringstream ss;
-
-    // string jj = "HELLE DJEJDEJDEKDNKASNKDASKJDASKASJKJKDSAN DAKJDJKNDJKFJD ";
-    // ss << jj;
     try {
         if (_isHeader)
         {
@@ -256,16 +250,83 @@ void    requestBody::chunkedBody(stringstream &stream) {
                 _isHeader = false;
             }
         }
+        if (!chunked_ok)
+        {
+            if (chunk_str.length() == 1 && chunk_str[0] == '\r')
+                chunk_str.clear();
+            chunk_str += stream.str().substr(0, stream.str().find("\r\n"));
+            chunk_size = hex_to_dec(chunk_str);
+            if (chunk_size == 0)
+                UpdateStatus(BODY_STATUS | BODY_DONE);
+            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            chunk_str.clear();
+            chunked_ok = true;
+        }
         if (!_isHeader && chunk_size < stream.str().length())
         {
             std::stringstream tmp;
             tmp.str(stream.str().substr(0, chunk_size));
             s_write(bodycontent, tmp);
-            stream.str(stream.str().substr(chunk_size + 2));
+            stream.str(stream.str().substr(chunk_size));
+            if (stream.str().length())
+            {
+                if (stream.str().length() == 1){
+                    chunk_str += '\r';
+                    stream.clear();
+                    stream.str("");
+                    chunked_ok = false;
+                    return ;
+                }
+                stream.str(stream.str().substr(2));
+                if (stream.str().find("\r\n") == std::string::npos)
+                {
+                    size_t pos = stream.str().find("\r");
+                    if (pos != std::string::npos && pos < stream.str().length())
+                        stream.str(stream.str().substr(0, stream.str().find("\r")));
+                    chunk_str += stream.str();
+                    stream.clear();
+                    stream.str("");
+                    chunked_ok = false;
+                    return ;
+                }
+                else if (stream.str().length() == 2)
+                {
+                    stream.clear();
+                    stream.str("");
+                    chunked_ok = false;
+                    return ;
+                }
+            }
             chunk_size = hex_to_dec(stream.str());
             if (chunk_size == 0)
                 UpdateStatus(BODY_STATUS | BODY_DONE);
-            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            if (stream.str().find("\r\n") != string::npos)
+                stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            else
+            {
+                for (size_t i = 0; i < stream.str().length(); i++)
+                {
+                    if (stream.str().c_str()[i] == '\r' || stream.str().c_str()[i] == '\n')
+                    {
+                        chunked_ok = true;
+                        break ;
+                    }
+                    else
+                    {
+                        chunk_str += stream.str().c_str()[i];
+                    }
+                }
+                if (chunked_ok)
+                    chunk_size = hex_to_dec(chunk_str);
+                else
+                {
+                    chunked_ok = false;
+                    return ;
+                }
+                if (chunk_size == 0)
+                    UpdateStatus(BODY_STATUS | BODY_DONE);
+                return ;
+            }
         }
         if (!_isHeader && chunk_size >= stream.str().length())
         {
@@ -273,14 +334,6 @@ void    requestBody::chunkedBody(stringstream &stream) {
             s_write(bodycontent, stream);
         }
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
+    catch (const std::exception &e) {
     }
-    // s_write(bodycontent, stream);
-    // cout << "chunkedBody" << endl;
-    // exit(0);
-    
-    // exit(4);
-
-} 
+}
