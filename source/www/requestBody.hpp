@@ -100,6 +100,7 @@ class requestBody {
         mutable short       _status; // body status
         size_t                chunk_size;
         bool                 chunked_ok;
+        bool                is_the_last_newline;
 
         // multipartBody 
         short                  _idx;
@@ -135,6 +136,7 @@ class requestBody {
             _isHeader = true;
             chunk_size = 0;
             chunked_ok = true;
+            is_the_last_newline = false;
         }
         requestBody &operator=(const requestBody &rhs) {
             if (this != &rhs) {
@@ -151,6 +153,7 @@ class requestBody {
                 chunk_size = rhs.chunk_size;
                 chunk_str = rhs.chunk_str;
                 chunked_ok = rhs.chunked_ok;
+                is_the_last_newline = rhs.is_the_last_newline;
             }
             return *this;
         }

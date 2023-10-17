@@ -258,7 +258,13 @@ void    requestBody::chunkedBody(stringstream &stream) {
             chunk_size = hex_to_dec(chunk_str);
             if (chunk_size == 0)
                 UpdateStatus(BODY_STATUS | BODY_DONE);
-            stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
+            if (is_the_last_newline)
+            {
+                stream.str(stream.str().substr(1));
+                is_the_last_newline = false;
+            }
+            else
+                stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
             chunk_str.clear();
             chunked_ok = true;
         }
@@ -282,15 +288,11 @@ void    requestBody::chunkedBody(stringstream &stream) {
                 {
                     size_t pos = stream.str().find("\r");
                     if (pos != std::string::npos && pos < stream.str().length())
-                        stream.str(stream.str().substr(0, stream.str().find("\r")));
+                    {
+                        stream.str(stream.str().substr(0, pos));
+                        is_the_last_newline = true;
+                    }
                     chunk_str += stream.str();
-                    stream.clear();
-                    stream.str("");
-                    chunked_ok = false;
-                    return ;
-                }
-                else if (stream.str().length() == 2)
-                {
                     stream.clear();
                     stream.str("");
                     chunked_ok = false;
@@ -304,27 +306,8 @@ void    requestBody::chunkedBody(stringstream &stream) {
                 stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
             else
             {
-                for (size_t i = 0; i < stream.str().length(); i++)
-                {
-                    if (stream.str().c_str()[i] == '\r' || stream.str().c_str()[i] == '\n')
-                    {
-                        chunked_ok = true;
-                        break ;
-                    }
-                    else
-                    {
-                        chunk_str += stream.str().c_str()[i];
-                    }
-                }
-                if (chunked_ok)
-                    chunk_size = hex_to_dec(chunk_str);
-                else
-                {
-                    chunked_ok = false;
-                    return ;
-                }
-                if (chunk_size == 0)
-                    UpdateStatus(BODY_STATUS | BODY_DONE);
+                chunked_ok = false;
+                chunk_str = stream.str();
                 return ;
             }
         }

@@ -41,7 +41,6 @@ server : $(SRCS)
 	@$(CC) -g $(CPPFLAGS) $^ -o $(NAME)
 
 rs : show server
-	
 
 
 
