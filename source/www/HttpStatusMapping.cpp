@@ -1,5 +1,5 @@
 
-# include "HttpStatusMapping.hpp"
+# include "server-core.hpp"
 
 HttpStatusMapping::HttpStatusMapping( void ) 
 {
@@ -21,7 +21,10 @@ HttpStatusMapping::HttpStatusMapping( void )
     (*this)[HTTP_NOT_MODIFIED] = "Not Modified";
     (*this)[HTTP_USE_PROXY] = "Use Proxy";
     (*this)[HTTP_TEMPORARY_REDIRECT] = "Temporary Redirect";
+    // my exit codes
 
+    (*this)[UNACCEPTABLE_REQUEST] = "Unacceptable Request !";
+    
     (*this)[HTTP_BAD_REQUEST] = "Bad Request";
     (*this)[HTTP_UNAUTHORIZED] = "Unauthorized";
     (*this)[HTTP_PAYMENT_REQUIRED] = "Payment Required";
@@ -48,3 +51,5 @@ HttpStatusMapping::HttpStatusMapping( void )
     (*this)[HTTP_GATEWAY_TIMEOUT] = "Gateway Timeout";
     (*this)[HTTP_VERSION_NOT_SUPPORTED] = "HTTP Version Not Supported";
 }
+
+HttpStatusMapping WebStatusMap;

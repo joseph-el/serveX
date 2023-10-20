@@ -1,26 +1,13 @@
-# include "socket.hpp"
-#include "client.hpp"
-#include <netdb.h>
-#include <vector>
+# include "server-core.hpp"
 
-void Socket::listen(int _backlog) 
-{
-    if (::listen(_socketfd, _backlog) != 0)
-    {
+void Socket::listen(int _backlog)  {
+    if (::listen(_socketfd, _backlog) != 0) {
         cerr << NAME << ": listen " << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
 }
 
-std::string to_str(int value)
-{
-    std::stringstream ss;
-    ss << value;
-    return ss.str();
-}
-
-void *getAddr(struct sockaddr *sa) 
-{
+void *getAddr(struct sockaddr *sa)  {
 	return &(((struct sockaddr_in *)sa)->sin_addr);
 }
 
@@ -36,8 +23,8 @@ struct addrinfo* Socket::getSocketAddr( void )
     // ai_flags = AI_PASSIVE : Bind
     hint.ai_flags = AI_PASSIVE;
 
-    if (getaddrinfo(Address.getHost().c_str(), to_str(Address.getListenPort()).c_str(), &hint, &addr) < 0) {
-            std::cerr << "Invalid address.\n";
+    if (getaddrinfo(Address.getHost().c_str(), to_string(Address.getListenPort()).c_str(), &hint, &addr) < 0) {
+            cerr << NAME ": Invalid address" << endl;
             exit(EXIT_FAILURE);
     }
     return addr;
@@ -52,8 +39,7 @@ void Socket::set_server_address(server_data &_address) {
     Address = _address;
 }
 
-void Socket::bind() 
-{
+void Socket::bind()  {
     struct addrinfo *addr = getSocketAddr();
     int error = 0, tmp_socket;
     for (struct addrinfo *tmp = addr; tmp; tmp = tmp->ai_next)
@@ -68,7 +54,7 @@ void Socket::bind()
     }
     freeaddrinfo(addr);
     if (error == -1)
-            return ((void)(perror(NULL)), (void)close(tmp_socket), exit(1));
+            return perror("socket fail: "), close(tmp_socket), exit(1);
     _socketfd = tmp_socket;
 }
 
@@ -76,8 +62,7 @@ socket_t Socket::getsocket_t( void ) const
     {  return _socketfd; }
 
 
-int is_inSocket(socket_t &fdsocket, const vector<Socket> &_socket)
-{
+int is_inSocket(socket_t &fdsocket, const vector<Socket> &_socket) {
     vector<Socket>::const_iterator it = _socket.begin();
 
     for (; it != _socket.end(); it++)
@@ -87,8 +72,7 @@ int is_inSocket(socket_t &fdsocket, const vector<Socket> &_socket)
     return -1;
 }
 
-socket_t Socket::accept(void)
-{
+socket_t Socket::accept(void) {
     socket_t newconnection;
 
     newconnection = ::accept(_socketfd, NULL, NULL);
@@ -101,12 +85,12 @@ socket_t Socket::accept(void)
 }
 
 
-server_data Socket::get_server_address( void ) const
-{
+const server_data& Socket::get_server_address( void ) const {
     return Address;
 }
 
-vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, pair<socket_t, socket_t> &fd_range)
+
+vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, t_pair &fd_range) 
 {
     vector<server_data>::iterator it = servers.begin();
     socket_t min_fd, max_fd;
@@ -114,8 +98,7 @@ vector<Socket> init_Socket(vector<server_data> servers, fd_set &rd_socket, pair<
 
     FD_ZERO(&rd_socket);
 
-    for (; it != servers.end(); it++)
-    {
+    for (; it != servers.end(); it++) {
         Socket new_socket;
         
         // setting server address which contain all information about the server

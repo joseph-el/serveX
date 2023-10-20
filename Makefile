@@ -1,59 +1,76 @@
-NAME = Webserv
+NAME := Webserv
 
-CC = c++
+PREFIX_FOLDER   := $(shell pwd)
+SERVER_PATH_PWD := $(shell pwd)
+CONFIG_FILE     := $(addsuffix /cfg/config.cfg,$(PREFIX_FOLDER))
 
-PREFIX_FOLDER := $(shell pwd)
-CONFIG_FILE   := $(addsuffix /cfg/webserv.cfg,$(PREFIX_FOLDER))
+SET_PREFIX := -D SERVER_PATH=\"$(SERVER_PATH_PWD)\" -D DEFAULT_CONF=\"$(CONFIG_FILE)\" 
+CPPFLAGS   := -Wall -Wextra -Werror -std=c++98 
+DEBUG	   := -fsanitize=address -g 
+CC 		   := c++
 
-CPPFLAGS :=  -D DEFAULT_CONF=\"$(CONFIG_FILE)\" #-fsanitize=address -g
+HTTP_FILES    := HttpStatusMapping.cpp cgi.hpp headers.cpp mimeTypes.hpp request.cpp requestBody.hpp socket.cpp \
+              	 HttpStatusMapping.hpp client.cpp headers.hpp cgi_extension.hpp redirective.cpp request.hpp response.cpp socket.hpp \
+              	 cgi.cpp client.hpp mimeTypes.cpp redirective.hpp requestBody.cpp response.hpp cgi_extension.cpp
 
+UTILITY_FILES  := StringManipulation.cpp filesManipulation.cpp location_data.cpp server_data.cpp time.cpp \
+                  StringManipulation.hpp filesManipulation.hpp location_data.hpp server_data.hpp time.hpp templates_helper.hpp
 
-UTILITY :=  source/utility/location_data.cpp\
-			source/utility/server_data.cpp \
-			source/utility/StringManipulation.cpp \
-			source/utility/utils.cpp
-
-HTTP   := source/www/socket.cpp \
-		  source/www/request.cpp \
-		  source/www/response.cpp \
-		  source/www/client.cpp \
-		  source/www/Header.cpp \
-		  source/www/mimeTypes.cpp \
-		  source/www/requestBody.cpp 
-
-		  
-CORE := source/Webserv-core.cpp \
-		source/core/config.cpp \
-		source/core/optioneer.cpp \
-		source/core/server.cpp
-
-SRCS =  $(CORE) \
-		$(UTILITY) \
-		$(HTTP)
-
-# OBJS	 := $(SRCS:%.cpp=%.o)
+CORE_FILES     := config.cpp config.hpp optioneer.cpp optioneer.hpp server-core.cpp server-core.hpp logger.cpp logger.hpp
 
 
-show :
-	clear && echo "Find config file cfg at : $(CONFIG_FILE)" && rm -f $(NAME)
-
-server : $(SRCS)
-	@$(CC) -g $(CPPFLAGS) $^ -o $(NAME)
-
-rs : show server
-
+CORE_CPP_FILES     := $(filter %.cpp,$(CORE_FILES))
+CORE_HPP_FILES 	   := $(filter %.hpp,$(CORE_FILES))
+HTTP_CPP_FILES 	   := $(filter %.cpp,$(HTTP_FILES))
+HTTP_HPP_FILES     := $(filter %.hpp,$(HTTP_FILES))
+UTILITY_CPP_FILES  := $(filter %.cpp,$(UTILITY_FILES))
+UTILITY_HPP_FILES  := $(filter %.hpp,$(UTILITY_FILES))
 
 
-all: $(NAME)
+SRCS 	:= Webserv-core.cpp\
+		$(addprefix www/,$(HTTP_CPP_FILES))\
+		$(addprefix core/, $(CORE_CPP_FILES))\
+		$(addprefix utility/, $(UTILITY_CPP_FILES))
 
-$(NAME): $(OBJS)
-	$(CC) $(CPPFLAGS) -o $(NAME) $^
+SRCS    := $(addprefix source/, $(SRCS))
 
-%.o: %.cpp 
-	$(CC) $(CPPFLAGS) $< -o $@
+HEADERS = $(addprefix core/, $(CORE_HPP_FILES))\
+	$(addprefix www/, $(HTTP_HPP_FILES))\
+	$(addprefix  utility/, $(UTILITY_HPP_FILES))
 
-clean:
-	rm -f $(OBJS)
-fclean: clean
-	rm -f $(NAME)
-re: fclean all
+
+HEADERS := $(HEADERS:%=source/%)
+
+OBJS 	:= $(SRCS:%.cpp=%.o)
+
+INCLUDES := www core utility
+INCLUDES := $(addprefix -I source/, $(INCLUDES))
+
+
+COM_COLOR := \033[0;34m
+OBJ_COLOR := \033[0;36m
+OK_COLOR  := \033[0;32m
+NO_COLOR  := \033[m
+
+COM_STRING := "Compiling"
+
+all : $(NAME)
+	reset && echo "Find config file cfg at : $(CONFIG_FILE)"
+	@echo "$(OK_COLOR) [Webserv ✅] $(NO_COLOR)"
+
+
+$(NAME) : $(OBJS)
+		@echo "$(OK_COLOR) [OBJS ✅] $(NO_COLOR)"
+		@$(CC) -fsanitize=address -g $^ -o $@ 
+
+%.o: %.cpp $(HEADERS)
+#@printf "%-100.900b\r" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
+	@$(CC)  -g $(SET_PREFIX) $(INCLUDES) -c $< -o $@
+
+clean :
+	@echo "$(OK_COLOR) [clean 🧹] $(NO_COLOR)"
+	@rm -f $(OBJS)
+fclean : clean
+	@rm -f $(NAME)
+
+re : fclean all

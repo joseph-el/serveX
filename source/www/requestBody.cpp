@@ -1,9 +1,6 @@
-# include "requestBody.hpp"
-#include <cstdlib>
-#include <sstream>
+# include "server-core.hpp"
 
-pair<bool, string> requestBody::extractBoundary(string &line)
-{
+pair<bool, string> requestBody::extractBoundary(string &line) {
     stringstream ss(line);
     string multipartSting, boundary_;
     ss >> multipartSting >> boundary_;
@@ -20,44 +17,42 @@ pair<bool, string> requestBody::extractBoundary(string &line)
     return make_pair(boundary_.empty() ? false : true, boundary_);
 }
 
-bool    requestBody::UpdateStatus(short _st) const
-{
-    if (_st & BODY_STATUS)
-        return  _status = _st & ~BODY_STATUS, true;
-    return _multipartStatus = _st & ~MULTIPART_STATUS, true;
+void    requestBody::UpdateStatus(t_stat _st) const {
+    _status = _st;
 }
 
 void    requestBody::FindBodyStatus( Header &_header ) {
     string line;
     string buff;
+    stringstream ss;
 
     if (!(line = _header.get("Content-Length")).empty()) { // get Length 
 		trim(line);
 	    if (line.length() > 0 and (line[0] >= '1' and line[0] <= '9') and every(line.begin(), line.end(), ::isdigit))
 			contentLength = atoi(line.c_str());
+        if (!contentLength)
+            goto other;
 	}
     bodyType = _header.get("Content-Type"), trim(bodyType); // get like (text/plain) externsion
     if (bodyType.find(MULTIPART_STRING) != string::npos) { // emm check if the body as multiple part
         boundary = extractBoundary(bodyType);
-        return (void)UpdateStatus(!boundary.first ? (BODY_STATUS | BODY_ERROR) : (BODY_STATUS | MULTIPART_BODY) );
+        return UpdateStatus(!boundary.first ? UNACCEPTABLE_REQUEST:MULTIPART_BODY);
     }
     line = _header.get("Transfer-Encoding"); // check if chunked
-    stringstream ss(line);
+    ss.clear(); ss << line;
     while (getline(ss, buff, ',')) {
         trim(buff);
         if (identicalStrings(buff, "chunked"))
-            return (void)UpdateStatus(CHUNKED_BODY | BODY_STATUS);
+            return UpdateStatus(CHUNKED_BODY);
     }
-    if ( !MimeTypes(bodyType).empty()) // check if the extension found at mimeTypes for rename it after 😎
-       _isBinary = true;
-    if (contentLength > 0) // else the body  is just a lenghted body
-         UpdateStatus(LENGTH_BODY | BODY_STATUS);
-    else
-        UpdateStatus(BODY_SUCCESSFUL | BODY_STATUS); // body done
+    other:
+       if (contentLength > 0) // else the body  is just a lenghted body
+           UpdateStatus(LENGTH_BODY);
+       else
+           UpdateStatus(BODY_SUCCESSFUL); // body done
 }
 
-void    requestBody::absorbHeaders(string &_buff)
-{
+void    requestBody::absorbHeaders(string &_buff) {
     string buff;
     string _s1, name, filename;
 
@@ -84,29 +79,48 @@ void    requestBody::absorbHeaders(string &_buff)
         }
         _multipart[_idx].name = name;
         _multipart[_idx]._filename = filename;
-        string tmp = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";
-        if (!filename.empty())
-            tmp = "/tmp/" + filename; // just for test
+        string tmp = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";    
+        if (_multipart[_idx]._header.size() == 1) // i added this for setup key
+            tmp = "/tmp/serveX_" + to_string(set_time()) + "__.key", _multipart[_idx]._filename = "";
         _multipart[_idx]._openedFILE = tmp;
         _multipart[_idx].file = s_open(tmp);
-        UpdateStatus (MULTIPART_STATUS | MLT_HEADER_DONE | MLT_CONTENT | MULTIPART_BEGIN);
+        _multipartStatus = (MLT_HEADER_DONE | MLT_CONTENT | MULTIPART_BEGIN);
 }
 
-int     requestBody::absorbCRLF(stringstream &ss) {
+// int     requestBody::absorbCRLF(stringstream &ss) {
+
+//     static string::size_type idx = 0;
+//     int                      seek = ss.tellg();
+//     char                     _c;
+
+//     while (!ss.eof() and idx < 2) {
+// 		ss.get(_c);
+// 		if (CRLF[idx] != _c && !ss.eof()) 
+// 			return idx = 0, ss.seekg(seek), CRLF_NO;
+// 		if (!ss.eof())
+// 			idx++;
+// 	}
+//     if (idx == 2)
+//         return idx = 0, CRLF_OK;
+//     return CRLF_WAIT;
+// }
+
+
+int     absorbCRL(stringstream &stream, stringstream &ss) {
 
     static string::size_type idx = 0;
-    int                      seek = ss.tellg();
     char                     _c;
 
-    while (!ss.eof() and idx < 2) {
-		ss.get(_c);
-		if (CRLF[idx] != _c && !ss.eof()) 
-			return idx = 0, ss.seekg(seek), CRLF_NO;
+    while (!stream.eof() and idx < 2) {
+		stream.get(_c);
+        (!stream.eof()) && (ss << _c);
+		if (CRLF[idx] != _c && !stream.eof()) 
+			return idx = 0,  CRLF_NO;
 		if (!ss.eof())
 			idx++;
 	}
     if (idx == 2)
-        return idx = 0, CRLF_OK;
+        return  ss.clear(), ss.str(""), idx = 0, CRLF_OK;
     return CRLF_WAIT;
 }
 
@@ -131,20 +145,23 @@ int     requestBody::absorbBoundary(stringstream &stream, stringstream &ss) {
 void    requestBody::multipartBody(stringstream &stream)
 {
     string       buff;
-    short        _st;
+    t_stat       _st;
     char         _c;
 
+
     while (!stream.eof() && _multipartStatus & ~MULTIPART_DONE) {
+        
         if (_multipartStatus & MULTIPART_BEGIN) {
+
             _st = _multipartStatus & ~MULTIPART_BEGIN;
             switch (_st) {
                 case MLT_BOUNDARY:
                     (absorbBoundary(stream, ss)) &&
-                        UpdateStatus(MULTIPART_STATUS | MLT_CRLF | MULTIPART_BEGIN);
+                        (_multipartStatus = (MLT_CRLF | MULTIPART_BEGIN));
                     break;
                 case MLT_CRLF:
-                     (absorbCRLF(stream) == CRLF_OK) &&
-                        (UpdateStatus(MULTIPART_STATUS | MLT_HEADERS | MULTIPART_BEGIN));
+                     (absorbCRL(stream, ss) == CRLF_OK) &&
+                        (_multipartStatus = (MLT_HEADERS | MULTIPART_BEGIN));
                     buff.clear();
                     break;
                 case MLT_HEADERS:
@@ -157,10 +174,11 @@ void    requestBody::multipartBody(stringstream &stream)
             if (_multipartStatus & MLT_HEADER_DONE)
                 _multipartStatus &= ~(MULTIPART_BEGIN | MLT_HEADER_DONE);
         }  else if (_multipartStatus & MLT_CONTENT) {
+
             _st = absorbBoundary(stream, ss);
             switch (_st) {
                 case BN_OK:
-                    stream.get(_c); // TODO: check if stream is empty
+                    stream.get(_c); // check if stream is empty
                     if (contest('-', _c, stream)) {
                         _multipartStatus = MULTIPART_DONE;
                         return ;
@@ -176,90 +194,65 @@ void    requestBody::multipartBody(stringstream &stream)
                     s_write(_multipart[_idx].file, ss);
                     break;
             }
+        
         }
     }
 }
 
 void    requestBody::lengthedBody(stringstream &stream) {
 
-    stringstream ss;
-	char         buff[(1 << 10)] = {0};
+	char buff[MAX_BYTES_RECV] = {0};
 
     stream.read(buff, contentLength - content);
     content += stream.gcount();    
-    ss << buff;
-    s_write(bodycontent, ss);
-    if (contentLength == content) 
-		UpdateStatus(BODY_STATUS | BODY_DONE);
+    fwrite(buff, 1, stream.gcount(), bodycontent);
+    if (contentLength == content)
+		UpdateStatus(BODY_SUCCESSFUL);
 }
 
 void    requestBody::absorb_stream(stringstream &stream)
 {
-    // cout << "check status: " << _status << endl;
     switch (_status) {
 
         case MULTIPART_BODY:
 
             multipartBody(stream);
-            if (_multipartStatus & MULTIPART_DONE)
-                UpdateStatus(BODY_STATUS | BODY_DONE);
+            if (_multipartStatus & MULTIPART_DONE) {
+                UpdateStatus(BODY_SUCCESSFUL);
+                cout << "YES DONE :" << endl;
+            }
+
             break;
         
         case CHUNKED_BODY:
             chunkedBody(stream);
-
-            // cout << "waiting for tnaceur" << endl;
-            // exit(EXIT_FAILURE);
-
             break;
+        
         case LENGTH_BODY:
             lengthedBody(stream);
             break;
+    }
     
-    }
 }
-
-
-
-// ===========================================================================================================================================================================
-
-
-size_t  hex_to_dec(std::string s)
-{
-    std::stringstream ss;
-    ss << std::hex << s;
-    size_t result;
-    ss >> result;
-    if (ss.fail() || ss.bad())
-    {
-        return -1;
-    }
-    return result;
-}
-
 
 void    requestBody::chunkedBody(stringstream &stream) {
     try {
-        if (_isHeader)
-        {
+        if (_isHeader) {
             size_t f = stream.str().find("\r\n\r\n");
-            if (f != string::npos)
-            {
+            if (f != string::npos) {
                 chunk_size = hex_to_dec(stream.str().substr(f + 4));
                 stream.str(stream.str().substr(f + 4 + std::to_string(chunk_size).length() + 2));
                 _isHeader = false;
             }
         }
-        if (!chunked_ok)
-        {
+        if (!chunked_ok) {
             if (chunk_str.length() == 1 && chunk_str[0] == '\r')
                 chunk_str.clear();
             chunk_str += stream.str().substr(0, stream.str().find("\r\n"));
             chunk_size = hex_to_dec(chunk_str);
             if (chunk_size == 0)
-                UpdateStatus(BODY_STATUS | BODY_DONE);
-            if (is_the_last_newline)
-            {
+                return UpdateStatus(BODY_SUCCESSFUL);
+            if (is_the_last_newline) {
                 stream.str(stream.str().substr(1));
                 is_the_last_newline = false;
             }
@@ -268,15 +261,13 @@ void    requestBody::chunkedBody(stringstream &stream) {
             chunk_str.clear();
             chunked_ok = true;
         }
-        if (!_isHeader && chunk_size < stream.str().length())
-        {
+        if (!_isHeader && chunk_size < stream.str().length()) {
             std::stringstream tmp;
             tmp.str(stream.str().substr(0, chunk_size));
             s_write(bodycontent, tmp);
             stream.str(stream.str().substr(chunk_size));
-            if (stream.str().length())
-            {
-                if (stream.str().length() == 1){
+            if (stream.str().length()) {
+                if (stream.str().length() == 1) {
                     chunk_str += '\r';
                     stream.clear();
                     stream.str("");
@@ -284,11 +275,9 @@ void    requestBody::chunkedBody(stringstream &stream) {
                     return ;
                 }
                 stream.str(stream.str().substr(2));
-                if (stream.str().find("\r\n") == std::string::npos)
-                {
+                if (stream.str().find("\r\n") == std::string::npos) {
                     size_t pos = stream.str().find("\r");
-                    if (pos != std::string::npos && pos < stream.str().length())
-                    {
+                    if (pos != std::string::npos && pos < stream.str().length()) {
                         stream.str(stream.str().substr(0, pos));
                         is_the_last_newline = true;
                     }
@@ -301,22 +290,47 @@ void    requestBody::chunkedBody(stringstream &stream) {
             }
             chunk_size = hex_to_dec(stream.str());
             if (chunk_size == 0)
-                UpdateStatus(BODY_STATUS | BODY_DONE);
+                return UpdateStatus(BODY_SUCCESSFUL);
             if (stream.str().find("\r\n") != string::npos)
                 stream.str(stream.str().substr(stream.str().find("\r\n") + 2));
-            else
-            {
+            else {
                 chunked_ok = false;
                 chunk_str = stream.str();
                 return ;
             }
         }
-        if (!_isHeader && chunk_size >= stream.str().length())
-        {
+        if (!_isHeader && chunk_size >= stream.str().length()) {
             chunk_size -= stream.str().length();
             s_write(bodycontent, stream);
         }
     }
-    catch (const std::exception &e) {
+    catch (...) {
+        UpdateStatus(UNACCEPTABLE_REQUEST);
     }
+}
+
+void requestBody::closebodycontent() {
+    if (bodycontent) {
+        fclose(bodycontent);
+        bodycontent = NULL;
+    }
+}
+
+void requestBody::reset() {
+    closebodycontent();
+	_idx = 0;
+    contentLength = 0;
+    content = 0;
+    _status = 0;
+    ss.clear();
+    ss.str("");
+    _idx = 0;
+    _multipartStatus = MULTIPART_BEGIN | MLT_BOUNDARY;
+    map<short, ShapeFile>::iterator it = _multipart.begin();
+    while (it != _multipart.end()) {
+        it->second._header.clear();
+        fclose(it->second.file);
+        it++;
+    }
+    _multipart.clear();
 }

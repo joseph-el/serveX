@@ -1,57 +1,54 @@
-# ifndef _CLIENT_H_
-# define _CLIENT_H_
+# ifndef __CLIENT_H__
+# define __CLIENT_H__
 
-# include "../core/config.hpp"
-# include "socket.hpp"
-# include "request.hpp"
-# include "response.hpp"
-
+# include "server-core.hpp"
 class s_client {
-    private:
-        response res_;
-        request  req_;
-        socket_t _newconnection; // new client
-        socket_t _server_socket; // server socket
-        int       _server_idx;   // server index
 
-    
-    public:
-        s_client() {
-            // cout << "Client Constructor" << endl;
-        }
-        ~s_client() { 
-            // cout << "Client Destructor" << endl;
-        }
-        s_client(const s_client &other) {
-            // cout << "Client Copy Constructor" << endl;
-            *this = other;
-        }
-        s_client &operator=(const s_client &other) {
-            // cout << "Client Assignement Operator" << endl;
-            if (this != &other) {
-                this->_newconnection = other._newconnection;
-                this->_server_socket = other._server_socket;
-                this->_server_idx = other._server_idx;
-                this->req_ = other.req_;
-                this->res_ = other.res_;
-            }
-            return *this;
-        }
-        s_client(socket_t newconnection);
+    private :
+        request  req;      
+        socket_t newconnection;
+        socket_t server_socket;
 
-        bool reset() {return req_.is_valid();}
-        
-        void set_server_idx(int idx, int server_socket);
+    public :
+
+        socket_t    server_idx;
+        response    res;
+        # ifndef __ADDRESS__
+            # define SERVER_ADDRESS (&_socket[clients[c].server_idx].get_server_address())
+            # define MAX_BYTES_RECV 1024
+        # endif
+        void DealwithRequest( stringstream *,const server_data *);
+        void DealwithResponce(const server_data *_vts = __null);
+
+        void     set_server_idx(socket_t, socket_t);
         socket_t get_client_socket();
-        
-        void Expireconnection() {
-            // exit(EXIT_FAILURE); // hhhhhhh debug about 20 min fuck
-            // waiting to remove iterator and close the fd
+
+        void reset ();
+        bool clientDone() const;
+        bool request_done() const;
+        s_client();
+       ~s_client();
+        s_client(socket_t);
+
+
+    s_client &operator=(const s_client &other) {
+        if (this != &other) {
+            this->req = other.req;
+            this->newconnection = other.newconnection;
+            this->server_socket = other.server_socket;
+            this->server_idx = other.server_idx;
+            this->res = other.res;
         }
-        void DealwithRequest( stringstream *);
-        void DealwithResponce();
+        return *this;
+    }
+
+    s_client(const s_client& other) {
+        *this = other;
+    }
+
+
 };
 
-extern std::vector<s_client> clients;
+extern vector<s_client> clients;
 
 # endif

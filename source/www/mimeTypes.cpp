@@ -1,9 +1,8 @@
-# include "mimeTypes.hpp"
+# include "server-core.hpp"
 
 mimeTypes::mimeTypes(){
 
 	insert(make_pair("html", "text/html"));
-	insert(make_pair("htm", "text/html"));
 	insert(make_pair("shtml", "text/html"));
 	insert(make_pair("css", "text/css"));
 	insert(make_pair("xml", "text/xml"));

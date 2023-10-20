@@ -8,10 +8,10 @@
 # include <errno.h>
 # include <sys/stat.h>
 
-# include "config.hpp"
+# include "server-core.hpp"
 
-# define GETOPT_EXIT    -1
-# define NAME    "Webserv"
+# define  GETOPT_EXIT    -1
+# define  NAME    "Webserv"
 # define _VERSION "1.0.0"
 
 using namespace std;

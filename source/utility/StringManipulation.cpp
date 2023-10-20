@@ -1,5 +1,26 @@
-# include "StringManipulation.hpp"
-# include <algorithm>
+# include "server-core.hpp"
+
+string joinPath(const string &CrrPath, const string &Secound) {
+	if (CrrPath.empty()  or Secound.empty())
+		return CrrPath + Secound;
+	string path(CrrPath);
+	if (CrrPath.back() != '/' && Secound.front() != '/')
+		path += "/";
+	else if (CrrPath.back() == '/' and Secound.front() == '/')
+		return CrrPath.substr(0, CrrPath.length() - 1) + Secound;
+	return path + Secound;
+}
+
+size_t  hex_to_dec(std::string s)
+{
+    std::stringstream ss;
+    ss << std::hex << s;
+    size_t result;
+    ss >> result;
+    if (ss.fail() || ss.bad())
+        return -1;
+    return result;
+}
 
 bool identicalStrings(const std::string &_st1, const std::string &_st2)
 {
@@ -33,4 +54,24 @@ void rightTrim(string &_st, const string &sep) {
 void trim(string &target, const string &sep) {
 	leftTrim (target, sep);
 	rightTrim(target, sep);
+}
+
+string::size_type commonPrefix(const string &s1, const string &s2) {
+    string::size_type ret = 0;
+	while (s1[ret] && s2[ret] && s1[ret] == s2[ret])
+		ret++;
+	return ret;
+}
+
+bool contest(const char _c, char &target, stringstream &ss) {
+    return _c == target && !ss.eof();
+}
+
+string	clientmsg(socket_t idx, bool mode) {
+    string msg;
+
+    msg = "client [" + to_string(idx) + "]: " + " has finished sending the request\n";
+    if (mode)
+        msg = "client [" + to_string(idx) + "]: " + " has finished receiving the response\n";
+    return msg;
 }

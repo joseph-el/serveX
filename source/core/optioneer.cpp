@@ -1,4 +1,4 @@
-# include "optioneer.hpp"
+# include "server-core.hpp"
 
 OptionFunction optionFunctions[] = {
         &Options::showHelp,
@@ -51,19 +51,9 @@ void Options::options(int argc, char *const argv[])
     is_successful = (flag & CONFIG_FILE);
 }
 
-/*
-    i will handel logs in my serveX ;
-*/
-
-void Options::setErrorLogFile() const 
-{
-    struct stat _st;
-    memset(&_st, 0, sizeof _st);
-    errno = stat(p_error.c_str(), &_st) != 0 ? ENOENT : S_ISDIR(_st.st_mode) ? EISDIR : 0;
-
-    if ( errno & (ENOENT | EISDIR) )
-		cerr << NAME ": \"" << p_error << "\" failed : " << strerror(errno) << endl, is_successful = false;
-    // set p_error
+void Options::setErrorLogFile() const {
+    cout << NAME "/" _VERSION " not support to set logger file !" << endl;
+    cout << NAME "Error log: /log/notice.log";
 }
 
 void Options::setConfigFile() const 
