@@ -130,7 +130,7 @@ bool    server_data::foundRoot( void ) const {
 
 location_data*  server_data::matchLocation(string _path) {
 
-    location_data   *matched = nullptr;
+    location_data   *matched = __null;
     Base it       = _locations.begin();
     string::size_type   _size = 0;
 

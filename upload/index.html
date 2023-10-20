@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,9 +14,9 @@
 
 
         <input type="file" name="file1"><br />
-        <!-- <input type="file" name="file2"><br />
+        <input type="file" name="file2"><br />
         <input type="file" name="file3"><br />
-        <input type="file" name="file4"><br /> -->
+        <input type="file" name="file4"><br />
 
 
 
@@ -26,4 +26,44 @@
 
 </body>
 
-</html> 
+</html>  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Files</title>
+    <script>
+        function redirectToAnotherPage() {
+            // Get the user input value
+            var userInput = document.getElementById("userInput").value;
+
+            // Construct the URL for the redirection
+            var redirectUrl = "/Users/joseph/Desktop/serverX/dist/serveX-uploading.html";
+
+            // Redirect to another HTML file
+            window.location.href = redirectUrl;
+        }
+    </script>
+</head>
+
+<body>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data" onsubmit="redirectToAnotherPage(); return false;">
+
+        <!-- Add the user input field -->
+        <!-- Add file input fields -->
+        <input type="file" name="file1"><br />
+        <input type="file" name="file2"><br />
+        <input type="file" name="file3"><br />
+        <input type="file" name="file4"><br />
+
+        <input type="submit" value="Upload">
+
+    </form>
+
+</body>
+
+</html>

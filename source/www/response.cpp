@@ -729,11 +729,11 @@ response::response() {
     _stat = RESPONSE_INIT;
     _httpCodeSatus = HTTP_BAD_REQUEST;
     _keepAlive = true;
-    _location = nullptr;
-    req = nullptr;
-    file = nullptr;
-    _vts = nullptr;
-    _location = nullptr;
+    _location = __null;
+    req = __null;
+    file = __null;
+    _vts = __null;
+    _location = __null;
     _cgi = -1;
     _fdCgi[CGI_OUT] = _fdCgi[CGI_ERR] = -1;
     _time = 0;

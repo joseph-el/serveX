@@ -9,7 +9,7 @@ stringstream *Readrequest(socket_t _fd)
     int bytes;
     bytes = recv(_fd, stream, MAX_BYTES_RECV, 0);
     if (!bytes or bytes == -1)
-        return nullptr;
+        return __null;
     _stream->write(stream, bytes);
     return _stream;
 }

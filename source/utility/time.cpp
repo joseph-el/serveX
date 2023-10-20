@@ -16,7 +16,7 @@ unsigned long set_time() {
 
 
 string getCurrentGMTTime() {
-    time_t currentTime = time(nullptr);
+    time_t currentTime = time(__null);
     char buffer[50]; 
 
    strftime(buffer, sizeof(buffer), "%a, %d %b %Y %H:%M:%S GMT", gmtime(&currentTime));
