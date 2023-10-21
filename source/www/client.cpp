@@ -4,9 +4,9 @@ s_client::s_client(socket_t newconnection) : req(), newconnection(newconnection)
 s_client::s_client() {}
 s_client::~s_client() {}
 
-void    s_client::set_server_idx(socket_t idx, socket_t server_socket) {
+void    s_client::set_server_idx(socket_t idx, socket_t _server_socket) {
     server_idx = idx;
-    server_socket = server_socket;
+    server_socket = _server_socket;
 }
 
 socket_t s_client::get_client_socket() {
@@ -16,9 +16,9 @@ socket_t s_client::get_client_socket() {
 # define INIT_UPLOADING_PAGE 8
 # define HANDEL_UPLOADING_PAGE 16
 
-void s_client::DealwithRequest( stringstream *stream, const server_data *_virtualServer) 
+void s_client::DealwithRequest( stringstream *stream, __unused const server_data *_virtualServer) 
 {
-    static int remember = INIT_UPLOADING_PAGE;
+    // static int remember = INIT_UPLOADING_PAGE;
     if (!stream)
         return req.UpdateStatus(REQUEST_PARSE_DONE);
     reset();

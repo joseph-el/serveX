@@ -111,6 +111,8 @@ void config::parseServersData()
                         {
                             if (currentLocationConfig.isEmpty())
                                 currentLocationConfig.setIsEmptyLocation(true);
+                            if (currentLocationConfig.getRoot().empty())
+                                _errorAndExit("Every Location Must Have At Least A {Root}", lineNumber);
                             currentConfig.addLocation(currentLocationConfig);
                             break;
                         }

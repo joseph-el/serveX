@@ -1,8 +1,7 @@
 # include "server-core.hpp"
 
 int  s_write(FILE *file, stringstream &__DATA_TO_WRITE__) {
-	if (fwrite(__DATA_TO_WRITE__.str().c_str(), 1, __DATA_TO_WRITE__.str().size(), file) == -1)
-        return -1;
+	fwrite(__DATA_TO_WRITE__.str().c_str(), 1, __DATA_TO_WRITE__.str().size(), file);
 	__DATA_TO_WRITE__.clear();
 	__DATA_TO_WRITE__.str("");
     fflush(file);

@@ -44,7 +44,7 @@ bool    cgi::_setupCgiEnvs( request& req) {
     _initRequestEnvVariables(req);
 
     std::map<std::string, std::string>::const_iterator it;
-    int i = 0;
+    
     for (it = _cgiEnvVars.begin(); it != _cgiEnvVars.end(); ++it)
         _tmpEnvs.push_back(it->first + "=" + it->second);
 

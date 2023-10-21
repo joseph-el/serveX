@@ -215,12 +215,10 @@ void    requestBody::absorb_stream(stringstream &stream)
     switch (_status) {
 
         case MULTIPART_BODY:
-
+            
             multipartBody(stream);
-            if (_multipartStatus & MULTIPART_DONE) {
+            if (_multipartStatus & MULTIPART_DONE)
                 UpdateStatus(BODY_SUCCESSFUL);
-                cout << "YES DONE :" << endl;
-            }
 
             break;
         

@@ -18,7 +18,7 @@ class  Redirect {
         string _getRedirectHost(void) const {
             return _host;
         }
-        const int getRedirectStatus(void) const {
+        int getRedirectStatus(void) const {
             return _redirect_Code_Status;
         }
         Redirect(const  string &, const int _CodeStatus = 301, bool local = true);

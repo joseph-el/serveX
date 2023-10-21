@@ -48,7 +48,7 @@ class request {
         void parseReaquestLine(string );
         void parseHeader(string ); 
 
-        request() : _query(""), _path(""), _line("") {
+        request() : _path("") , _line(""), _query("") {
            _stat = REQUEST_SETUP;
            _httpCodeSatus = 0;
            _method = UNKNOWN_MT;

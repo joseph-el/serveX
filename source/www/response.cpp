@@ -238,7 +238,7 @@ bool response::_build_cgi_body() {
     lenghtSize = found(content, "Content-Lenght");
     lenghtSize = (lenghtSize == -1) ? filesize : lenghtSize;
     found(content, "Content-Type");
-    if (lenghtSize == -2 || lenghtSize > (ULONG_MAX - (1 << 0xA)) || lenghtSize > filesize) {
+    if (lenghtSize == -2 || lenghtSize > (LLONG_MAX - (1 << 0xA)) || lenghtSize > filesize) {
         ErrCgi("unvalid headers syntax");
         return false;
     }
@@ -258,8 +258,6 @@ void response::_build_upload_response_page() {
     bzero(&fileStat, sizeof fileStat);
 
     locationUpload = _location->getUploadPath();
-    if (_location->getUploadPath().length() && _location->getUploadPath()[0] != '/')
-        locationUpload = joinPath(SERVER_PATH, _location->getUploadPath());
     if (stat(locationUpload.c_str(), &fileStat) == 0) {
         if (S_ISDIR(fileStat.st_mode)) {
             UploadPath = locationUpload;
@@ -426,7 +424,7 @@ void response::_setup_multipart_upload_(const string &UploadPath, bool findUploa
 
     map<short, ShapeFile>* uploadFiles = &(*req)._body._multipart;
     map<short, ShapeFile>::iterator it = uploadFiles->begin();
-    ShapeFile* ret                     = NULL;
+    ShapeFile* ret                     = __null;
 
     while (it != uploadFiles->end()) {
 
@@ -437,24 +435,26 @@ void response::_setup_multipart_upload_(const string &UploadPath, bool findUploa
             newPath = joinPath(UploadPath, ret->_filename);
             if (rename(oldPath.c_str(), newPath.c_str()) == 0) {
                 msgSatus = " " + ret->_filename +  " has been uploaded successfully " + (!findUploadPath ? "but in /tmp" : "");
-                _build_alert_user_messages_(findUploadPath ? N_DONE : N_WARNING , msgSatus);
+                _build_alert_user_messages_(findUploadPath ? N_DONE : N_WARNING , " " + msgSatus);
             } else {
                 msgSatus = " an error during upload " + ret->_filename + " " + strerror(errno);
-                _build_alert_user_messages_(N_FAILED, msgSatus);              
+                _build_alert_user_messages_(N_FAILED, " " + msgSatus);              
             }
         } else if (!ret->name .empty() && ret->_header.size() == 1) {
+             oldPath = ret->_openedFILE;
              newPath = joinPath(UploadPath, ret->name + ".key");
              msgSatus = " " + ret->name;
              status = (rename(oldPath.c_str(), newPath.c_str()) == 0);
              msgSatus += status ? " value has been uploaded successfully " : string(strerror(errno));
-            _build_alert_user_messages_(status ? N_DONE : N_FAILED, msgSatus);
+            _build_alert_user_messages_(status ? N_DONE : N_FAILED, " " + msgSatus);
         } else {
+            oldPath = ret->_openedFILE;
              newPath = to_string(set_time()) + ".key";
              msgSatus = " " + newPath;
              newPath = joinPath(UploadPath, newPath);
              status = (rename(oldPath.c_str(), newPath.c_str()) == 0);
              msgSatus += status ? " has been uploaded successfully !" : string(strerror(errno));
-            _build_alert_user_messages_(status ? N_DONE : N_FAILED , msgSatus);
+            _build_alert_user_messages_(status ? N_DONE : N_FAILED , " " + msgSatus);
         }
         it ++;
     }
@@ -554,7 +554,6 @@ void response::_setup_upload_response_(void) {
     _build_upload_response_page();
 
     _headers.adding("Content-Type", MimeTypes["html"]);
-    cout << "YES AIM HERE " << endl;
     _set_stat_(PAGES_SEND_DONE | RESPONSE_DONE);
 }
 

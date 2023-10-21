@@ -17,11 +17,11 @@ static stringstream *Readrequest(socket_t _fd)
 static bool resetRanges(socket_t &maxRange, vector<Socket>& _socket) {
     
     maxRange = 0;
-    for (int s = 0; s < _socket.size(); s++) {
+    for (size_t s = 0; s < _socket.size(); s++) {
         (_socket[s].getsocket_t() > maxRange) &&
             (maxRange = _socket[s].getsocket_t());
     }
-    for (int j = 0; j < clients.size(); j++) {
+    for (size_t j = 0; j < clients.size(); j++) {
         (clients[j].get_client_socket() > maxRange) &&
             (maxRange = clients[j].get_client_socket());
     }
@@ -51,9 +51,9 @@ void init_Webserv(int argc, char *const argv[])
         if (select(fd_range.second + 1, &(rd_socket_copy), &wr_socket_copy, 0, 0) == -1)
             logger.notice(string(strerror(errno)));
         
-        for (int i = fd_range.first; i < fd_range.second + 1; i++) {
+        for (socket_t i = fd_range.first; i < fd_range.second + 1; i++) {
             if (FD_ISSET(i, &(rd_socket_copy))) {
-                int idx = is_inSocket(i, _socket);
+                socket_t idx = is_inSocket(i, _socket);
                 if (idx != -1) {
                     socket_t newconnection = _socket[idx].accept();
                     if (newconnection == -1) 
@@ -63,7 +63,7 @@ void init_Webserv(int argc, char *const argv[])
                     if (newconnection > fd_range.second)
                         fd_range.second = newconnection;
                 } else {
-                    for (int c = 0; c < clients.size(); c++) {
+                    for (size_t c = 0; c < clients.size(); c++) {
                         if (clients[c].get_client_socket() == i) {
                             stringstream *ss = Readrequest(i);
                             clients[c].DealwithRequest(ss, SERVER_ADDRESS);
@@ -77,7 +77,7 @@ void init_Webserv(int argc, char *const argv[])
                     }
                 }
             } if (FD_ISSET(i, &wr_socket_copy)) {
-                for (int c = 0; c < clients.size(); c++) {
+                for (socket_t c = 0; c < (socket_t)clients.size(); c++) {
                     if (clients[c].get_client_socket() == i) {
                         clients[c].DealwithResponce(SERVER_ADDRESS);
                         if (clients[c].clientDone()) {
