@@ -24,7 +24,7 @@ CORE_HPP_FILES 	   := $(filter %.hpp,$(CORE_FILES))
 HTTP_CPP_FILES 	   := $(filter %.cpp,$(HTTP_FILES))
 HTTP_HPP_FILES     := $(filter %.hpp,$(HTTP_FILES))
 UTILITY_CPP_FILES  := $(filter %.cpp,$(UTILITY_FILES))
-UTILITY_HPP_FILES  := $(filter %.hpp,$(UTILITY_FILES))
+# UTILITY_HPP_FILES  := $(filter %.hpp,$(UTILITY_FILES))
 
 
 SRCS 	:= Webserv-core.cpp\

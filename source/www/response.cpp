@@ -77,22 +77,22 @@ void response::interpret_response(socket_t &fd) {
                 string FILE_PATH;
                 while (it != LOCATION.getIndexes().end()) {
                     FILE_PATH = joinPath(requestPATH, *it) ;
-                    if (access(FILE_PATH.c_str(), F_OK | R_OK) == 0) {
+                    if (access(FILE_PATH.c_str(), F_OK) == 0) {
                         if (REQ._method & DELETE)
                             goto deleteFILE;
                         else if (_st & LOCATION_CGI && cgiExtension.FindFileByExtension(FILE_PATH)) {
-                            RunCgi(FILE_PATH); 
+                            RunCgi(FILE_PATH);
                             goto setupCgi;
                         }
                         file = new ifstream(FILE_PATH, ios::in);
-                        if (!file or !file->good())
+                        if (!file or !file->is_open() or !file->good())
                             goto FileNotGood;
                         _setup_lenghted_type_(FILE_PATH, REQ._requestChunked_());
                         goto sendResponse;
                     }
                     it ++;
                 }
-                if (LOCATION.getAutoIndex()) {
+                if (LOCATION.getAutoIndex() && REQ._method & GET) {
                     _build_directory_listing_(requestPATH);
                     goto sendResponse;
                 }
@@ -101,19 +101,21 @@ void response::interpret_response(socket_t &fd) {
                         revokeItem(FILE_PATH, (it == LOCATION.getIndexes().end()));
                         goto sendResponse;
                     }
+            errno = ENOENT;
+            goto FileNotGood;
         }
         case NORMAL_FILE_PATH: {
             handelFiles:
-                if (access(requestPATH.c_str(), F_OK | R_OK) == 0) {
+                if (access(requestPATH.c_str(), F_OK) == 0) {
                     if (REQ._method & DELETE) {
                         revokeItem(requestPATH, false);
                         goto sendResponse;
-                    } else if (_st & LOCATION_CGI && cgiExtension.FindFileByExtension(requestPATH)) {
+                    }  else if (_st & LOCATION_CGI && cgiExtension.FindFileByExtension(requestPATH)) {
                         RunCgi(requestPATH); // setup time
                         goto setupCgi;
                     }
                     file = new ifstream(requestPATH, ios::in);
-                    if (!file or !file->good())
+                    if (!file or !file->is_open() or !file->good() )
                         goto FileNotGood;
                     _setup_lenghted_type_(requestPATH, REQ._requestChunked_());
                     goto sendResponse;
@@ -149,9 +151,20 @@ void response::cgi_supervisor() {
     if (_cgi == -1 || _stat & RESPONSE_CGI_BODY)
         return ;
     switch (WaitCgi(_cgi, _time)) {
-        case CGI_WAITING:
-            break;
+        case CGI_WAITING: {
+            // static int te = 1;
+            // if (te==1) {
 
+            // // pair<int, string> redirect;
+            // // redirect.first = HTTP_MOVED_PERMANENTLY;
+            // // redirect.second = "https://tnaceur.github.io/loading/loading.html";
+            // // _setup_redirective_(&redirect, true);
+            //     _setup_uploading_page_(22);
+
+            //     te = 2;
+            // }
+            break;
+        }
         case CGI_TIMEOUT:
              closefiles(_fdCgi);
             _setup_error_pages(504, VTS.getErrorPages());
@@ -177,7 +190,7 @@ long long response::found(string const& _Body, string const& toSearch) {
             size_t pos = headerLine.find(":");
             if (pos != string::npos) {
                 headerValue = headerLine.substr(pos + 2);
-                trim(headerValue, " ");
+                trim(headerValue);
                 if (headerValue.empty() && toSearch == "Content-Type") {
                     _headers.adding("Content-Type", MimeTypes["html"]);
                     return 0;
@@ -189,13 +202,14 @@ long long response::found(string const& _Body, string const& toSearch) {
             return -1;
     } else {
         if (toSearch == "Content-Type")
-              return  _headers.adding("Content-Type", MimeTypes["html"]), 0;
+              return _headers.adding("Content-Type", MimeTypes["html"]), 0;
         return -1;
     }
     if (toSearch == "Content-Lenght") 
         return every(headerValue.begin(), headerValue.end(), ::isdigit) ? atoi(headerValue.c_str()) : -2;
     return EXIT_SUCCESS;
 }
+
 
 bool response::_build_cgi_body() {
 
@@ -206,9 +220,6 @@ bool response::_build_cgi_body() {
     _set_http_code_status_(HTTP_OK);
     _set_connection_(false);
     _init_headers_();
-
-    // if (_pathFile.substr(_pathFile.find_last_of('.')) == ".php")
-    //     return true;
 
     lseek(*_fdCgi, 0, SEEK_SET);
     filesize = lseek(*_fdCgi, 0, SEEK_END);
@@ -373,11 +384,15 @@ void response::_build_directory_listing_(const string& _path) {
 }
 
 
+
 void response::_setup_cgi_response_(const string &path) {
 
+    if (access(path.c_str(), F_OK | R_OK) != 0) {
+        ErrPage(HTTP_FORBIDDEN, VTS.getErrorPages());
+        return;
+    }
     cgi cgiHandler(*_vts, *_location, path);
     _time = time(NULL);
-
     if (!cgiHandler.executeCgi(*req)) {
          closefiles(_fdCgi);
         _setup_error_pages(HTTP_INTERNAL_SERVER_ERROR, NULL, cgiHandler.errorMsg);
@@ -563,18 +578,26 @@ void response::_setup_lenghted_type_(const string &path, bool type) {
 }
 
 
+bool response::send(__unused socket_t &fd, const char *__buffer, const size_t &__size) {
+    
+    bool done = (::send(fd, __buffer, __size, 0) < 1);
+    if (done) {
+        closefiles(_fdCgi);
+        closeStreamFile();
+        _pages.clear(), _pages.str("");
+        _set_stat_(RESPONSE_DONE);
+    }
+    return done;
+}
+
 void response::_send_response(__unused socket_t fd) {
     if (_stat & (PAGES_SEND_DONE | RESPONSE_HEADERS)) {
         _setup_response_message_();
-
-        if (send(fd, _stream.str().c_str(), _stream.str().size(), 0) < 1) {
-            closefiles(_fdCgi);
-            return _set_stat_(RESPONSE_DONE);
-
-        }
-
+        if (send(fd, _stream.str().c_str(), _stream.str().size()))
+            return;
         if (_stat & PAGES_SEND_DONE) {
-            send(fd, _pages.str().c_str(), _pages.str().size(), 0);
+            if (send(fd, _pages.str().c_str(), _pages.str().size()))
+                return ;
             _pages.clear(), _pages.str("");
             _stat &= ~PAGES_SEND_DONE;
             _set_stat_( _stat & RESPONSE_DONE ? RESPONSE_DONE : _stat);
@@ -610,10 +633,8 @@ void response::_send_chunked_body_(__unused socket_t fd) {
         size_t currentChunkSize = (remainingData > chunkSize) ? chunkSize : remainingData;
         ss << hex << currentChunkSize << CRLF;
         ss << tmp.substr(offset, currentChunkSize) << CRLF;
-        if (send(fd, ss.str().c_str(), ss.str().size(), 0) < 1) {
-            closeStreamFile();
-            return _set_stat_(RESPONSE_DONE);
-        }
+        if (send(fd, buffer, file->gcount()))
+            return ss.clear(), ss.str("");
         ss.clear(), ss.str("");
         offset += currentChunkSize;
     }
@@ -625,12 +646,9 @@ void response::_send_lenghted_body_(__unused socket_t fd) {
     char buffer[1024] = {0};
     file->read(buffer, 1024);
 
-     if (send(fd, buffer, file->gcount(), 0) < 1) {
-        closeStreamFile();
-        return _set_stat_(RESPONSE_DONE);
-     }
+     if (send(fd, buffer, file->gcount()))
+        return ;
     _set_stat_(file->eof() ? RESPONSE_DONE : _stat);
-
 }
 
 void response::_send_cgi_body_(__unused socket_t fd) {
@@ -640,18 +658,21 @@ void response::_send_cgi_body_(__unused socket_t fd) {
     nbyte = read(_fdCgi[CGI_OUT], buffer, (1 << 10));
     
     if (nbyte <= 0) {
-         send(fd, buffer, nbyte, 0);
+         send(fd, buffer, nbyte);
          closefiles(_fdCgi);
         _set_stat_(RESPONSE_DONE);
         return ;
     }
-    if (send(fd, buffer, nbyte, 0) < 1) {
-        
-        logger.notice("HELLOP IM HERE {{{{{{{{}}}}}}}}");
+    if (send(fd, buffer, nbyte))
+        return ;
+}
 
-        closefiles(_fdCgi);
-        return _set_stat_(RESPONSE_DONE);
-    } 
+
+void response::killCgi() {
+    if (_cgi == -1)
+        return ;
+    kill(_cgi, SIGKILL);
+    waitpid(_cgi, 0, 0);
 }
 
 void response::_init_headers_( void ) {

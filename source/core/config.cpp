@@ -95,6 +95,8 @@ void config::parseServersData()
                         _errorAndExit("Location Must An Argument Path", lineNumber);
                     if (tokens.back() != "{")
                         _errorAndExit(LOCATIONSYNTAXERROR, lineNumber);
+                    if (tokens[1].size() >= 1 && tokens[1][0] != '/')
+                        tokens[1] = "/" + tokens[1];
                     /*  Init Location Object Here */
                     location_data currentLocationConfig(tokens[1]);
                     for (; getline(_configFile, line); )

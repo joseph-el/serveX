@@ -59,6 +59,7 @@ class response {
         short          _httpCodeSatus;
         bool           _keepAlive;
 
+        pid_t          _cgi;
         time_t         _time;
         string         _pathFile;
         int            _fdCgi[CGI_FDS]; // [0] for Cgi_stdout [1] for Cgi_stderr
@@ -72,7 +73,6 @@ class response {
         location_data *_location;
     
     public :
-        pid_t          _cgi;
         void interpret_response(socket_t &); // mainFunction
         short absorbSatus(string&);
         void cgi_supervisor(void);
@@ -106,7 +106,7 @@ class response {
         void  revokeItem(string, bool); 
         void _find_error_pages_(const ErrorPages*);
 
-
+        bool  send(socket_t &, const char *, const size_t &);
         void _send_response(socket_t);
         void _send_chunked_body_(socket_t);
         void _send_lenghted_body_(socket_t);
@@ -119,6 +119,7 @@ class response {
     
     
         void reset();
+        void killCgi();
         void closeStreamFile();
         response();
        ~response();

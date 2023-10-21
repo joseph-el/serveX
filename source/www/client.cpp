@@ -20,24 +20,19 @@ void s_client::DealwithRequest( stringstream *stream, const server_data *_virtua
 {
     static int remember = INIT_UPLOADING_PAGE;
     if (!stream)
-        return ;
+        return req.UpdateStatus(REQUEST_PARSE_DONE);
     reset();
     req.interpretRequest(*stream);
 
     // if (req.likeness(REQUEST_BODY) && remember & INIT_UPLOADING_PAGE) {
-        
-    //     // pair<int, string> redirect;
-    //     // redirect.first = HTTP_MOVED_PERMANENTLY;
-    //     // redirect.second = "https://tnaceur.github.io/loading/loading.html";
-    //     //     res.set(_virtualServer, req);
-
-    //     // res._setup_redirective_(&redirect, true);
-
+    //     pair<int, string> redirect;
+    //     redirect.first = HTTP_MOVED_PERMANENTLY;
+    //     redirect.second = "https://tnaceur.github.io/loading/loading.html";
+    //     res._setup_redirective_(&redirect, true);
+    //         res.set(_virtualServer, req);
     //     res._setup_uploading_page_(req.Uploaded());
     //     res._send_response(newconnection);
-
     //     remember = HANDEL_UPLOADING_PAGE;
-
     // } else if (req.likeness(REQUEST_PARSE_DONE)) {
     //     remember = INIT_UPLOADING_PAGE;
     //     res.reset();
@@ -60,13 +55,10 @@ bool s_client::clientDone() const {
     return res.likeness(RESPONSE_DONE);
 }
 
-int o = 0;
 void s_client::reset() {
 
     if (res.likeness(RESPONSE_DONE) && req.likeness(REQUEST_PARSE_DONE)) {
-
-        string dd = "yes iamm here : " + to_string(++o);
-        logger.notice(dd);
+        res.killCgi();
         req.reset();
         res.reset();
     }

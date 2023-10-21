@@ -25,10 +25,12 @@ supported_extension::supported_extension() { // cgi supported extension 20
 
 bool supported_extension::FindFileByExtension(const string &_filePath) {
     string::size_type idx = _filePath.find_last_of('.');
-        string exc = _filePath.substr(idx);
-        if (find(exc) != end())
-            return true;
+    if (idx == string::npos)
         return false;
+    string exc = _filePath.substr(idx);
+    if (find(exc) != end())
+        return true;
+    return false;
 }
 
 short WaitCgi(pid_t _pid, time_t BeginTime) {
