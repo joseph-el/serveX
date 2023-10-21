@@ -221,8 +221,14 @@ void    requestBody::chunkedBody(stringstream &stream) {
         if (_isHeader) {
             size_t f = stream.str().find("\r\n\r\n");
             if (f != string::npos) {
-                chunk_size = hex_to_dec(stream.str().substr(f + 4));
-                stream.str(stream.str().substr(f + 4 + std::to_string(chunk_size).length() + 2));
+                stream.str(stream.str().substr(f + 4));
+                chunk_size = hex_to_dec(stream.str());
+                for (int x = 0; x < stream.str().length(); x++) {
+                    if (x + 1 != stream.str().length() && stream.str().c_str()[x] == '\r' && stream.str().c_str()[x + 1] == '\n') {
+                        stream.str(stream.str().substr(x + 2));
+                        break;
+                    }
+                }
                 _isHeader = false;
             }
         }

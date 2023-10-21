@@ -28,11 +28,11 @@ static bool resetRanges(socket_t &maxRange, vector<Socket>& _socket) {
     return true;
 }
 
-void init_Webserv(int argc, char *const argv[])
+void init_Webserv(__unused int argc, __unused char *const argv[])
 {
-    Options opt(argc, argv);
-
-    if (!opt.successful() or !MainContext.successful())
+    // Options opt(argc, argv); 
+    // !opt.successful() 
+    if (!MainContext.successful())
         return ;
 
     t_pair fd_range;
