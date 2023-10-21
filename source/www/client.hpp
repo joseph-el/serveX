@@ -15,7 +15,7 @@ class s_client {
         response    res;
         # ifndef __ADDRESS__
             # define SERVER_ADDRESS (&_socket[clients[c].server_idx].get_server_address())
-            # define MAX_BYTES_RECV 1024
+            # define MAX_BYTES_RECV 2048
         # endif
         void DealwithRequest( stringstream *,const server_data *);
         void DealwithResponce(const server_data *_vts = __null);

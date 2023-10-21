@@ -2,10 +2,8 @@
 
 /*  location_data Constructor  */
 location_data::location_data() : _autoIndex(false), _isUpload(false), _isEmptyLocation(false) {
-    _onHeap = false;
 }
 location_data::location_data(const std::string& path) : _autoIndex(false), _isUpload(false), _isEmptyLocation(false), _path(path) {
-    _onHeap = false;
 }
 
 location_data::location_data( const location_data& other )
@@ -27,7 +25,6 @@ location_data &location_data::operator=( const location_data& other)
         this->_indexes = other._indexes;
         this->_allowedMethods = other._allowedMethods;
         this->_redirection = other._redirection;
-        this->_onHeap = other._onHeap;
 
     }
     return *this;

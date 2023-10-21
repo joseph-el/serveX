@@ -11,6 +11,6 @@
 #       <upload_path>       <Path>;                                             #
 #       <cgi_path>          <pathToCGI>;                                        #
 #       <auto_index>        <off/on>;                                           #
-#       <return>            <status> <PathToRedirection>;                       #
+#       <return>            <status>    <PathToRedirection>;                    #
 # }                                                                             #
 #################################################################################

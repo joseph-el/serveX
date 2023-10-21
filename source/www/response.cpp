@@ -779,8 +779,6 @@ void response::reset() {
     _headers.clear();
     req = NULL;
     _vts = NULL;
-    if (_location->LCTHeap())
-        delete _location;
     _location = __null;
     _stream.clear();
     _stream.str("");

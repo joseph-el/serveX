@@ -65,20 +65,15 @@ public:
     bool    LocationIsRedirective( void ) {
         return _redirection.first > 0 && !_redirection.second.empty();
     }
-    bool LCTHeap() const {
-        return _onHeap;
-    }
     location_data(string root, const vector<string> &Indexs, const vector<int> &allowMethods, bool autoIndx) {
         _autoIndex = autoIndx;
         _root = root;
         _indexes = Indexs;
         _isEmptyLocation = false;
         _allowedMethods = allowMethods;
-        _onHeap =  true;
     }
 
 private:
-    bool                         _onHeap;
     bool                         _autoIndex;
     bool                         _isUpload;
     bool                         _isEmptyLocation;

@@ -142,7 +142,10 @@ location_data*  server_data::matchLocation(string _path) {
         }
     }
     if (!matched && foundRoot()) {
-        return new location_data(_serverRoot, _serverIndexes, _serverAllowedMethods,  _autoIndex);
+        _locations.clear();
+        location_data ret = location_data(_serverRoot, _serverIndexes, _serverAllowedMethods,  _autoIndex);
+        _locations.push_back(ret);
+        return (location_data*)&_locations[0];
     }
     return matched;
 }

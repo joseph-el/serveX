@@ -67,44 +67,27 @@ void    requestBody::absorbHeaders(string &_buff) {
         return _multipart[_idx]._header.adding(key, value);
     }
     _setup :
-        buff = _multipart[_idx]._header.get("Content-Disposition");
-        string::size_type idx = buff.find("name=\"");
-        buff = buff.substr(idx + 6);
-        idx = (buff.find("\"; ") == string::npos) ? buff.find("\"") : buff.find("\"; ");
-        name = buff.substr(0, idx);
-        idx = buff.find("filename=\"");
-        if (idx != string::npos) { 
-            buff = buff.substr(idx + 10);
-            filename = buff.substr(0, buff.find_last_of('\"'));
-        }
-        _multipart[_idx].name = name;
-        _multipart[_idx]._filename = filename;
-        string tmp = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";    
-        if (_multipart[_idx]._header.size() == 1) // i added this for setup key
-            tmp = "/tmp/serveX_" + to_string(set_time()) + "__.key", _multipart[_idx]._filename = "";
-        _multipart[_idx]._openedFILE = tmp;
-        _multipart[_idx].file = s_open(tmp);
-        _multipartStatus = (MLT_HEADER_DONE | MLT_CONTENT | MULTIPART_BEGIN);
+        try {
+            buff = _multipart[_idx]._header.get("Content-Disposition");
+            string::size_type idx = buff.find("name=\"");
+            buff = buff.substr(idx + 6);
+            idx = (buff.find("\"; ") == string::npos) ? buff.find("\"") : buff.find("\"; ");
+            name = buff.substr(0, idx);
+            idx = buff.find("filename=\"");
+            if (idx != string::npos) { 
+                buff = buff.substr(idx + 10);
+                filename = buff.substr(0, buff.find_last_of('\"'));
+            }
+            _multipart[_idx].name = name;
+            _multipart[_idx]._filename = filename;
+            string tmp = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";    
+            if (_multipart[_idx]._header.size() == 1) // i added this for setup key
+                tmp = "/tmp/.serveX_" + to_string(set_time()) + "__.key", _multipart[_idx]._filename = "";
+            _multipart[_idx]._openedFILE = tmp;
+            _multipart[_idx].file = s_open(tmp);
+            _multipartStatus = (MLT_HEADER_DONE | MLT_CONTENT | MULTIPART_BEGIN);
+        } catch (...) {}
 }
-
-// int     requestBody::absorbCRLF(stringstream &ss) {
-
-//     static string::size_type idx = 0;
-//     int                      seek = ss.tellg();
-//     char                     _c;
-
-//     while (!ss.eof() and idx < 2) {
-// 		ss.get(_c);
-// 		if (CRLF[idx] != _c && !ss.eof()) 
-// 			return idx = 0, ss.seekg(seek), CRLF_NO;
-// 		if (!ss.eof())
-// 			idx++;
-// 	}
-//     if (idx == 2)
-//         return idx = 0, CRLF_OK;
-//     return CRLF_WAIT;
-// }
-
 
 int     absorbCRL(stringstream &stream, stringstream &ss) {
 

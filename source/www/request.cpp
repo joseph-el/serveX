@@ -51,7 +51,6 @@ void request::parseHeader(string target) {
         if (_st & REQUEST_BODY) {
             _body.FindBodyStatus(this->_header);
             _type = _body._status & (MULTIPART_BODY | CHUNKED_BODY | LENGTH_BODY | BODY_SUCCESSFUL) ? _body._status : 0;
-            cout << "check status :" << _body._status << endl;
             if (_body._status & ~MULTIPART_BODY) {
                 _body.bodyPath = "/tmp/.serveX__" + to_string(set_time()) + "__.upload";
                 _body.bodycontent = s_open(_body.bodyPath);
