@@ -36,10 +36,12 @@ short WaitCgi(pid_t _pid, time_t BeginTime) {
 	int process;
     
     process = waitpid(_pid, &status, WNOHANG);
+    // logger.notice(string("test : ") +  to_string(process));
     if (process == _pid && (WIFSIGNALED(status) || WIFEXITED(status)))
         return CGI_SUCCESS;
     if (RUN_TIME(BeginTime)) {
         kill(_pid, SIGKILL);
+        waitpid(_pid, 0, 0);
         return CGI_TIMEOUT;
     }
 	return CGI_WAITING;

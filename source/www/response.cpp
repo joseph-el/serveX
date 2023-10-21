@@ -236,7 +236,6 @@ bool response::_build_cgi_body() {
     return true;
 }
 
- 
 void response::_build_upload_response_page() {
 
     string      locationUpload;
@@ -372,8 +371,6 @@ void response::_build_directory_listing_(const string& _path) {
     _headers.adding("Content-Lenght", to_string(get_ostringstream_size(_pages)));
     _set_stat_(PAGES_SEND_DONE | RESPONSE_DONE);
 }
-
-
 
 
 void response::_setup_cgi_response_(const string &path) {
@@ -542,6 +539,7 @@ void response::_setup_upload_response_(void) {
     _build_upload_response_page();
 
     _headers.adding("Content-Type", MimeTypes["html"]);
+    cout << "YES AIM HERE " << endl;
     _set_stat_(PAGES_SEND_DONE | RESPONSE_DONE);
 }
 
@@ -568,7 +566,12 @@ void response::_setup_lenghted_type_(const string &path, bool type) {
 void response::_send_response(__unused socket_t fd) {
     if (_stat & (PAGES_SEND_DONE | RESPONSE_HEADERS)) {
         _setup_response_message_();
-        send(fd, _stream.str().c_str(), _stream.str().size(), 0);
+
+        if (send(fd, _stream.str().c_str(), _stream.str().size(), 0) < 1) {
+            closefiles(_fdCgi);
+            return _set_stat_(RESPONSE_DONE);
+
+        }
 
         if (_stat & PAGES_SEND_DONE) {
             send(fd, _pages.str().c_str(), _pages.str().size(), 0);
@@ -607,7 +610,10 @@ void response::_send_chunked_body_(__unused socket_t fd) {
         size_t currentChunkSize = (remainingData > chunkSize) ? chunkSize : remainingData;
         ss << hex << currentChunkSize << CRLF;
         ss << tmp.substr(offset, currentChunkSize) << CRLF;
-        send(fd, ss.str().c_str(), ss.str().size(), 0);
+        if (send(fd, ss.str().c_str(), ss.str().size(), 0) < 1) {
+            closeStreamFile();
+            return _set_stat_(RESPONSE_DONE);
+        }
         ss.clear(), ss.str("");
         offset += currentChunkSize;
     }
@@ -619,9 +625,12 @@ void response::_send_lenghted_body_(__unused socket_t fd) {
     char buffer[1024] = {0};
     file->read(buffer, 1024);
 
-    send(fd, buffer, file->gcount(), 0);    
-
+     if (send(fd, buffer, file->gcount(), 0) < 1) {
+        closeStreamFile();
+        return _set_stat_(RESPONSE_DONE);
+     }
     _set_stat_(file->eof() ? RESPONSE_DONE : _stat);
+
 }
 
 void response::_send_cgi_body_(__unused socket_t fd) {
@@ -636,9 +645,14 @@ void response::_send_cgi_body_(__unused socket_t fd) {
         _set_stat_(RESPONSE_DONE);
         return ;
     }
-    send(fd, buffer, nbyte, 0);
-}
+    if (send(fd, buffer, nbyte, 0) < 1) {
+        
+        logger.notice("HELLOP IM HERE {{{{{{{{}}}}}}}}");
 
+        closefiles(_fdCgi);
+        return _set_stat_(RESPONSE_DONE);
+    } 
+}
 
 void response::_init_headers_( void ) {
     _headers.clear();

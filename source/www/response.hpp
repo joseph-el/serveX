@@ -59,7 +59,6 @@ class response {
         short          _httpCodeSatus;
         bool           _keepAlive;
 
-        pid_t          _cgi;
         time_t         _time;
         string         _pathFile;
         int            _fdCgi[CGI_FDS]; // [0] for Cgi_stdout [1] for Cgi_stderr
@@ -73,6 +72,7 @@ class response {
         location_data *_location;
     
     public :
+        pid_t          _cgi;
         void interpret_response(socket_t &); // mainFunction
         short absorbSatus(string&);
         void cgi_supervisor(void);

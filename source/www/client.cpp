@@ -23,14 +23,26 @@ void s_client::DealwithRequest( stringstream *stream, const server_data *_virtua
         return ;
     reset();
     req.interpretRequest(*stream);
+
     // if (req.likeness(REQUEST_BODY) && remember & INIT_UPLOADING_PAGE) {
-    //     remember = HANDEL_UPLOADING_PAGE;
+        
+    //     // pair<int, string> redirect;
+    //     // redirect.first = HTTP_MOVED_PERMANENTLY;
+    //     // redirect.second = "https://tnaceur.github.io/loading/loading.html";
+    //     //     res.set(_virtualServer, req);
+
+    //     // res._setup_redirective_(&redirect, true);
+
     //     res._setup_uploading_page_(req.Uploaded());
     //     res._send_response(newconnection);
+
+    //     remember = HANDEL_UPLOADING_PAGE;
+
     // } else if (req.likeness(REQUEST_PARSE_DONE)) {
     //     remember = INIT_UPLOADING_PAGE;
     //     res.reset();
     // }
+
     stream->str("");
     delete stream;
 }
