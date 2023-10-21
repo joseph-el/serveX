@@ -59,18 +59,15 @@ public:
 
     // added by Joseph
     bool                        NotallowMethod(METHODS &_mth) {
-        // vector<int>::iterator it = _allowedMethods.begin();
-        // while (it != _allowedMethods.end()){
-        //     cout << "allow method = " << *it << endl;
-        //     it ++;
-        // }
         return (find(_allowedMethods.begin(), _allowedMethods.end(), _mth) == _allowedMethods.end());
     }
 
     bool    LocationIsRedirective( void ) {
         return _redirection.first > 0 && !_redirection.second.empty();
     }
-
+    bool LCTHeap() const {
+        return _onHeap;
+    }
     location_data(string root, const vector<string> &Indexs, const vector<int> &allowMethods, bool autoIndx) {
         _autoIndex = autoIndx;
         _root = root;

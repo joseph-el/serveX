@@ -142,7 +142,6 @@ location_data*  server_data::matchLocation(string _path) {
         }
     }
     if (!matched && foundRoot()) {
-        cout << "YES IAM HERE" << endl;
         return new location_data(_serverRoot, _serverIndexes, _serverAllowedMethods,  _autoIndex);
     }
     return matched;

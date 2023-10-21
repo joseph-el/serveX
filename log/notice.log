@@ -1,33 +1,9 @@
- [21/Oct/2023:18:34:04 +01]: waiting for client
- [21/Oct/2023:18:34:10 +01]: client [9]:  has finished sending the request
+ [21/Oct/2023:20:13:35 +01]: waiting for client
+ [21/Oct/2023:20:14:29 +01]: client [9]:  has finished sending the request
 
- [21/Oct/2023:18:34:10 +01]: client [9]:  has finished receiving the response
+ [21/Oct/2023:20:14:29 +01]: client [9]:  has finished receiving the response
 
- [21/Oct/2023:18:34:10 +01]: client [9]:  has finished sending the request
+ [21/Oct/2023:20:15:54 +01]: client [9]:  has finished sending the request
 
- [21/Oct/2023:18:34:10 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:34:16 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:34:16 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:34:20 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:34:20 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:34:20 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:34:20 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:35:35 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:35:35 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:35:40 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:35:40 +01]: client [9]:  has finished receiving the response
-
- [21/Oct/2023:18:35:40 +01]: client [9]:  has finished sending the request
-
- [21/Oct/2023:18:35:40 +01]: client [9]:  has finished receiving the response
+ [21/Oct/2023:20:15:54 +01]: client [9]:  has finished receiving the response
 
