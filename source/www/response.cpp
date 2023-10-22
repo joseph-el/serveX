@@ -21,10 +21,17 @@ short response::absorbSatus(string &path) {
     if (LOCATION.getIsUpload() && REQ._method & POST && !_cgi)
         return (1 << 8);
 
-    path = LOCATION.getRoot() + path;
-    path = REQ.normalization(path); // norm path 
+    cout << "check request : " << path << endl;
+
+    path = LOCATION.getRoot() ;
+
+    path = REQ.normalization(path); // norm path
+
+    cout << "check normal : " << path << endl;
     
+
     bzero(&_file, sizeof _file);
+
     if (stat(path.c_str(), &_file) != EXIT_SUCCESS)
         return (1 << 6); 
 
@@ -44,6 +51,8 @@ void response::interpret_response(socket_t &fd) {
         goto  sendResponse;
     }
     (_stat & RESPONSE_INIT) && (_st = absorbSatus(requestPATH));
+    if (_stat & RESPONSE_INIT)
+        cout << "init fab :::::::::::::" << endl;
     switch (_st) {
         case LOCATION_UPLOAD      : Upload;
             goto sendResponse;
@@ -77,7 +86,9 @@ void response::interpret_response(socket_t &fd) {
                 string FILE_PATH;
                 while (it != LOCATION.getIndexes().end()) {
                     FILE_PATH = joinPath(requestPATH, *it) ;
+                    cout << "check in PATH_IS_DIRECTORY: " << FILE_PATH << endl;
                     if (access(FILE_PATH.c_str(), F_OK) == 0) {
+                    
                         if (REQ._method & DELETE)
                             goto deleteFILE;
                         else if (_st & LOCATION_CGI && cgiExtension.FindFileByExtension(FILE_PATH)) {
@@ -106,6 +117,9 @@ void response::interpret_response(socket_t &fd) {
         }
         case NORMAL_FILE_PATH: {
             handelFiles:
+                
+                cout << "check in NORMAL_FILE_PATH: " << requestPATH << endl;
+
                 if (access(requestPATH.c_str(), F_OK) == 0) {
                     if (REQ._method & DELETE) {
                         revokeItem(requestPATH, false);
@@ -151,20 +165,9 @@ void response::cgi_supervisor() {
     if (_cgi == -1 || _stat & RESPONSE_CGI_BODY)
         return ;
     switch (WaitCgi(_cgi, _time)) {
-        case CGI_WAITING: {
-            // static int te = 1;
-            // if (te==1) {
-
-            // // pair<int, string> redirect;
-            // // redirect.first = HTTP_MOVED_PERMANENTLY;
-            // // redirect.second = "https://tnaceur.github.io/loading/loading.html";
-            // // _setup_redirective_(&redirect, true);
-            //     _setup_uploading_page_(22);
-
-            //     te = 2;
-            // }
+        case CGI_WAITING:
             break;
-        }
+    
         case CGI_TIMEOUT:
              closefiles(_fdCgi);
             _setup_error_pages(504, VTS.getErrorPages());
@@ -209,7 +212,6 @@ long long response::found(string const& _Body, string const& toSearch) {
         return every(headerValue.begin(), headerValue.end(), ::isdigit) ? atoi(headerValue.c_str()) : -2;
     return EXIT_SUCCESS;
 }
-
 
 bool response::_build_cgi_body() {
 

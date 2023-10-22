@@ -147,5 +147,7 @@ location_data*  server_data::matchLocation(string _path) {
         _locations.push_back(ret);
         return (location_data*)&_locations[0];
     }
+    if (matched)
+        cout << "check :>" << matched->getPath() << endl;
     return matched;
 }

@@ -223,7 +223,7 @@ void    requestBody::chunkedBody(stringstream &stream) {
             if (f != string::npos) {
                 stream.str(stream.str().substr(f + 4));
                 chunk_size = hex_to_dec(stream.str());
-                for (int x = 0; x < stream.str().length(); x++) {
+                for (size_t x = 0; x < stream.str().length(); x++) {
                     if (x + 1 != stream.str().length() && stream.str().c_str()[x] == '\r' && stream.str().c_str()[x + 1] == '\n') {
                         stream.str(stream.str().substr(x + 2));
                         break;
