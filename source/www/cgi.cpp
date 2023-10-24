@@ -126,9 +126,11 @@ void    cgi::_initServerEnvVariables( server_data const& server ) {
 // initialize envirenement variables releated to the request
 void    cgi::_initRequestEnvVariables( request & req ) {
 
-    string::size_type idx = _script.find(SERVER_PATH);
-    idx += sizeof(SERVER_PATH);
-    _cgiEnvVars["SCRIPT_NAME"] = _script.find(idx);
+    try {
+        string::size_type idx = _script.find(SERVER_PATH);
+        idx += sizeof(SERVER_PATH);
+        _cgiEnvVars["SCRIPT_NAME"] = _script.substr(idx);
+    } catch (...) {}
     _cgiEnvVars["SCRIPT_FILENAME"] = _script;
     _cgiEnvVars["DOCUMENT_ROOT"] = SERVER_PATH;
     if (req._method & GET)

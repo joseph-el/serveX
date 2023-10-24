@@ -21,17 +21,11 @@ short response::absorbSatus(string &path) {
     if (LOCATION.getIsUpload() && REQ._method & POST && !_cgi)
         return (1 << 8);
 
-    cout << "check request : " << path << endl;
-
-    path = LOCATION.getRoot() ;
+    path = LOCATION.getRoot() +  path ;
 
     path = REQ.normalization(path); // norm path
 
-    cout << "check normal : " << path << endl;
-    
-
     bzero(&_file, sizeof _file);
-
     if (stat(path.c_str(), &_file) != EXIT_SUCCESS)
         return (1 << 6); 
 
@@ -51,8 +45,7 @@ void response::interpret_response(socket_t &fd) {
         goto  sendResponse;
     }
     (_stat & RESPONSE_INIT) && (_st = absorbSatus(requestPATH));
-    if (_stat & RESPONSE_INIT)
-        cout << "init fab :::::::::::::" << endl;
+
     switch (_st) {
         case LOCATION_UPLOAD      : Upload;
             goto sendResponse;
@@ -86,9 +79,7 @@ void response::interpret_response(socket_t &fd) {
                 string FILE_PATH;
                 while (it != LOCATION.getIndexes().end()) {
                     FILE_PATH = joinPath(requestPATH, *it) ;
-                    cout << "check in PATH_IS_DIRECTORY: " << FILE_PATH << endl;
                     if (access(FILE_PATH.c_str(), F_OK) == 0) {
-                    
                         if (REQ._method & DELETE)
                             goto deleteFILE;
                         else if (_st & LOCATION_CGI && cgiExtension.FindFileByExtension(FILE_PATH)) {
@@ -117,8 +108,6 @@ void response::interpret_response(socket_t &fd) {
         }
         case NORMAL_FILE_PATH: {
             handelFiles:
-                
-                cout << "check in NORMAL_FILE_PATH: " << requestPATH << endl;
 
                 if (access(requestPATH.c_str(), F_OK) == 0) {
                     if (REQ._method & DELETE) {
@@ -213,6 +202,8 @@ long long response::found(string const& _Body, string const& toSearch) {
     return EXIT_SUCCESS;
 }
 
+
+
 bool response::_build_cgi_body() {
 
     ssize_t   nbyte;
@@ -235,7 +226,6 @@ bool response::_build_cgi_body() {
     }
     string content(buff, nbyte);
     delete[] buff;
-
 
     lenghtSize = found(content, "Content-Lenght");
     lenghtSize = (lenghtSize == -1) ? filesize : lenghtSize;
@@ -518,7 +508,7 @@ void response::_setup_redirective_(const pair<int, string> *_redirective, bool l
 
 void response::_setup_delete_response_page(short mode, const string &msg) {
     _set_connection_(true);
-    _set_http_code_status_(HTTP_OK);
+    _set_http_code_status_( errno == EPERM ? HTTP_FORBIDDEN : HTTP_OK);
     _init_headers_();
     _headers.adding("Content-Type", MimeTypes["html"]);
 
@@ -579,6 +569,7 @@ void response::_setup_lenghted_type_(const string &path, bool type) {
 }
 
 
+
 bool response::send(__unused socket_t &fd, const char *__buffer, const size_t &__size) {
     
     bool done = (::send(fd, __buffer, __size, 0) < 1);
@@ -594,10 +585,12 @@ bool response::send(__unused socket_t &fd, const char *__buffer, const size_t &_
 void response::_send_response(__unused socket_t fd) {
     if (_stat & (PAGES_SEND_DONE | RESPONSE_HEADERS)) {
         _setup_response_message_();
+
         if (send(fd, _stream.str().c_str(), _stream.str().size()))
             return;
+
         if (_stat & PAGES_SEND_DONE) {
-            if (send(fd, _pages.str().c_str(), _pages.str().size()))
+            if (send(fd, _pages.str().c_str(), _pages.str().size())) 
                 return ;
             _pages.clear(), _pages.str("");
             _stat &= ~PAGES_SEND_DONE;
@@ -721,9 +714,11 @@ void response::revokeItem(string _FILE_PATH_, bool mode) {
         _setup_delete_response_page(N_WARNING, title + " : is a directory !");
         return ;
     }
-    if (remove(_FILE_PATH_.c_str()) == 0) {
+    bool access_file = (access(_FILE_PATH_.c_str(), W_OK) == 0);
+    if (access_file && remove(_FILE_PATH_.c_str()) == 0) {
         _setup_delete_response_page(N_DONE, " You successfully Delete " + title ); 
     } else {
+        errno = (!access_file) ? EPERM : errno;
         _setup_delete_response_page(N_FAILED, title + " " + strerror(errno)); 
     }
 }

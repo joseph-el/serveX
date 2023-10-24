@@ -125,8 +125,10 @@ void request::parseReaquestLine(string req_line)
 }
 
 bool  request::TooLarge(const t_size &Maxbytes) {
+
     string contentlenght;
     contentlenght = _header.get("Content-Length");
+
     trim(contentlenght);
     if (contentlenght.empty() or !every(contentlenght.begin(), contentlenght.end(), ::isdigit))
         return false;
@@ -138,6 +140,8 @@ void request::UpdateStatus(short _st)
 {
     _stat = _st;
 }
+
+
 
 short request::_unacceptable_request_( void ) const {
     if (_httpCodeSatus)

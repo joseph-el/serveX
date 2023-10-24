@@ -14,7 +14,7 @@
 # include "server-core.hpp"
 
 # ifndef DEFAULT_CONF
-    # define DEFAULT_CONF "/Users/joseph/Desktop/webserv/webserv.cfg"
+    # define DEFAULT_CONF "/Users/yoel-idr/goinfre/webserv/cfg/config.cfg"
 # endif
 
 

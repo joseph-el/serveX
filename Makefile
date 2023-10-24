@@ -1,4 +1,4 @@
-NAME := Webserv
+NAME := webserv
 
 PREFIX_FOLDER   := $(shell pwd)
 SERVER_PATH_PWD := $(shell pwd)
@@ -6,7 +6,6 @@ CONFIG_FILE     := $(addsuffix /cfg/config.cfg,$(PREFIX_FOLDER))
 
 SET_PREFIX := -D SERVER_PATH=\"$(SERVER_PATH_PWD)\" -D DEFAULT_CONF=\"$(CONFIG_FILE)\" 
 CPPFLAGS   := -Wall -Wextra -Werror -std=c++98 
-DEBUG	   := -fsanitize=address -g 
 CC 		   := c++
 
 HTTP_FILES    := HttpStatusMapping.cpp cgi.hpp headers.cpp mimeTypes.hpp request.cpp requestBody.hpp socket.cpp \
@@ -61,10 +60,10 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@echo "$(OK_COLOR) [OBJS ✅] $(NO_COLOR)"
-		@$(CC) -fsanitize=address -g $^ -o $@ 
+		@$(CC) $^ -o $@ 
 
 %.o: %.cpp $(HEADERS)
-#@printf "%-100.900b\r" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
+	@printf "%-100.900b\r" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
 	@$(CC) $(CPPFLAGS) $(SET_PREFIX) $(INCLUDES) -c $< -o $@
 
 clean :

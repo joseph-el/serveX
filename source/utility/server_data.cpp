@@ -1,5 +1,5 @@
 # include "server-core.hpp"
-
+ 
 /*  server_data Constructors    */
 server_data::server_data() : _maxBodySize(MAX_BODY_SIZE), _port(0), _autoIndex(false) {}
 server_data::server_data( const server_data& other )
@@ -147,7 +147,5 @@ location_data*  server_data::matchLocation(string _path) {
         _locations.push_back(ret);
         return (location_data*)&_locations[0];
     }
-    if (matched)
-        cout << "check :>" << matched->getPath() << endl;
     return matched;
 }
