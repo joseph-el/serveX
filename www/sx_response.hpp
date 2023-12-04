@@ -7,6 +7,7 @@
 # include "serveX-core.hpp"
 
 # define SEND_TARCE            (1 << 12)
+# define SEND_CONNECT          (1 << 13)
 # define SEND_OPTIONS          (1 << 11)
 # define LOCATION_CGI          (1 << 9 )
 # define PATH_NOT_FOUND        (1 << 6 )
@@ -18,7 +19,6 @@
 # define LOCATION_NOT_FOUND    (1 << 3 )
 # define REDIRECTIVE_LOCATION  (1 << 2 )
 # define RECV_BYTES_TOO_LARGE  (1 << 10)
-
 # define HTTP_RESPONSE_ERROR    (PATH_NOT_FOUND | METHOD_NOT_ALLOW | LOCATION_NOT_FOUND | RECV_BYTES_TOO_LARGE)
 
 # define RESPONSE_INIT          (1 << 1)
@@ -35,6 +35,7 @@
 # define NewUrl(_directive)   _setup_redirective_((_directive))
 # define options_method       _setup_options_response()
 # define trace_method         _setup_trace_response()
+# define connect_method       _setup_connect_response()
 # define patch_method(_path)  _setup_patch_response((_path))
 # define setupHead(_path)     _setup_head_response((_path))
 # define Upload               _setup_upload_response_()
@@ -117,7 +118,6 @@ class response {
         void _setup_trace_response();
         void _accept_connect_connection();
         void _setup_connect_response();
-
 
         void _init_headers_(void);
         void  revokeItem(string, bool); 

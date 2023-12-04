@@ -1,7 +1,6 @@
 # include "serveX-core.hpp"
 
-const char *methods[] = { "PUT", "GET", "HEAD", "POST", "PATCH", "TRACE" \
-                               , "DELETE", "CONNECT", "OPTIONS", "UNKNOWN" };
+const char *methods[] = { "PUT", "GET", "HEAD", "POST", "PATCH", "TRACE" , "DELETE", "CONNECT", "OPTIONS", "UNKNOWN" };
 
 void request::interpretRequest(stringstream &stream) {
     string buff;

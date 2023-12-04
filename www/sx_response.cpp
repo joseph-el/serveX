@@ -10,44 +10,6 @@ static constexpr auto checkMethod = [](auto&& req, auto methods, int flag) {
 
 short response::absorbSatus(string &path) {
     struct stat _file;
-    bool _cgi = false;
-
-    int result = 0;
-
-    if (!_location)
-        return (1 << 3);
-
-    result |= checkMethod(REQ._method, TRACE, 1 << 12);
-    result |= checkMethod(REQ._method, OPTIONS, 1 << 11);
-    result |= checkRedirective(_vts->ServerIsRedirective(), 1 << 1);
-    result |= checkRedirective(LOCATION.LocationIsRedirective(), 1 << 2);
-    result |= checkRedirective(REQ.TooLarge(_vts->getMaxBodySize()), 1 << 10);
-    result |= checkRedirective(LOCATION.NotallowMethod(REQ._method), 1 << 4);
-
-    _cgi = (!LOCATION.getCgiPath().empty());
-    if (LOCATION.getIsUpload() && REQ._method & POST && !_cgi)
-        result |= 1 << 8;
-
-    path = LOCATION.getRoot() + path;
-    path = REQ.normalization(path); // norm path
-
-    bzero(&_file, sizeof _file);
-    if (stat(path.c_str(), &_file) != EXIT_SUCCESS)
-        result |= REQ._method & PUT ? (1 << 5) : (1 << 6);
-
-    if (S_ISDIR(_file.st_mode))
-        result |= (1 << 7) | (_cgi ? (1 << 9) : 0);
-
-    if (S_ISREG(_file.st_mode))
-        result |= 1 << 5 | (_cgi ? (1 << 9) : 0);
-
-    return static_cast<short>(result);
-}
-
-
-/*
-short response::absorbSatus(string &path) {
-    struct stat _file;
     bool  _cgi = false;
 
     path = REQ._path;
@@ -61,10 +23,13 @@ short response::absorbSatus(string &path) {
         return (1 << 4);
     if (REQ.TooLarge(_vts->getMaxBodySize()))
         return (1 << 10);
+    
     if (REQ._method & OPTIONS)
         return (1 << 11);
     if (REQ._method & TRACE)
         return (1 << 12);
+    if (REQ._method & CONNECT)
+        return (1 << 13);
     
     _cgi = (!LOCATION.getCgiPath().empty());
 
@@ -86,7 +51,7 @@ short response::absorbSatus(string &path) {
         return (1 << 5) | (_cgi ? (1 << 9) : 0);
     return 0;
 }
-*/
+
 
 void response::interpret_response(socket_t &fd) {
 
@@ -100,6 +65,8 @@ void response::interpret_response(socket_t &fd) {
 
     switch (_st) {
         case SEND_TARCE           : trace_method;
+            goto sendResponse;
+        case SEND_CONNECT         : connect_method;
             goto sendResponse;
         case SEND_OPTIONS         : options_method;
             goto sendResponse;
@@ -193,7 +160,6 @@ void response::interpret_response(socket_t &fd) {
         cgi_supervisor();
     sendResponse:
         _send(fd);
-
 }
 
 bool response::cgi_stderr() {
@@ -947,6 +913,22 @@ void response::_set_stat_(const short _st) {
     _stat = _st;   
 }
 
+__unused static short encriptSatus(__unused string &path) {
+    __unused struct stat _file;
+    __unused bool _cgi = false;
+
+    int result = 0;
+
+    result |= checkMethod(true, TRACE, 1 << 12);
+    result |= checkMethod(true, OPTIONS, 1 << 11);
+    result |= checkRedirective(true, 1 << 1);
+    result |= checkRedirective(true, 1 << 2);
+    result |= checkRedirective(true, 1 << 10);
+    result |= checkRedirective(true, 1 << 4);
+
+    return static_cast<short>(result);
+}
+
 void response::_set_connection_(const bool _st) {
     _keepAlive = _st;
 }
@@ -983,5 +965,6 @@ void response::reset() {
 
     closeStreamFile();
 }
+
 
 response::~response() {}
