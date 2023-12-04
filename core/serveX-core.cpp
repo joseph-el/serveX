@@ -1,5 +1,14 @@
 # include "serveX-core.hpp"
 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+#include <unistd.h>
+#include <sys/select.h>
+#include <cstring>
+
 vector<s_client> clients;
 
 static stringstream *Readrequest(socket_t _fd)

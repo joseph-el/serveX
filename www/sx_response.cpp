@@ -42,49 +42,6 @@ short response::absorbSatus(string &path) {
     return static_cast<short>(result);
 }
 
-/*
-short response::absorbSatus(string &path) {
-    struct stat _file;
-    bool  _cgi = false;
-
-    path = REQ._path;
-    if (_vts->ServerIsRedirective())
-        return (1 << 1);
-    if (!_location)
-        return (1 << 3);
-    if (LOCATION.LocationIsRedirective())
-        return (1 << 2);
-    if (LOCATION.NotallowMethod(REQ._method))
-        return (1 << 4);
-    if (REQ.TooLarge(_vts->getMaxBodySize()))
-        return (1 << 10);
-    if (REQ._method & OPTIONS)
-        return (1 << 11);
-    if (REQ._method & TRACE)
-        return (1 << 12);
-    
-    _cgi = (!LOCATION.getCgiPath().empty());
-
-    if (LOCATION.getIsUpload() && REQ._method & POST && !_cgi)
-        return (1 << 8);
-
-    path = LOCATION.getRoot() +  path ;
-
-    path = REQ.normalization(path); // norm path
-
-    bzero(&_file, sizeof _file);
-    if (stat(path.c_str(), &_file) != EXIT_SUCCESS)
-        return (REQ._method & PUT ? (1 << 5) : (1 << 6) ); 
-
-    if (S_ISDIR(_file.st_mode)) // check if the path is directory
-        return  (1 << 7) | (_cgi ? (1 << 9) : 0); // append to cgi
-    
-    if (S_ISREG(_file.st_mode))
-        return (1 << 5) | (_cgi ? (1 << 9) : 0);
-    return 0;
-}
-*/
-
 void response::interpret_response(socket_t &fd) {
 
     string requestPATH;

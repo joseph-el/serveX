@@ -113,9 +113,7 @@ class response {
         void _setup_error_pages(const int &, const ErrorPages *, const string &msg = "");
         void _setup_options_response();
         void _setup_head_response(string const&);
-
-        void _setup_patch_response(string const&, bool founded_put_method = false);
-
+        void _setup_patch_response(string const&, __unused bool founded_put_method = false);
         void _setup_trace_response();
 
         void _init_headers_(void);
