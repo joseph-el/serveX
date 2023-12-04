@@ -5,7 +5,7 @@
 *.lib
 *.out
 *.app
-Webserv
+ServeX
 .vscode/*
 .DS_STORE
 controllers/*

@@ -3,7 +3,7 @@
 import os
 
 # Set the Content-Type header
-print "Content-Type: text/html \r"
+print "Content-Type: application/javascript \r"
 print "\r"
 
 
