@@ -71,7 +71,7 @@ class requestBody {
             # define BOUNDARY_STRING  "boundary"
             # define BOUNDARY_BEGIN   "--"
             # define HTTP_VERSION     "HTTP/1.1"
-            # define METHODS_LENGHT 9
+            # define METHODS_LENGHT 10
         # endif
 
         short                  _idx;

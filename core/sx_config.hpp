@@ -14,9 +14,12 @@
 # include "serveX-core.hpp"
 
 # ifndef DEFAULT_CONF
-    # define DEFAULT_CONF "/Users/yoel-idr/goinfre/serveX/cfg/config.cfg"
+    # define DEFAULT_CONF ""
 # endif
 
+# ifndef SERVER_PATH
+    # define SERVER_PATH ""
+# endif
 
 using namespace std;
 
@@ -75,7 +78,7 @@ class config
 
 extern config MainContext;
 
-#define MAX_METHOD_SIZE 9
+#define MAX_METHOD_SIZE 10
 #define CHECK_CONF_EXTENSION(fileName) \
     do { \
         string extension = ".cfg"; \

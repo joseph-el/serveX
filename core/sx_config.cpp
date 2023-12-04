@@ -205,6 +205,8 @@ void config::parseServersData()
                             currentConfig.setServerAllowedMethod(TRACE);
                         else if (tokens[i] == "PUT")
                             currentConfig.setServerAllowedMethod(PUT);
+                        else if (tokens[i] == "CONNECT")
+                            currentConfig.setServerAllowedMethod(PUT);
                         else
                             currentConfig.setServerAllowedMethod(UNKNOWN_MT);
                     }
@@ -329,6 +331,8 @@ void config::_parseLocationDirectives(std::string &trimmedLine, location_data &c
             else if (tokens[i] == "TRACE")
                 currentLocationConfig.setAllowedMethod(TRACE);
             else if (tokens[i] == "PUT")
+                currentLocationConfig.setAllowedMethod(PUT);
+            else if (tokens[i] == "CONNECT")
                 currentLocationConfig.setAllowedMethod(PUT);
             else
                 currentLocationConfig.setAllowedMethod(UNKNOWN_MT);
@@ -527,6 +531,7 @@ bool config::_parseAllowedMethods(std::vector<std::string> &tokens)
     knownAllowedMethods.insert("HEAD");
     knownAllowedMethods.insert("PATCH");
     knownAllowedMethods.insert("TRACE");
+    knownAllowedMethods.insert("CONNECT");
     knownAllowedMethods.insert("DELETE");
     knownAllowedMethods.insert("OPTIONS");
 

@@ -17,8 +17,9 @@ enum METHODS {
     PATCH       = (1<<5),
     TRACE       = (1<<6),
     DELETE      = (1<<7),
-    OPTIONS     = (1<<8),
-    UNKNOWN_MT  = (1<<9)
+    CONNECT     = (1<<8),
+    OPTIONS     = (1<<9),
+    UNKNOWN_MT  = (1<<10)
 };
 
 using namespace std;

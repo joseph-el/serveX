@@ -14,7 +14,9 @@ short response::absorbSatus(string &path) {
 
     int result = 0;
 
-    result |= checkRedirective(!_location, 1 << 3);
+    if (!_location)
+        return (1 << 3);
+
     result |= checkMethod(REQ._method, TRACE, 1 << 12);
     result |= checkMethod(REQ._method, OPTIONS, 1 << 11);
     result |= checkRedirective(_vts->ServerIsRedirective(), 1 << 1);
@@ -41,6 +43,50 @@ short response::absorbSatus(string &path) {
 
     return static_cast<short>(result);
 }
+
+
+/*
+short response::absorbSatus(string &path) {
+    struct stat _file;
+    bool  _cgi = false;
+
+    path = REQ._path;
+    if (_vts->ServerIsRedirective())
+        return (1 << 1);
+    if (!_location)
+        return (1 << 3);
+    if (LOCATION.LocationIsRedirective())
+        return (1 << 2);
+    if (LOCATION.NotallowMethod(REQ._method))
+        return (1 << 4);
+    if (REQ.TooLarge(_vts->getMaxBodySize()))
+        return (1 << 10);
+    if (REQ._method & OPTIONS)
+        return (1 << 11);
+    if (REQ._method & TRACE)
+        return (1 << 12);
+    
+    _cgi = (!LOCATION.getCgiPath().empty());
+
+    if (LOCATION.getIsUpload() && REQ._method & POST && !_cgi)
+        return (1 << 8);
+
+    path = LOCATION.getRoot() +  path ;
+
+    path = REQ.normalization(path); // norm path
+
+    bzero(&_file, sizeof _file);
+    if (stat(path.c_str(), &_file) != EXIT_SUCCESS)
+        return (REQ._method & PUT ? (1 << 5) : (1 << 6) ); 
+
+    if (S_ISDIR(_file.st_mode)) // check if the path is directory
+        return  (1 << 7) | (_cgi ? (1 << 9) : 0); // append to cgi
+    
+    if (S_ISREG(_file.st_mode))
+        return (1 << 5) | (_cgi ? (1 << 9) : 0);
+    return 0;
+}
+*/
 
 void response::interpret_response(socket_t &fd) {
 
@@ -87,7 +133,8 @@ void response::interpret_response(socket_t &fd) {
                 }
                 string FILE_PATH;
                 for (auto const &it : LOCATION.getIndexes()) {
-                    if (FILE_PATH = joinPath(requestPATH, it) ; access(FILE_PATH.c_str(), F_OK) == 0) {
+                    FILE_PATH = joinPath(requestPATH, it);
+                    if (access(FILE_PATH.c_str(), F_OK) == 0) {
                         requestPATH = FILE_PATH;
                         goto progressFile;
                     }
@@ -122,8 +169,10 @@ void response::interpret_response(socket_t &fd) {
                     if ( REQ._method & HEAD && (setupHead(requestPATH), true) )
                         goto sendResponse;
                     
-                    __unused bool x = (REQ._method & (PATCH | PUT) && (_setup_patch_response(requestPATH), true)) || \
-                    (_setup_lenghted_type_(requestPATH, REQ._requestChunked_()), true);
+                    if (REQ._method & (PATCH | PUT) && (_setup_patch_response(requestPATH), true))
+                        ;
+                    else
+                        _setup_lenghted_type_(requestPATH, REQ._requestChunked_());
                     
                     goto sendResponse;
                     
@@ -656,6 +705,43 @@ void response::_setup_patch_response(string const& _path, __unused bool founded_
         _set_stat_(PAGES_SEND_DONE | RESPONSE_DONE);
         (file->close(), BodyFile.close());
 }
+
+void response::_accept_connect_connection() {
+
+    sockaddr_in serverAddress{};
+    const auto Host = REQ._header.get("Host");
+    const auto idx = Host.find(':');
+    const auto targetHost = Host.substr(0, idx - 1);
+    const auto targetPort = stoi (Host.substr(idx + 1)) ;
+
+    auto clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientSocket == -1) {
+        goto failed;
+        return;
+    }
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_port   = htons(targetPort);
+    inet_pton(AF_INET, targetHost.c_str(), &serverAddress.sin_addr);
+
+    if (connect(clientSocket, reinterpret_cast<struct sockaddr*>(&serverAddress), sizeof(serverAddress)) == -1) {
+        logger.notice(" failed to connecting to the target server");
+        close(clientSocket);
+        goto failed;
+    }
+   _pages << HTTP_VERSION <<  " 200 Connection established" << CRLF << CRLF;
+    close(clientSocket);
+
+    failed:
+        ErrPage(HTTP_INTERNAL_SERVER_ERROR, VTS.getErrorPages());
+}
+
+void response::_setup_connect_response() {
+    _set_http_code_status_(HTTP_OK);
+    _set_connection_(false);
+    _init_headers_();
+    _accept_connect_connection();
+    _set_stat_(PAGES_SEND_DONE | RESPONSE_DONE);
+}   
 
 map<string, string> response::getfileInformation(fs::path const& filePath) {
         

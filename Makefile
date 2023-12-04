@@ -58,7 +58,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 		@echo "$(OK_COLOR) [OBJS ✅] $(NO_COLOR)"
-		@$(CC) $(DEBUG) $^ -o $@ 
+		@$(CC) $^ -o $@ 
 
 %.o: %.cpp $(HEADERS)
 	@printf "%-100.900b\r" "$(COM_COLOR)$(COM_STRING) $(OBJ_COLOR)$(@)$(NO_COLOR)\n";
