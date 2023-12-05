@@ -27,38 +27,38 @@
 
 ---
 
-##  Table of Contents
-- [ Table of Contents](#-table-of-contents)
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ repository Structure](#-repository-structure)
-- [ Modules](#modules)
-- [ Getting Started](#-getting-started)
-    - [ Installation](#-installation)
-    - [ Running serveX](#-running-serveX)
-    - [ Tests](#-tests)
-- [ Roadmap](#-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
+## 📖 Table of Contents
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 Overview](#-overview)
+- [📦 Features](#-features)
+- [📂 repository Structure](#-repository-structure)
+- [⚙️ Modules](#modules)
+- [🚀 Getting Started](#-getting-started)
+    - [🔧 Installation](#-installation)
+    - [🤖 Running serveX](#-running-serveX)
+    - [🧪 Tests](#-tests)
+- [🛣 Roadmap](#-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 
 
-##  Overview
+## 📍 Overview
 
 HTTPStatus Exception: 401
 
 ---
 
-##  Features
+## 📦 Features
 
 HTTPStatus Exception: 401
 
 ---
 
 
-##  Repository Structure
+## 📂 Repository Structure
 
 ```sh
 └── serveX/
@@ -254,7 +254,7 @@ HTTPStatus Exception: 401
 ---
 
 
-##  Modules
+## ⚙️ Modules
 
 <details closed><summary>Root</summary>
 
@@ -751,7 +751,7 @@ HTTPStatus Exception: 401
 
 ---
 
-##  Getting Started
+## 🚀 Getting Started
 
 ***Dependencies***
 
@@ -763,7 +763,7 @@ Please ensure you have the following dependencies installed on your system:
 
 `- ℹ️ ...`
 
-###  Installation
+### 🔧 Installation
 
 1. Clone the serveX repository:
 ```sh
@@ -780,13 +780,13 @@ cd serveX
 ► INSERT-TEXT
 ```
 
-###  Running serveX
+### 🤖 Running serveX
 
 ```sh
 ► INSERT-TEXT
 ```
 
-###  Tests
+### 🧪 Tests
 ```sh
 ► INSERT-TEXT
 ```
@@ -794,7 +794,7 @@ cd serveX
 ---
 
 
-##  Project Roadmap
+## 🛣 Project Roadmap
 
 > - [X] `ℹ️  Task 1: Implement X`
 > - [ ] `ℹ️  Task 2: Implement Y`
@@ -803,7 +803,7 @@ cd serveX
 
 ---
 
-##  Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
 
@@ -842,14 +842,14 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 ---
 
-##  License
+## 📄 License
 
 
 This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
-##  Acknowledgments
+## 👏 Acknowledgments
 
 - List any resources, contributors, inspiration, etc. here.
 
