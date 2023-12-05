@@ -14,6 +14,7 @@
     <br />
     <br />
 </div>
+<img width="1678" alt="Screenshot 2023-12-05 at 11 38 52" src="https://github.com/joseph-el/serveX/assets/80905157/d5446afd-2f66-46ad-a4ab-e53abcc41f8d">
 
 
  ## About
@@ -129,3 +130,6 @@ make ; ./serveX - (options if needed)
 ## Acknowledgments
 
 Special thanks to [@tnaceur](https://github.com/tnaceur) and [@ELkhalil](https://github.com/ELkhalil) for their valuable contributions to the serveX project.
+
+
+
