@@ -19,6 +19,10 @@
  ## About
 ``serveX`` is a HTTP web server like [nginx](https://en.wikipedia.org/wiki/Nginx) , meticulously crafted in C++17 by [@joseph-el](https://github.com/joseph-el) , [@tnaceur](https://github.com/tnaceur) and [@ELkhalil](https://github.com/ELkhalil)
 
+## Overview
+
+``serveX`` designed to provide a robust and versatile platform for handling web applications. The server is meticulously crafted to support a wide range of features, making it suitable for various web development scenarios 
+
 ## Features
  
 - **HTTP Methods Support:** serveX supports all ``HTTP methods``, providing a versatile platform for handling various types of requests.
@@ -31,3 +35,6 @@
  
 - **Error Logging:** The server includes a high-level error ``logger`` that detects errors in configuration files, requests, and responses, providing valuable insights for debugging and maintenance.
  
+## Acknowledgments
+
+Special thanks to [@tnaceur](https://github.com/tnaceur) and [@ELkhalil](https://github.com/ELkhalil) for their valuable contributions to the serveX project.
