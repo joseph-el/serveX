@@ -124,7 +124,8 @@ git clone https://github.com/joseph-el/serveX.git
 ```
 #### config file and run
 ```sh
-make ; ./serveX - (options if needed)
+- setup the a config file
+make ; ./serveX -c path_of_config.cfg
 ```
 
 ## Acknowledgments
