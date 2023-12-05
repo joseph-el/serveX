@@ -2,7 +2,7 @@
 <h1 align="center">
 <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
 <br>SERVEX</h1>
-<h3>◦ HTTPStatus Exception: 404</h3>
+<h3>◦ HTTPStatus Exception: 401</h3>
 <h3>◦ Developed with the software and tools below.</h3>
 
 <p align="center">
@@ -27,38 +27,38 @@
 
 ---
 
-##  Table of Contents
-- [ Table of Contents](#-table-of-contents)
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ repository Structure](#-repository-structure)
-- [ Modules](#modules)
-- [ Getting Started](#-getting-started)
-    - [ Installation](#-installation)
-    - [ Running serveX](#-running-serveX)
-    - [ Tests](#-tests)
-- [ Roadmap](#-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
+## 📖 Table of Contents
+- [📖 Table of Contents](#-table-of-contents)
+- [📍 Overview](#-overview)
+- [📦 Features](#-features)
+- [📂 repository Structure](#-repository-structure)
+- [⚙️ Modules](#modules)
+- [🚀 Getting Started](#-getting-started)
+    - [🔧 Installation](#-installation)
+    - [🤖 Running serveX](#-running-serveX)
+    - [🧪 Tests](#-tests)
+- [🛣 Roadmap](#-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 
 
-##  Overview
+## 📍 Overview
 
-HTTPStatus Exception: 404
-
----
-
-##  Features
-
-HTTPStatus Exception: 404
+HTTPStatus Exception: 401
 
 ---
 
+## 📦 Features
 
-##  Repository Structure
+HTTPStatus Exception: 401
+
+---
+
+
+## 📂 Repository Structure
 
 ```sh
 └── serveX/
@@ -254,14 +254,14 @@ HTTPStatus Exception: 404
 ---
 
 
-##  Modules
+## ⚙️ Modules
 
 <details closed><summary>Root</summary>
 
 | File                                                                             | Summary                   |
 | ---                                                                              | ---                       |
-| [Makefile](https://github.com/joseph-el/serveX/blob/main/Makefile)               | HTTPStatus Exception: 404 |
-| [serveX-main.cpp](https://github.com/joseph-el/serveX/blob/main/serveX-main.cpp) | HTTPStatus Exception: 404 |
+| [Makefile](https://github.com/joseph-el/serveX/blob/main/Makefile)               | HTTPStatus Exception: 401 |
+| [serveX-main.cpp](https://github.com/joseph-el/serveX/blob/main/serveX-main.cpp) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -269,7 +269,7 @@ HTTPStatus Exception: 404
 
 | File                                                                        | Summary                   |
 | ---                                                                         | ---                       |
-| [index.html](https://github.com/joseph-el/serveX/blob/main/home/index.html) | HTTPStatus Exception: 404 |
+| [index.html](https://github.com/joseph-el/serveX/blob/main/home/index.html) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -277,25 +277,25 @@ HTTPStatus Exception: 404
 
 | File                                                                                                                   | Summary                   |
 | ---                                                                                                                    | ---                       |
-| [main.js](https://github.com/joseph-el/serveX/blob/main/home/src/js/main.js)                                           | HTTPStatus Exception: 404 |
-| [jquery-3.2.1.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery-3.2.1.min.js)                   | HTTPStatus Exception: 404 |
-| [range.js](https://github.com/joseph-el/serveX/blob/main/template/js/range.js)                                         | HTTPStatus Exception: 404 |
-| [jquery.timepicker.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.timepicker.min.js)         | HTTPStatus Exception: 404 |
-| [jquery.magnific-popup.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.magnific-popup.min.js) | HTTPStatus Exception: 404 |
-| [bootstrap-datepicker.js](https://github.com/joseph-el/serveX/blob/main/template/js/bootstrap-datepicker.js)           | HTTPStatus Exception: 404 |
-| [google-map.js](https://github.com/joseph-el/serveX/blob/main/template/js/google-map.js)                               | HTTPStatus Exception: 404 |
-| [jquery.easing.1.3.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.easing.1.3.js)                 | HTTPStatus Exception: 404 |
-| [jquery.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.min.js)                               | HTTPStatus Exception: 404 |
-| [main.js](https://github.com/joseph-el/serveX/blob/main/template/js/main.js)                                           | HTTPStatus Exception: 404 |
-| [owl.carousel.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/owl.carousel.min.js)                   | HTTPStatus Exception: 404 |
-| [bootstrap.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/bootstrap.min.js)                         | HTTPStatus Exception: 404 |
-| [aos.js](https://github.com/joseph-el/serveX/blob/main/template/js/aos.js)                                             | HTTPStatus Exception: 404 |
-| [jquery.stellar.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.stellar.min.js)               | HTTPStatus Exception: 404 |
-| [popper.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/popper.min.js)                               | HTTPStatus Exception: 404 |
-| [scrollax.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/scrollax.min.js)                           | HTTPStatus Exception: 404 |
-| [jquery.waypoints.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.waypoints.min.js)           | HTTPStatus Exception: 404 |
-| [jquery.animateNumber.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.animateNumber.min.js)   | HTTPStatus Exception: 404 |
-| [jquery-migrate-3.0.1.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery-migrate-3.0.1.min.js)   | HTTPStatus Exception: 404 |
+| [main.js](https://github.com/joseph-el/serveX/blob/main/home/src/js/main.js)                                           | HTTPStatus Exception: 401 |
+| [jquery-3.2.1.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery-3.2.1.min.js)                   | HTTPStatus Exception: 401 |
+| [range.js](https://github.com/joseph-el/serveX/blob/main/template/js/range.js)                                         | HTTPStatus Exception: 401 |
+| [jquery.timepicker.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.timepicker.min.js)         | HTTPStatus Exception: 401 |
+| [jquery.magnific-popup.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.magnific-popup.min.js) | HTTPStatus Exception: 401 |
+| [bootstrap-datepicker.js](https://github.com/joseph-el/serveX/blob/main/template/js/bootstrap-datepicker.js)           | HTTPStatus Exception: 401 |
+| [google-map.js](https://github.com/joseph-el/serveX/blob/main/template/js/google-map.js)                               | HTTPStatus Exception: 401 |
+| [jquery.easing.1.3.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.easing.1.3.js)                 | HTTPStatus Exception: 401 |
+| [jquery.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.min.js)                               | HTTPStatus Exception: 401 |
+| [main.js](https://github.com/joseph-el/serveX/blob/main/template/js/main.js)                                           | HTTPStatus Exception: 401 |
+| [owl.carousel.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/owl.carousel.min.js)                   | HTTPStatus Exception: 401 |
+| [bootstrap.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/bootstrap.min.js)                         | HTTPStatus Exception: 401 |
+| [aos.js](https://github.com/joseph-el/serveX/blob/main/template/js/aos.js)                                             | HTTPStatus Exception: 401 |
+| [jquery.stellar.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.stellar.min.js)               | HTTPStatus Exception: 401 |
+| [popper.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/popper.min.js)                               | HTTPStatus Exception: 401 |
+| [scrollax.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/scrollax.min.js)                           | HTTPStatus Exception: 401 |
+| [jquery.waypoints.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.waypoints.min.js)           | HTTPStatus Exception: 401 |
+| [jquery.animateNumber.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery.animateNumber.min.js)   | HTTPStatus Exception: 401 |
+| [jquery-migrate-3.0.1.min.js](https://github.com/joseph-el/serveX/blob/main/template/js/jquery-migrate-3.0.1.min.js)   | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -303,9 +303,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                           | Summary                   |
 | ---                                                                                            | ---                       |
-| [style.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/style.scss)           | HTTPStatus Exception: 404 |
-| [_normalize.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/_normalize.scss) | HTTPStatus Exception: 404 |
-| [style.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/style.scss)           | HTTPStatus Exception: 404 |
+| [style.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/style.scss)           | HTTPStatus Exception: 401 |
+| [_normalize.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/_normalize.scss) | HTTPStatus Exception: 401 |
+| [style.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/style.scss)           | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -313,11 +313,11 @@ HTTPStatus Exception: 404
 
 | File                                                                                                | Summary                   |
 | ---                                                                                                 | ---                       |
-| [_main.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_main.scss)         | HTTPStatus Exception: 404 |
-| [_features.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_features.scss) | HTTPStatus Exception: 404 |
-| [_footer.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_footer.scss)     | HTTPStatus Exception: 404 |
-| [_hero.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_hero.scss)         | HTTPStatus Exception: 404 |
-| [_header.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_header.scss)     | HTTPStatus Exception: 404 |
+| [_main.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_main.scss)         | HTTPStatus Exception: 401 |
+| [_features.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_features.scss) | HTTPStatus Exception: 401 |
+| [_footer.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_footer.scss)     | HTTPStatus Exception: 401 |
+| [_hero.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_hero.scss)         | HTTPStatus Exception: 401 |
+| [_header.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/layout/_header.scss)     | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -325,8 +325,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                                  | Summary                   |
 | ---                                                                                                   | ---                       |
-| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/components/_forms.scss)     | HTTPStatus Exception: 404 |
-| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/components/_buttons.scss) | HTTPStatus Exception: 404 |
+| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/components/_forms.scss)     | HTTPStatus Exception: 401 |
+| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/components/_buttons.scss) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -334,10 +334,10 @@ HTTPStatus Exception: 404
 
 | File                                                                                                             | Summary                   |
 | ---                                                                                                              | ---                       |
-| [_functions.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_functions.scss)         | HTTPStatus Exception: 404 |
-| [_variables.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_variables.scss)         | HTTPStatus Exception: 404 |
-| [_include-media.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_include-media.scss) | HTTPStatus Exception: 404 |
-| [_mixins.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_mixins.scss)               | HTTPStatus Exception: 404 |
+| [_functions.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_functions.scss)         | HTTPStatus Exception: 401 |
+| [_variables.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_variables.scss)         | HTTPStatus Exception: 401 |
+| [_include-media.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_include-media.scss) | HTTPStatus Exception: 401 |
+| [_mixins.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/abstracts/_mixins.scss)               | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -345,9 +345,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                                  | Summary                   |
 | ---                                                                                                   | ---                       |
-| [_typography.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_typography.scss) | HTTPStatus Exception: 404 |
-| [_helpers.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_helpers.scss)       | HTTPStatus Exception: 404 |
-| [_base.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_base.scss)             | HTTPStatus Exception: 404 |
+| [_typography.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_typography.scss) | HTTPStatus Exception: 401 |
+| [_helpers.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_helpers.scss)       | HTTPStatus Exception: 401 |
+| [_base.scss](https://github.com/joseph-el/serveX/blob/main/home/src/scss/base/_base.scss)             | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -355,14 +355,14 @@ HTTPStatus Exception: 404
 
 | File                                                                                    | Summary                   |
 | ---                                                                                     | ---                       |
-| [sx_logger.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_logger.cpp)       | HTTPStatus Exception: 404 |
-| [sx_optioneer.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_optioneer.hpp) | HTTPStatus Exception: 404 |
-| [sx_config.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_config.cpp)       | HTTPStatus Exception: 404 |
-| [serveX-core.hpp](https://github.com/joseph-el/serveX/blob/main/core/serveX-core.hpp)   | HTTPStatus Exception: 404 |
-| [sx_optioneer.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_optioneer.cpp) | HTTPStatus Exception: 404 |
-| [sx_config.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_config.hpp)       | HTTPStatus Exception: 404 |
-| [serveX-core.cpp](https://github.com/joseph-el/serveX/blob/main/core/serveX-core.cpp)   | HTTPStatus Exception: 404 |
-| [sx_logger.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_logger.hpp)       | HTTPStatus Exception: 404 |
+| [sx_logger.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_logger.cpp)       | HTTPStatus Exception: 401 |
+| [sx_optioneer.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_optioneer.hpp) | HTTPStatus Exception: 401 |
+| [sx_config.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_config.cpp)       | HTTPStatus Exception: 401 |
+| [serveX-core.hpp](https://github.com/joseph-el/serveX/blob/main/core/serveX-core.hpp)   | HTTPStatus Exception: 401 |
+| [sx_optioneer.cpp](https://github.com/joseph-el/serveX/blob/main/core/sx_optioneer.cpp) | HTTPStatus Exception: 401 |
+| [sx_config.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_config.hpp)       | HTTPStatus Exception: 401 |
+| [serveX-core.cpp](https://github.com/joseph-el/serveX/blob/main/core/serveX-core.cpp)   | HTTPStatus Exception: 401 |
+| [sx_logger.hpp](https://github.com/joseph-el/serveX/blob/main/core/sx_logger.hpp)       | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -370,19 +370,19 @@ HTTPStatus Exception: 404
 
 | File                                                                                              | Summary                   |
 | ---                                                                                               | ---                       |
-| [blog.html](https://github.com/joseph-el/serveX/blob/main/template/blog.html)                     | HTTPStatus Exception: 404 |
-| [index.html](https://github.com/joseph-el/serveX/blob/main/template/index.html)                   | HTTPStatus Exception: 404 |
-| [product-single.html](https://github.com/joseph-el/serveX/blob/main/template/product-single.html) | HTTPStatus Exception: 404 |
-| [about.html](https://github.com/joseph-el/serveX/blob/main/template/about.html)                   | HTTPStatus Exception: 404 |
-| [contact.html](https://github.com/joseph-el/serveX/blob/main/template/contact.html)               | HTTPStatus Exception: 404 |
-| [menu.html](https://github.com/joseph-el/serveX/blob/main/template/menu.html)                     | HTTPStatus Exception: 404 |
-| [shop.html](https://github.com/joseph-el/serveX/blob/main/template/shop.html)                     | HTTPStatus Exception: 404 |
-| [prepros-6.config](https://github.com/joseph-el/serveX/blob/main/template/prepros-6.config)       | HTTPStatus Exception: 404 |
-| [siege](https://github.com/joseph-el/serveX/blob/main/template/siege)                             | HTTPStatus Exception: 404 |
-| [blog-single.html](https://github.com/joseph-el/serveX/blob/main/template/blog-single.html)       | HTTPStatus Exception: 404 |
-| [checkout.html](https://github.com/joseph-el/serveX/blob/main/template/checkout.html)             | HTTPStatus Exception: 404 |
-| [services.html](https://github.com/joseph-el/serveX/blob/main/template/services.html)             | HTTPStatus Exception: 404 |
-| [cart.html](https://github.com/joseph-el/serveX/blob/main/template/cart.html)                     | HTTPStatus Exception: 404 |
+| [blog.html](https://github.com/joseph-el/serveX/blob/main/template/blog.html)                     | HTTPStatus Exception: 401 |
+| [index.html](https://github.com/joseph-el/serveX/blob/main/template/index.html)                   | HTTPStatus Exception: 401 |
+| [product-single.html](https://github.com/joseph-el/serveX/blob/main/template/product-single.html) | HTTPStatus Exception: 401 |
+| [about.html](https://github.com/joseph-el/serveX/blob/main/template/about.html)                   | HTTPStatus Exception: 401 |
+| [contact.html](https://github.com/joseph-el/serveX/blob/main/template/contact.html)               | HTTPStatus Exception: 401 |
+| [menu.html](https://github.com/joseph-el/serveX/blob/main/template/menu.html)                     | HTTPStatus Exception: 401 |
+| [shop.html](https://github.com/joseph-el/serveX/blob/main/template/shop.html)                     | HTTPStatus Exception: 401 |
+| [prepros-6.config](https://github.com/joseph-el/serveX/blob/main/template/prepros-6.config)       | HTTPStatus Exception: 401 |
+| [siege](https://github.com/joseph-el/serveX/blob/main/template/siege)                             | HTTPStatus Exception: 401 |
+| [blog-single.html](https://github.com/joseph-el/serveX/blob/main/template/blog-single.html)       | HTTPStatus Exception: 401 |
+| [checkout.html](https://github.com/joseph-el/serveX/blob/main/template/checkout.html)             | HTTPStatus Exception: 401 |
+| [services.html](https://github.com/joseph-el/serveX/blob/main/template/services.html)             | HTTPStatus Exception: 401 |
+| [cart.html](https://github.com/joseph-el/serveX/blob/main/template/cart.html)                     | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -390,22 +390,22 @@ HTTPStatus Exception: 404
 
 | File                                                                                                                      | Summary                   |
 | ---                                                                                                                       | ---                       |
-| [bootstrap.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap.min.css)                         | HTTPStatus Exception: 404 |
-| [magnific-popup.css](https://github.com/joseph-el/serveX/blob/main/template/css/magnific-popup.css)                       | HTTPStatus Exception: 404 |
-| [aos.css](https://github.com/joseph-el/serveX/blob/main/template/css/aos.css)                                             | HTTPStatus Exception: 404 |
-| [owl.theme.default.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/owl.theme.default.min.css)         | HTTPStatus Exception: 404 |
-| [animate.css](https://github.com/joseph-el/serveX/blob/main/template/css/animate.css)                                     | HTTPStatus Exception: 404 |
-| [icomoon.css](https://github.com/joseph-el/serveX/blob/main/template/css/icomoon.css)                                     | HTTPStatus Exception: 404 |
-| [jquery.timepicker.css](https://github.com/joseph-el/serveX/blob/main/template/css/jquery.timepicker.css)                 | HTTPStatus Exception: 404 |
-| [ionicons.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/ionicons.min.css)                           | HTTPStatus Exception: 404 |
-| [owl.carousel.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/owl.carousel.min.css)                   | HTTPStatus Exception: 404 |
-| [style.css](https://github.com/joseph-el/serveX/blob/main/template/css/style.css)                                         | HTTPStatus Exception: 404 |
-| [flaticon.css](https://github.com/joseph-el/serveX/blob/main/template/css/flaticon.css)                                   | HTTPStatus Exception: 404 |
-| [bootstrap-datepicker.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap-datepicker.css)           | HTTPStatus Exception: 404 |
-| [open-iconic-bootstrap.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/open-iconic-bootstrap.min.css) | HTTPStatus Exception: 404 |
-| [bootstrap-reboot.css](https://github.com/joseph-el/serveX/blob/main/template/css/css/bootstrap-reboot.css)               | HTTPStatus Exception: 404 |
-| [_ionicons.scss](https://github.com/joseph-el/serveX/blob/main/template/fonts/ionicons/css/_ionicons.scss)                | HTTPStatus Exception: 404 |
-| [ionicons.min.css](https://github.com/joseph-el/serveX/blob/main/template/fonts/ionicons/css/ionicons.min.css)            | HTTPStatus Exception: 404 |
+| [bootstrap.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap.min.css)                         | HTTPStatus Exception: 401 |
+| [magnific-popup.css](https://github.com/joseph-el/serveX/blob/main/template/css/magnific-popup.css)                       | HTTPStatus Exception: 401 |
+| [aos.css](https://github.com/joseph-el/serveX/blob/main/template/css/aos.css)                                             | HTTPStatus Exception: 401 |
+| [owl.theme.default.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/owl.theme.default.min.css)         | HTTPStatus Exception: 401 |
+| [animate.css](https://github.com/joseph-el/serveX/blob/main/template/css/animate.css)                                     | HTTPStatus Exception: 401 |
+| [icomoon.css](https://github.com/joseph-el/serveX/blob/main/template/css/icomoon.css)                                     | HTTPStatus Exception: 401 |
+| [jquery.timepicker.css](https://github.com/joseph-el/serveX/blob/main/template/css/jquery.timepicker.css)                 | HTTPStatus Exception: 401 |
+| [ionicons.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/ionicons.min.css)                           | HTTPStatus Exception: 401 |
+| [owl.carousel.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/owl.carousel.min.css)                   | HTTPStatus Exception: 401 |
+| [style.css](https://github.com/joseph-el/serveX/blob/main/template/css/style.css)                                         | HTTPStatus Exception: 401 |
+| [flaticon.css](https://github.com/joseph-el/serveX/blob/main/template/css/flaticon.css)                                   | HTTPStatus Exception: 401 |
+| [bootstrap-datepicker.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap-datepicker.css)           | HTTPStatus Exception: 401 |
+| [open-iconic-bootstrap.min.css](https://github.com/joseph-el/serveX/blob/main/template/css/open-iconic-bootstrap.min.css) | HTTPStatus Exception: 401 |
+| [bootstrap-reboot.css](https://github.com/joseph-el/serveX/blob/main/template/css/css/bootstrap-reboot.css)               | HTTPStatus Exception: 401 |
+| [_ionicons.scss](https://github.com/joseph-el/serveX/blob/main/template/fonts/ionicons/css/_ionicons.scss)                | HTTPStatus Exception: 401 |
+| [ionicons.min.css](https://github.com/joseph-el/serveX/blob/main/template/fonts/ionicons/css/ionicons.min.css)            | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -413,46 +413,46 @@ HTTPStatus Exception: 404
 
 | File                                                                                                                 | Summary                   |
 | ---                                                                                                                  | ---                       |
-| [bootstrap-reboot.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap/bootstrap-reboot.css)    | HTTPStatus Exception: 404 |
-| [bootstrap-grid.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap/bootstrap-grid.css)        | HTTPStatus Exception: 404 |
-| [_code.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_code.scss)                       | HTTPStatus Exception: 404 |
-| [_functions.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_functions.scss)             | HTTPStatus Exception: 404 |
-| [_jumbotron.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_jumbotron.scss)             | HTTPStatus Exception: 404 |
-| [_navbar.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_navbar.scss)                   | HTTPStatus Exception: 404 |
-| [_variables.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_variables.scss)             | HTTPStatus Exception: 404 |
-| [_progress.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_progress.scss)               | HTTPStatus Exception: 404 |
-| [_popover.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_popover.scss)                 | HTTPStatus Exception: 404 |
-| [_input-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_input-group.scss)         | HTTPStatus Exception: 404 |
-| [_breadcrumb.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_breadcrumb.scss)           | HTTPStatus Exception: 404 |
-| [_carousel.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_carousel.scss)               | HTTPStatus Exception: 404 |
-| [bootstrap.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap.scss)               | HTTPStatus Exception: 404 |
-| [_badge.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_badge.scss)                     | HTTPStatus Exception: 404 |
-| [_print.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_print.scss)                     | HTTPStatus Exception: 404 |
-| [_media.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_media.scss)                     | HTTPStatus Exception: 404 |
-| [_button-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_button-group.scss)       | HTTPStatus Exception: 404 |
-| [_reboot.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_reboot.scss)                   | HTTPStatus Exception: 404 |
-| [_utilities.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_utilities.scss)             | HTTPStatus Exception: 404 |
-| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_forms.scss)                     | HTTPStatus Exception: 404 |
-| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_buttons.scss)                 | HTTPStatus Exception: 404 |
-| [_tables.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_tables.scss)                   | HTTPStatus Exception: 404 |
-| [_images.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_images.scss)                   | HTTPStatus Exception: 404 |
-| [_close.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_close.scss)                     | HTTPStatus Exception: 404 |
-| [_list-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_list-group.scss)           | HTTPStatus Exception: 404 |
-| [bootstrap-grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap-grid.scss)     | HTTPStatus Exception: 404 |
-| [_pagination.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_pagination.scss)           | HTTPStatus Exception: 404 |
-| [_card.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_card.scss)                       | HTTPStatus Exception: 404 |
-| [_grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_grid.scss)                       | HTTPStatus Exception: 404 |
-| [_mixins.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_mixins.scss)                   | HTTPStatus Exception: 404 |
-| [_custom-forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_custom-forms.scss)       | HTTPStatus Exception: 404 |
-| [_nav.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_nav.scss)                         | HTTPStatus Exception: 404 |
-| [_alert.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_alert.scss)                     | HTTPStatus Exception: 404 |
-| [_transitions.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_transitions.scss)         | HTTPStatus Exception: 404 |
-| [_tooltip.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_tooltip.scss)                 | HTTPStatus Exception: 404 |
-| [_root.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_root.scss)                       | HTTPStatus Exception: 404 |
-| [_modal.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_modal.scss)                     | HTTPStatus Exception: 404 |
-| [_type.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_type.scss)                       | HTTPStatus Exception: 404 |
-| [_dropdown.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_dropdown.scss)               | HTTPStatus Exception: 404 |
-| [bootstrap-reboot.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap-reboot.scss) | HTTPStatus Exception: 404 |
+| [bootstrap-reboot.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap/bootstrap-reboot.css)    | HTTPStatus Exception: 401 |
+| [bootstrap-grid.css](https://github.com/joseph-el/serveX/blob/main/template/css/bootstrap/bootstrap-grid.css)        | HTTPStatus Exception: 401 |
+| [_code.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_code.scss)                       | HTTPStatus Exception: 401 |
+| [_functions.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_functions.scss)             | HTTPStatus Exception: 401 |
+| [_jumbotron.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_jumbotron.scss)             | HTTPStatus Exception: 401 |
+| [_navbar.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_navbar.scss)                   | HTTPStatus Exception: 401 |
+| [_variables.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_variables.scss)             | HTTPStatus Exception: 401 |
+| [_progress.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_progress.scss)               | HTTPStatus Exception: 401 |
+| [_popover.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_popover.scss)                 | HTTPStatus Exception: 401 |
+| [_input-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_input-group.scss)         | HTTPStatus Exception: 401 |
+| [_breadcrumb.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_breadcrumb.scss)           | HTTPStatus Exception: 401 |
+| [_carousel.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_carousel.scss)               | HTTPStatus Exception: 401 |
+| [bootstrap.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap.scss)               | HTTPStatus Exception: 401 |
+| [_badge.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_badge.scss)                     | HTTPStatus Exception: 401 |
+| [_print.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_print.scss)                     | HTTPStatus Exception: 401 |
+| [_media.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_media.scss)                     | HTTPStatus Exception: 401 |
+| [_button-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_button-group.scss)       | HTTPStatus Exception: 401 |
+| [_reboot.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_reboot.scss)                   | HTTPStatus Exception: 401 |
+| [_utilities.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_utilities.scss)             | HTTPStatus Exception: 401 |
+| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_forms.scss)                     | HTTPStatus Exception: 401 |
+| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_buttons.scss)                 | HTTPStatus Exception: 401 |
+| [_tables.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_tables.scss)                   | HTTPStatus Exception: 401 |
+| [_images.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_images.scss)                   | HTTPStatus Exception: 401 |
+| [_close.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_close.scss)                     | HTTPStatus Exception: 401 |
+| [_list-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_list-group.scss)           | HTTPStatus Exception: 401 |
+| [bootstrap-grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap-grid.scss)     | HTTPStatus Exception: 401 |
+| [_pagination.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_pagination.scss)           | HTTPStatus Exception: 401 |
+| [_card.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_card.scss)                       | HTTPStatus Exception: 401 |
+| [_grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_grid.scss)                       | HTTPStatus Exception: 401 |
+| [_mixins.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_mixins.scss)                   | HTTPStatus Exception: 401 |
+| [_custom-forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_custom-forms.scss)       | HTTPStatus Exception: 401 |
+| [_nav.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_nav.scss)                         | HTTPStatus Exception: 401 |
+| [_alert.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_alert.scss)                     | HTTPStatus Exception: 401 |
+| [_transitions.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_transitions.scss)         | HTTPStatus Exception: 401 |
+| [_tooltip.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_tooltip.scss)                 | HTTPStatus Exception: 401 |
+| [_root.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_root.scss)                       | HTTPStatus Exception: 401 |
+| [_modal.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_modal.scss)                     | HTTPStatus Exception: 401 |
+| [_type.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_type.scss)                       | HTTPStatus Exception: 401 |
+| [_dropdown.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/_dropdown.scss)               | HTTPStatus Exception: 401 |
+| [bootstrap-reboot.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/bootstrap-reboot.scss) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -460,37 +460,37 @@ HTTPStatus Exception: 404
 
 | File                                                                                                                              | Summary                   |
 | ---                                                                                                                               | ---                       |
-| [_text-hide.css](https://github.com/joseph-el/serveX/blob/main/template/css/css/mixins/_text-hide.css)                            | HTTPStatus Exception: 404 |
-| [_reset-text.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_reset-text.scss)                 | HTTPStatus Exception: 404 |
-| [_hover.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_hover.scss)                           | HTTPStatus Exception: 404 |
-| [_image.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_image.scss)                           | HTTPStatus Exception: 404 |
-| [_badge.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_badge.scss)                           | HTTPStatus Exception: 404 |
-| [_lists.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_lists.scss)                           | HTTPStatus Exception: 404 |
-| [_float.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_float.scss)                           | HTTPStatus Exception: 404 |
-| [_gradients.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_gradients.scss)                   | HTTPStatus Exception: 404 |
-| [_text-truncate.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-truncate.scss)           | HTTPStatus Exception: 404 |
-| [_text-emphasis.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-emphasis.scss)           | HTTPStatus Exception: 404 |
-| [_table-row.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_table-row.scss)                   | HTTPStatus Exception: 404 |
-| [_background-variant.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_background-variant.scss) | HTTPStatus Exception: 404 |
-| [_breakpoints.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_breakpoints.scss)               | HTTPStatus Exception: 404 |
-| [_box-shadow.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_box-shadow.scss)                 | HTTPStatus Exception: 404 |
-| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_forms.scss)                           | HTTPStatus Exception: 404 |
-| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_buttons.scss)                       | HTTPStatus Exception: 404 |
-| [_transition.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_transition.scss)                 | HTTPStatus Exception: 404 |
-| [_grid-framework.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_grid-framework.scss)         | HTTPStatus Exception: 404 |
-| [_caret.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_caret.scss)                           | HTTPStatus Exception: 404 |
-| [_resize.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_resize.scss)                         | HTTPStatus Exception: 404 |
-| [_screen-reader.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_screen-reader.scss)           | HTTPStatus Exception: 404 |
-| [_nav-divider.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_nav-divider.scss)               | HTTPStatus Exception: 404 |
-| [_list-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_list-group.scss)                 | HTTPStatus Exception: 404 |
-| [_pagination.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_pagination.scss)                 | HTTPStatus Exception: 404 |
-| [_clearfix.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_clearfix.scss)                     | HTTPStatus Exception: 404 |
-| [_grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_grid.scss)                             | HTTPStatus Exception: 404 |
-| [_text-hide.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-hide.scss)                   | HTTPStatus Exception: 404 |
-| [_alert.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_alert.scss)                           | HTTPStatus Exception: 404 |
-| [_border-radius.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_border-radius.scss)           | HTTPStatus Exception: 404 |
-| [_size.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_size.scss)                             | HTTPStatus Exception: 404 |
-| [_visibility.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_visibility.scss)                 | HTTPStatus Exception: 404 |
+| [_text-hide.css](https://github.com/joseph-el/serveX/blob/main/template/css/css/mixins/_text-hide.css)                            | HTTPStatus Exception: 401 |
+| [_reset-text.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_reset-text.scss)                 | HTTPStatus Exception: 401 |
+| [_hover.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_hover.scss)                           | HTTPStatus Exception: 401 |
+| [_image.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_image.scss)                           | HTTPStatus Exception: 401 |
+| [_badge.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_badge.scss)                           | HTTPStatus Exception: 401 |
+| [_lists.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_lists.scss)                           | HTTPStatus Exception: 401 |
+| [_float.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_float.scss)                           | HTTPStatus Exception: 401 |
+| [_gradients.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_gradients.scss)                   | HTTPStatus Exception: 401 |
+| [_text-truncate.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-truncate.scss)           | HTTPStatus Exception: 401 |
+| [_text-emphasis.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-emphasis.scss)           | HTTPStatus Exception: 401 |
+| [_table-row.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_table-row.scss)                   | HTTPStatus Exception: 401 |
+| [_background-variant.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_background-variant.scss) | HTTPStatus Exception: 401 |
+| [_breakpoints.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_breakpoints.scss)               | HTTPStatus Exception: 401 |
+| [_box-shadow.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_box-shadow.scss)                 | HTTPStatus Exception: 401 |
+| [_forms.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_forms.scss)                           | HTTPStatus Exception: 401 |
+| [_buttons.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_buttons.scss)                       | HTTPStatus Exception: 401 |
+| [_transition.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_transition.scss)                 | HTTPStatus Exception: 401 |
+| [_grid-framework.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_grid-framework.scss)         | HTTPStatus Exception: 401 |
+| [_caret.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_caret.scss)                           | HTTPStatus Exception: 401 |
+| [_resize.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_resize.scss)                         | HTTPStatus Exception: 401 |
+| [_screen-reader.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_screen-reader.scss)           | HTTPStatus Exception: 401 |
+| [_nav-divider.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_nav-divider.scss)               | HTTPStatus Exception: 401 |
+| [_list-group.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_list-group.scss)                 | HTTPStatus Exception: 401 |
+| [_pagination.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_pagination.scss)                 | HTTPStatus Exception: 401 |
+| [_clearfix.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_clearfix.scss)                     | HTTPStatus Exception: 401 |
+| [_grid.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_grid.scss)                             | HTTPStatus Exception: 401 |
+| [_text-hide.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_text-hide.scss)                   | HTTPStatus Exception: 401 |
+| [_alert.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_alert.scss)                           | HTTPStatus Exception: 401 |
+| [_border-radius.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_border-radius.scss)           | HTTPStatus Exception: 401 |
+| [_size.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_size.scss)                             | HTTPStatus Exception: 401 |
+| [_visibility.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/mixins/_visibility.scss)                 | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -498,21 +498,21 @@ HTTPStatus Exception: 404
 
 | File                                                                                                                       | Summary                   |
 | ---                                                                                                                        | ---                       |
-| [_shadows.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_shadows.scss)             | HTTPStatus Exception: 404 |
-| [_background.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_background.scss)       | HTTPStatus Exception: 404 |
-| [_float.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_float.scss)                 | HTTPStatus Exception: 404 |
-| [_borders.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_borders.scss)             | HTTPStatus Exception: 404 |
-| [_flex.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_flex.scss)                   | HTTPStatus Exception: 404 |
-| [_clearfix.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_clearfix.scss)           | HTTPStatus Exception: 404 |
-| [_align.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_align.scss)                 | HTTPStatus Exception: 404 |
-| [_screenreaders.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_screenreaders.scss) | HTTPStatus Exception: 404 |
-| [_embed.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_embed.scss)                 | HTTPStatus Exception: 404 |
-| [_sizing.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_sizing.scss)               | HTTPStatus Exception: 404 |
-| [_position.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_position.scss)           | HTTPStatus Exception: 404 |
-| [_visibility.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_visibility.scss)       | HTTPStatus Exception: 404 |
-| [_text.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_text.scss)                   | HTTPStatus Exception: 404 |
-| [_spacing.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_spacing.scss)             | HTTPStatus Exception: 404 |
-| [_display.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_display.scss)             | HTTPStatus Exception: 404 |
+| [_shadows.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_shadows.scss)             | HTTPStatus Exception: 401 |
+| [_background.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_background.scss)       | HTTPStatus Exception: 401 |
+| [_float.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_float.scss)                 | HTTPStatus Exception: 401 |
+| [_borders.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_borders.scss)             | HTTPStatus Exception: 401 |
+| [_flex.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_flex.scss)                   | HTTPStatus Exception: 401 |
+| [_clearfix.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_clearfix.scss)           | HTTPStatus Exception: 401 |
+| [_align.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_align.scss)                 | HTTPStatus Exception: 401 |
+| [_screenreaders.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_screenreaders.scss) | HTTPStatus Exception: 401 |
+| [_embed.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_embed.scss)                 | HTTPStatus Exception: 401 |
+| [_sizing.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_sizing.scss)               | HTTPStatus Exception: 401 |
+| [_position.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_position.scss)           | HTTPStatus Exception: 401 |
+| [_visibility.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_visibility.scss)       | HTTPStatus Exception: 401 |
+| [_text.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_text.scss)                   | HTTPStatus Exception: 401 |
+| [_spacing.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_spacing.scss)             | HTTPStatus Exception: 401 |
+| [_display.scss](https://github.com/joseph-el/serveX/blob/main/template/scss/bootstrap/utilities/_display.scss)             | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -520,7 +520,7 @@ HTTPStatus Exception: 404
 
 | File                                                                                           | Summary                   |
 | ---                                                                                            | ---                       |
-| [backup.txt](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/backup.txt) | HTTPStatus Exception: 404 |
+| [backup.txt](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/backup.txt) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -528,9 +528,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                                        | Summary                   |
 | ---                                                                                                         | ---                       |
-| [_flaticon.scss](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/_flaticon.scss) | HTTPStatus Exception: 404 |
-| [flaticon.css](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/flaticon.css)     | HTTPStatus Exception: 404 |
-| [flaticon.html](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/flaticon.html)   | HTTPStatus Exception: 404 |
+| [_flaticon.scss](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/_flaticon.scss) | HTTPStatus Exception: 401 |
+| [flaticon.css](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/flaticon.css)     | HTTPStatus Exception: 401 |
+| [flaticon.html](https://github.com/joseph-el/serveX/blob/main/template/fonts/flaticon/font/flaticon.html)   | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -538,28 +538,28 @@ HTTPStatus Exception: 404
 
 | File                                                                                                   | Summary                   |
 | ---                                                                                                    | ---                       |
-| [sx_HttpStatusMapping.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_HttpStatusMapping.hpp) | HTTPStatus Exception: 404 |
-| [sx_cgiExtension.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgiExtension.cpp)           | HTTPStatus Exception: 404 |
-| [sx_mimetype.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_mimetype.cpp)                   | HTTPStatus Exception: 404 |
-| [sx_cgi.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgi.hpp)                             | HTTPStatus Exception: 404 |
-| [sx_client.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_client.hpp)                       | HTTPStatus Exception: 404 |
-| [sx_request.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_request.hpp)                     | HTTPStatus Exception: 404 |
-| [sx_redirective.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_redirective.hpp)             | HTTPStatus Exception: 404 |
-| [sx_response.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_response.cpp)                   | HTTPStatus Exception: 404 |
-| [sx_socket.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_socket.hpp)                       | HTTPStatus Exception: 404 |
-| [sx_requestBody.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_requestBody.cpp)             | HTTPStatus Exception: 404 |
-| [sx_headers.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_headers.cpp)                     | HTTPStatus Exception: 404 |
-| [sx_redirective.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_redirective.cpp)             | HTTPStatus Exception: 404 |
-| [sx_response.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_response.hpp)                   | HTTPStatus Exception: 404 |
-| [sx_socket.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_socket.cpp)                       | HTTPStatus Exception: 404 |
-| [sx_requestBody.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_requestBody.hpp)             | HTTPStatus Exception: 404 |
-| [sx_headers.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_headers.hpp)                     | HTTPStatus Exception: 404 |
-| [sx_HttpStatusMapping.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_HttpStatusMapping.cpp) | HTTPStatus Exception: 404 |
-| [sx_cgiExtension.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgiExtension.hpp)           | HTTPStatus Exception: 404 |
-| [sx_cgi.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgi.cpp)                             | HTTPStatus Exception: 404 |
-| [sx_mimetype.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_mimetype.hpp)                   | HTTPStatus Exception: 404 |
-| [sx_client.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_client.cpp)                       | HTTPStatus Exception: 404 |
-| [sx_request.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_request.cpp)                     | HTTPStatus Exception: 404 |
+| [sx_HttpStatusMapping.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_HttpStatusMapping.hpp) | HTTPStatus Exception: 401 |
+| [sx_cgiExtension.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgiExtension.cpp)           | HTTPStatus Exception: 401 |
+| [sx_mimetype.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_mimetype.cpp)                   | HTTPStatus Exception: 401 |
+| [sx_cgi.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgi.hpp)                             | HTTPStatus Exception: 401 |
+| [sx_client.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_client.hpp)                       | HTTPStatus Exception: 401 |
+| [sx_request.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_request.hpp)                     | HTTPStatus Exception: 401 |
+| [sx_redirective.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_redirective.hpp)             | HTTPStatus Exception: 401 |
+| [sx_response.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_response.cpp)                   | HTTPStatus Exception: 401 |
+| [sx_socket.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_socket.hpp)                       | HTTPStatus Exception: 401 |
+| [sx_requestBody.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_requestBody.cpp)             | HTTPStatus Exception: 401 |
+| [sx_headers.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_headers.cpp)                     | HTTPStatus Exception: 401 |
+| [sx_redirective.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_redirective.cpp)             | HTTPStatus Exception: 401 |
+| [sx_response.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_response.hpp)                   | HTTPStatus Exception: 401 |
+| [sx_socket.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_socket.cpp)                       | HTTPStatus Exception: 401 |
+| [sx_requestBody.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_requestBody.hpp)             | HTTPStatus Exception: 401 |
+| [sx_headers.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_headers.hpp)                     | HTTPStatus Exception: 401 |
+| [sx_HttpStatusMapping.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_HttpStatusMapping.cpp) | HTTPStatus Exception: 401 |
+| [sx_cgiExtension.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgiExtension.hpp)           | HTTPStatus Exception: 401 |
+| [sx_cgi.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_cgi.cpp)                             | HTTPStatus Exception: 401 |
+| [sx_mimetype.hpp](https://github.com/joseph-el/serveX/blob/main/www/sx_mimetype.hpp)                   | HTTPStatus Exception: 401 |
+| [sx_client.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_client.cpp)                       | HTTPStatus Exception: 401 |
+| [sx_request.cpp](https://github.com/joseph-el/serveX/blob/main/www/sx_request.cpp)                     | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -567,8 +567,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                                    | Summary                   |
 | ---                                                                                                     | ---                       |
-| [ rotatingSquare.scm](https://github.com/joseph-el/serveX/blob/main/scripts/scheme/ rotatingSquare.scm) | HTTPStatus Exception: 404 |
-| [numberFactorial.scm](https://github.com/joseph-el/serveX/blob/main/scripts/scheme/numberFactorial.scm) | HTTPStatus Exception: 404 |
+| [ rotatingSquare.scm](https://github.com/joseph-el/serveX/blob/main/scripts/scheme/ rotatingSquare.scm) | HTTPStatus Exception: 401 |
+| [numberFactorial.scm](https://github.com/joseph-el/serveX/blob/main/scripts/scheme/numberFactorial.scm) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -576,8 +576,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                                  | Summary                   |
 | ---                                                                                                   | ---                       |
-| [rotatingSquare.lisp](https://github.com/joseph-el/serveX/blob/main/scripts/Lisp/rotatingSquare.lisp) | HTTPStatus Exception: 404 |
-| [helloWorld.lisp](https://github.com/joseph-el/serveX/blob/main/scripts/Lisp/helloWorld.lisp)         | HTTPStatus Exception: 404 |
+| [rotatingSquare.lisp](https://github.com/joseph-el/serveX/blob/main/scripts/Lisp/rotatingSquare.lisp) | HTTPStatus Exception: 401 |
+| [helloWorld.lisp](https://github.com/joseph-el/serveX/blob/main/scripts/Lisp/helloWorld.lisp)         | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -585,11 +585,11 @@ HTTPStatus Exception: 404
 
 | File                                                                                            | Summary                   |
 | ---                                                                                             | ---                       |
-| [post.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/post.py)                 | HTTPStatus Exception: 404 |
-| [envs.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/envs.py)                 | HTTPStatus Exception: 404 |
-| [game.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/game.py)                 | HTTPStatus Exception: 404 |
-| [errorHang.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/errorHang.py)       | HTTPStatus Exception: 404 |
-| [animatedCube.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/animatedCube.py) | HTTPStatus Exception: 404 |
+| [post.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/post.py)                 | HTTPStatus Exception: 401 |
+| [envs.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/envs.py)                 | HTTPStatus Exception: 401 |
+| [game.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/game.py)                 | HTTPStatus Exception: 401 |
+| [errorHang.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/errorHang.py)       | HTTPStatus Exception: 401 |
+| [animatedCube.py](https://github.com/joseph-el/serveX/blob/main/scripts/python/animatedCube.py) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -597,10 +597,10 @@ HTTPStatus Exception: 404
 
 | File                                                                                           | Summary                   |
 | ---                                                                                            | ---                       |
-| [animation.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/animation.sh)       | HTTPStatus Exception: 404 |
-| [msgAnimation.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/msgAnimation.sh) | HTTPStatus Exception: 404 |
-| [helloWorld.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/helloWorld.sh)     | HTTPStatus Exception: 404 |
-| [post.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/post.sh)                 | HTTPStatus Exception: 404 |
+| [animation.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/animation.sh)       | HTTPStatus Exception: 401 |
+| [msgAnimation.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/msgAnimation.sh) | HTTPStatus Exception: 401 |
+| [helloWorld.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/helloWorld.sh)     | HTTPStatus Exception: 401 |
+| [post.sh](https://github.com/joseph-el/serveX/blob/main/scripts/shell/post.sh)                 | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -608,9 +608,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                      | Summary                   |
 | ---                                                                                       | ---                       |
-| [post.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/post.pl)             | HTTPStatus Exception: 404 |
-| [game.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/game.pl)             | HTTPStatus Exception: 404 |
-| [helloWorld.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/helloWorld.pl) | HTTPStatus Exception: 404 |
+| [post.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/post.pl)             | HTTPStatus Exception: 401 |
+| [game.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/game.pl)             | HTTPStatus Exception: 401 |
+| [helloWorld.pl](https://github.com/joseph-el/serveX/blob/main/scripts/perl/helloWorld.pl) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -618,8 +618,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                 | Summary                   |
 | ---                                                                                  | ---                       |
-| [animation.R](https://github.com/joseph-el/serveX/blob/main/scripts/R/animation.R)   | HTTPStatus Exception: 404 |
-| [helloWorld.R](https://github.com/joseph-el/serveX/blob/main/scripts/R/helloWorld.R) | HTTPStatus Exception: 404 |
+| [animation.R](https://github.com/joseph-el/serveX/blob/main/scripts/R/animation.R)   | HTTPStatus Exception: 401 |
+| [helloWorld.R](https://github.com/joseph-el/serveX/blob/main/scripts/R/helloWorld.R) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -627,16 +627,16 @@ HTTPStatus Exception: 404
 
 | File                                                                                                 | Summary                   |
 | ---                                                                                                  | ---                       |
-| [queryParameters.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/queryParameters.php) | HTTPStatus Exception: 404 |
-| [game.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/game.php)                       | HTTPStatus Exception: 404 |
-| [animatedQuery.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/animatedQuery.php)     | HTTPStatus Exception: 404 |
-| [post.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/post.php)                       | HTTPStatus Exception: 404 |
-| [cookies.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/cookies.php)                 | HTTPStatus Exception: 404 |
-| [phpCookie.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/phpCookie.php)             | HTTPStatus Exception: 404 |
-| [env.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/env.php)                         | HTTPStatus Exception: 404 |
-| [cookiesTMP.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/cookiesTMP.php)           | HTTPStatus Exception: 404 |
-| [walo.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/walo.php)                       | HTTPStatus Exception: 404 |
-| [form.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/form.php)                       | HTTPStatus Exception: 404 |
+| [queryParameters.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/queryParameters.php) | HTTPStatus Exception: 401 |
+| [game.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/game.php)                       | HTTPStatus Exception: 401 |
+| [animatedQuery.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/animatedQuery.php)     | HTTPStatus Exception: 401 |
+| [post.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/post.php)                       | HTTPStatus Exception: 401 |
+| [cookies.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/cookies.php)                 | HTTPStatus Exception: 401 |
+| [phpCookie.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/phpCookie.php)             | HTTPStatus Exception: 401 |
+| [env.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/env.php)                         | HTTPStatus Exception: 401 |
+| [cookiesTMP.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/cookiesTMP.php)           | HTTPStatus Exception: 401 |
+| [walo.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/walo.php)                       | HTTPStatus Exception: 401 |
+| [form.php](https://github.com/joseph-el/serveX/blob/main/scripts/php/form.php)                       | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -644,9 +644,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                                 | Summary                   |
 | ---                                                                                                  | ---                       |
-| [rotatingSquares.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/rotatingSquares.lua) | HTTPStatus Exception: 404 |
-| [animations.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/animations.lua)           | HTTPStatus Exception: 404 |
-| [bouncingBall.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/bouncingBall.lua)       | HTTPStatus Exception: 404 |
+| [rotatingSquares.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/rotatingSquares.lua) | HTTPStatus Exception: 401 |
+| [animations.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/animations.lua)           | HTTPStatus Exception: 401 |
+| [bouncingBall.lua](https://github.com/joseph-el/serveX/blob/main/scripts/lua/bouncingBall.lua)       | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -654,9 +654,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                           | Summary                   |
 | ---                                                                                            | ---                       |
-| [rotateSquare.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/rotateSquare.tcl) | HTTPStatus Exception: 404 |
-| [helloWorld.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/helloWorld.tcl)     | HTTPStatus Exception: 404 |
-| [post.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/post.tcl)                 | HTTPStatus Exception: 404 |
+| [rotateSquare.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/rotateSquare.tcl) | HTTPStatus Exception: 401 |
+| [helloWorld.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/helloWorld.tcl)     | HTTPStatus Exception: 401 |
+| [post.tcl](https://github.com/joseph-el/serveX/blob/main/scripts/Tcl/post.tcl)                 | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -664,8 +664,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                             | Summary                   |
 | ---                                                                                              | ---                       |
-| [helloWorld.swift](https://github.com/joseph-el/serveX/blob/main/scripts/swift/helloWorld.swift) | HTTPStatus Exception: 404 |
-| [game.swift](https://github.com/joseph-el/serveX/blob/main/scripts/swift/game.swift)             | HTTPStatus Exception: 404 |
+| [helloWorld.swift](https://github.com/joseph-el/serveX/blob/main/scripts/swift/helloWorld.swift) | HTTPStatus Exception: 401 |
+| [game.swift](https://github.com/joseph-el/serveX/blob/main/scripts/swift/game.swift)             | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -673,9 +673,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                                          | Summary                   |
 | ---                                                                                                           | ---                       |
-| [queryName.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/queryName.groovy)             | HTTPStatus Exception: 404 |
-| [animatedSquare.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/animatedSquare.groovy)   | HTTPStatus Exception: 404 |
-| [currentDateTime.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/currentDateTime.groovy) | HTTPStatus Exception: 404 |
+| [queryName.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/queryName.groovy)             | HTTPStatus Exception: 401 |
+| [animatedSquare.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/animatedSquare.groovy)   | HTTPStatus Exception: 401 |
+| [currentDateTime.groovy](https://github.com/joseph-el/serveX/blob/main/scripts/groovy/currentDateTime.groovy) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -683,8 +683,8 @@ HTTPStatus Exception: 404
 
 | File                                                                                 | Summary                   |
 | ---                                                                                  | ---                       |
-| [main.c](https://github.com/joseph-el/serveX/blob/main/scripts/unknown/main.c)       | HTTPStatus Exception: 404 |
-| [main.html](https://github.com/joseph-el/serveX/blob/main/scripts/unknown/main.html) | HTTPStatus Exception: 404 |
+| [main.c](https://github.com/joseph-el/serveX/blob/main/scripts/unknown/main.c)       | HTTPStatus Exception: 401 |
+| [main.html](https://github.com/joseph-el/serveX/blob/main/scripts/unknown/main.html) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -692,9 +692,9 @@ HTTPStatus Exception: 404
 
 | File                                                                                            | Summary                   |
 | ---                                                                                             | ---                       |
-| [envs.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/envs.js)             | HTTPStatus Exception: 404 |
-| [helloWorld.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/helloWorld.js) | HTTPStatus Exception: 404 |
-| [animation.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/animation.js)   | HTTPStatus Exception: 404 |
+| [envs.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/envs.js)             | HTTPStatus Exception: 401 |
+| [helloWorld.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/helloWorld.js) | HTTPStatus Exception: 401 |
+| [animation.js](https://github.com/joseph-el/serveX/blob/main/scripts/javaScript/animation.js)   | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -702,10 +702,10 @@ HTTPStatus Exception: 404
 
 | File                                                                                      | Summary                   |
 | ---                                                                                       | ---                       |
-| [movingBall.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/movingBall.rb) | HTTPStatus Exception: 404 |
-| [helloWorld.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/helloWorld.rb) | HTTPStatus Exception: 404 |
-| [animation.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/animation.rb)   | HTTPStatus Exception: 404 |
-| [post.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/post.rb)             | HTTPStatus Exception: 404 |
+| [movingBall.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/movingBall.rb) | HTTPStatus Exception: 401 |
+| [helloWorld.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/helloWorld.rb) | HTTPStatus Exception: 401 |
+| [animation.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/animation.rb)   | HTTPStatus Exception: 401 |
+| [post.rb](https://github.com/joseph-el/serveX/blob/main/scripts/ruby/post.rb)             | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -713,13 +713,13 @@ HTTPStatus Exception: 404
 
 | File                                                                      | Summary                   |
 | ---                                                                       | ---                       |
-| [403.html](https://github.com/joseph-el/serveX/blob/main/errors/403.html) | HTTPStatus Exception: 404 |
-| [429.html](https://github.com/joseph-el/serveX/blob/main/errors/429.html) | HTTPStatus Exception: 404 |
-| [500.html](https://github.com/joseph-el/serveX/blob/main/errors/500.html) | HTTPStatus Exception: 404 |
-| [404.html](https://github.com/joseph-el/serveX/blob/main/errors/404.html) | HTTPStatus Exception: 404 |
-| [503.html](https://github.com/joseph-el/serveX/blob/main/errors/503.html) | HTTPStatus Exception: 404 |
-| [502.html](https://github.com/joseph-el/serveX/blob/main/errors/502.html) | HTTPStatus Exception: 404 |
-| [504.html](https://github.com/joseph-el/serveX/blob/main/errors/504.html) | HTTPStatus Exception: 404 |
+| [403.html](https://github.com/joseph-el/serveX/blob/main/errors/403.html) | HTTPStatus Exception: 401 |
+| [429.html](https://github.com/joseph-el/serveX/blob/main/errors/429.html) | HTTPStatus Exception: 401 |
+| [500.html](https://github.com/joseph-el/serveX/blob/main/errors/500.html) | HTTPStatus Exception: 401 |
+| [404.html](https://github.com/joseph-el/serveX/blob/main/errors/404.html) | HTTPStatus Exception: 401 |
+| [503.html](https://github.com/joseph-el/serveX/blob/main/errors/503.html) | HTTPStatus Exception: 401 |
+| [502.html](https://github.com/joseph-el/serveX/blob/main/errors/502.html) | HTTPStatus Exception: 401 |
+| [504.html](https://github.com/joseph-el/serveX/blob/main/errors/504.html) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -727,7 +727,7 @@ HTTPStatus Exception: 404
 
 | File                                                                                                | Summary                   |
 | ---                                                                                                 | ---                       |
-| [multipart_upload.html](https://github.com/joseph-el/serveX/blob/main/upload/multipart_upload.html) | HTTPStatus Exception: 404 |
+| [multipart_upload.html](https://github.com/joseph-el/serveX/blob/main/upload/multipart_upload.html) | HTTPStatus Exception: 401 |
 
 </details>
 
@@ -735,23 +735,23 @@ HTTPStatus Exception: 404
 
 | File                                                                                                         | Summary                   |
 | ---                                                                                                          | ---                       |
-| [sx_filesManipulation.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_filesManipulation.hpp)   | HTTPStatus Exception: 404 |
-| [sx_templates_helper.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_templates_helper.hpp)     | HTTPStatus Exception: 404 |
-| [sx_time.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_time.hpp)                             | HTTPStatus Exception: 404 |
-| [sx_StringManipulation.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_StringManipulation.hpp) | HTTPStatus Exception: 404 |
-| [sx_location_data.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_location_data.cpp)           | HTTPStatus Exception: 404 |
-| [sx_server_data.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_server_data.cpp)               | HTTPStatus Exception: 404 |
-| [sx_location_data.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_location_data.hpp)           | HTTPStatus Exception: 404 |
-| [sx_server_data.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_server_data.hpp)               | HTTPStatus Exception: 404 |
-| [sx_filesManipulation.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_filesManipulation.cpp)   | HTTPStatus Exception: 404 |
-| [sx_time.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_time.cpp)                             | HTTPStatus Exception: 404 |
-| [sx_StringManipulation.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_StringManipulation.cpp) | HTTPStatus Exception: 404 |
+| [sx_filesManipulation.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_filesManipulation.hpp)   | HTTPStatus Exception: 401 |
+| [sx_templates_helper.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_templates_helper.hpp)     | HTTPStatus Exception: 401 |
+| [sx_time.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_time.hpp)                             | HTTPStatus Exception: 401 |
+| [sx_StringManipulation.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_StringManipulation.hpp) | HTTPStatus Exception: 401 |
+| [sx_location_data.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_location_data.cpp)           | HTTPStatus Exception: 401 |
+| [sx_server_data.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_server_data.cpp)               | HTTPStatus Exception: 401 |
+| [sx_location_data.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_location_data.hpp)           | HTTPStatus Exception: 401 |
+| [sx_server_data.hpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_server_data.hpp)               | HTTPStatus Exception: 401 |
+| [sx_filesManipulation.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_filesManipulation.cpp)   | HTTPStatus Exception: 401 |
+| [sx_time.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_time.cpp)                             | HTTPStatus Exception: 401 |
+| [sx_StringManipulation.cpp](https://github.com/joseph-el/serveX/blob/main/utility/sx_StringManipulation.cpp) | HTTPStatus Exception: 401 |
 
 </details>
 
 ---
 
-##  Getting Started
+## 🚀 Getting Started
 
 ***Dependencies***
 
@@ -763,7 +763,7 @@ Please ensure you have the following dependencies installed on your system:
 
 `- ℹ️ ...`
 
-###  Installation
+### 🔧 Installation
 
 1. Clone the serveX repository:
 ```sh
@@ -780,13 +780,13 @@ cd serveX
 ► INSERT-TEXT
 ```
 
-###  Running serveX
+### 🤖 Running serveX
 
 ```sh
 ► INSERT-TEXT
 ```
 
-###  Tests
+### 🧪 Tests
 ```sh
 ► INSERT-TEXT
 ```
@@ -794,7 +794,7 @@ cd serveX
 ---
 
 
-##  Project Roadmap
+## 🛣 Project Roadmap
 
 > - [X] `ℹ️  Task 1: Implement X`
 > - [ ] `ℹ️  Task 2: Implement Y`
@@ -803,7 +803,7 @@ cd serveX
 
 ---
 
-##  Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Here are several ways you can contribute:
 
@@ -842,14 +842,14 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 ---
 
-##  License
+## 📄 License
 
 
 This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
-##  Acknowledgments
+## 👏 Acknowledgments
 
 - List any resources, contributors, inspiration, etc. here.
 
