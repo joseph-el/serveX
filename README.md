@@ -34,7 +34,98 @@
 - **Cookies and Session Management:** Easily manage user ``sessions`` and store information using cookies, enhancing the interactivity and personalization of web applications.
  
 - **Error Logging:** The server includes a high-level error ``logger`` that detects errors in configuration files, requests, and responses, providing valuable insights for debugging and maintenance.
- 
+
+## Configuration
+
+### Optionner
+
+We includes a optionner tool that allows you to fine-tune the server's behavior. Use the following command-line options to configure serveX according to your requirements:
+
+```sh
+  serveX         # run the server with the default config file: cfg/sx_config
+  serveX -h      # Display help
+  serveX -v      # Display the server version and exit
+  serveX -t      # Test the server configuration and exit
+  serveX -T      # Test configuration, dump it, and exit
+  serveX -c custom_config.conf  # Set a custom configuration file
+```
+## syntax 
+The serveX HTTP web server boasts an expressive and flexible configuration syntax
+### Server Block
+The server block serves as the encapsulating structure for the server configuration. It contains global server settings.
+```cfg
+server {
+    listen              Host:Port;
+    server_name         exampleName;
+    client_max_body_size <Size>; 
+}
+```
+
+### Location Block
+The location block allows you to define configurations specific to different URI paths.
+
+``` cfg
+location <pathToLocation> {
+    root               <path>;
+    allowed_methods    <Methods...>;
+    index              <indexes>...;
+    upload_path        <Path>;
+    cgi_path           <pathToCGI>;
+    auto_index         <off/on>;
+    return             <status>    <PathToRedirection>;
+}
+```
+
+## Example Configuration
+
+```cfg
+server {
+    listen              3333;
+    server_name         serverX.com;
+    client_max_body_size 500M;
+
+    location / {
+        allowed_methods GET HEAD PATCH;
+        root             home;
+        index            index.html;
+    }
+
+    location 42home {
+        root             .;
+        allowed_methods GET HEAD;
+        return           301 https://42.fr/en/homepage/;
+    }
+
+    location template {
+        root             .;
+        index            index.html;
+        allowed_methods GET;
+    }
+
+    location youtube.com {
+        allowed_methods GET;
+        root             .;
+        return           301 https://www.youtube.com/channel/UCa8CyDeTWLzoP4hvdQ5_l6w;
+    }
+
+    location upload {
+        root             ./;
+        index            index.html;
+        allowed_methods GET POST PUT PATCH;
+        upload_path      /goinfre/yoel-idr;
+    }
+}
+```
+### Usage
+#### clone repository
+```sh
+git clone https://github.com/joseph-el/serveX.git
+```
+#### config file and run
+```sh
+make ; ./serveX - (options if needed)
+```
+
 ## Acknowledgments
 
 Special thanks to [@tnaceur](https://github.com/tnaceur) and [@ELkhalil](https://github.com/ELkhalil) for their valuable contributions to the serveX project.
