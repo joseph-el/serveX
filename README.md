@@ -10,15 +10,15 @@
   <p align="center">
     An flexible HTTP web server!
     <br />
-    <a href="https://en.wikipedia.org/wiki/Web_server"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/joseph-el/serveX/assets/80905157/d5446afd-2f66-46ad-a4ab-e53abcc41f8d"><strong>Explore the docs »</strong></a>
     <br />
     <br />
 </div>
-<img width="1678" alt="Screenshot 2023-12-05 at 11 38 52" src="https://github.com/joseph-el/serveX/assets/80905157/d5446afd-2f66-46ad-a4ab-e53abcc41f8d">
 
 
  ## About
 ``serveX`` is a HTTP web server like [nginx](https://en.wikipedia.org/wiki/Nginx) , meticulously crafted in C++17 by [@joseph-el](https://github.com/joseph-el) , [@tnaceur](https://github.com/tnaceur) and [@ELkhalil](https://github.com/ELkhalil)
+
 
 ## Overview
 
